@@ -1,0 +1,90 @@
+{
+  "name": "opentrials-ebola",
+  "private": true,
+  "version": "0.0.1",
+  "description": "A prototype app for the Open Trials Ebola subproject.",
+  "keywords": [
+    "bad pharma",
+    "open data",
+    "open trials"
+  ],
+  "main": "prototype/index.js",
+  "dependencies": {
+    "bluebird": "^2.9.31",
+    "bootstrap": "^3.3.5",
+    "browserify": "^10.2.0",
+    "csv": "^0.4.5",
+    "express": "^4.13.1",
+    "faker": "^3.0.1",
+    "glob": "^5.0.6",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-concat": "^2.5.2",
+    "gulp-file": "^0.2.0",
+    "gulp-insert": "^0.5.0",
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "^1.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "lunr": "^0.5.12",
+    "nconf": "^0.8.0",
+    "nunjucks": "^2.0.0",
+    "pg": "^4.4.1",
+    "pg-hstore": "^2.3.2",
+    "resolve": "^1.1.6",
+    "sequelize": "^3.8.0",
+    "streamqueue": "^1.1.0",
+    "superagent": "^1.3.0",
+    "superagent-bluebird-promise": "^2.0.2",
+    "uglify-js": "^2.4.21",
+    "umzug": "^1.6.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.8.2",
+    "chai": "^2.3.0",
+    "jscs": "^2.1.1",
+    "mocha": "^2.2.5",
+    "watchify": "^3.2.1",
+    "zombie": "^4.1.0"
+  },
+  "engines": {
+    "iojs": "v2.3.x",
+    "npm": "v2.13.x"
+  },
+  "scripts": {
+    "build": "gulp",
+    "jscs": "jscs prototype",
+    "develop": "WATCH=true gulp & npm start",
+    "start": "node prototype",
+    "postinstall": "npm run build",
+    "test": "mocha tests --recursive --reporter spec"
+  },
+  "author": {
+    "name": "Open Knowledge",
+    "email": "info@okfn.org",
+    "url": "https://okfn.org/"
+  },
+  "contributors": [
+    {
+      "name": "Paul Walsh",
+      "email": "paulywalsh@gmail.com",
+      "url": "http://pwalsh.me/"
+    },
+    {
+      "name": "Evgeny Karev",
+      "email": "roll@respedct31.com"
+    }
+  ],
+  "homepage": "http://opentrials.net/",
+  "bugs": "https://github.com/okfn/opentrials-ebola-tracker/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/okfn/opentrials-ebola-tracker.git"
+  },
+  "license": "MIT"
+}

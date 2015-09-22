@@ -1,0 +1,114 @@
+@blue: #12b2e3;
+@dark-blue: darken(@blue, 2);
+
+.jumbotron.inverse.ot-header-jumbotron {
+  background: @blue url('/images/header-background.jpg') right top no-repeat;
+}
+
+.navbar-brand:hover {
+  color: @blue;
+}
+
+.navbar-brand .glyphicon {
+  @icon-colour: @blue;
+  @icon-shadow: @dark-blue;
+
+  background-color: @blue;
+  text-shadow: 1px 1px @icon-shadow,
+    2px 2px @icon-shadow,
+    3px 3px @icon-shadow,
+    4px 4px @icon-shadow,
+    5px 5px @icon-shadow,
+    6px 6px @icon-shadow,
+    7px 7px @icon-shadow,
+    8px 8px @icon-shadow,
+    9px 9px @icon-shadow,
+    10px 10px @icon-shadow,
+    11px 11px @icon-shadow,
+    12px 12px @icon-shadow,
+    13px 13px @icon-shadow,
+    14px 14px @icon-shadow,
+    15px 15px @icon-shadow;
+}
+
+.ok-ribbon::before {
+  background-color: @blue;
+}
+
+#ok-panel {
+  border-bottom-color: @blue;
+}
+
+.navbar-brand .text::before {
+  color: @blue;
+}
+
+a {
+  color: @blue;
+}
+
+a:hover, a:focus {
+  color: @dark-blue;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+  background-color: @blue;
+  border-color: @blue;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  color: @blue;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: @dark-blue;
+}
+
+.margin-right-4 {
+  margin-right: 4px;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-30 {
+  margin-bottom: 30px;
+}
+
+.margin-left-60 {
+  margin-left: 60px;
+}
+
+.margin-right-30 {
+  margin-right: 30px;
+}
+
+ul, li {
+  list-style-position: inside;
+}
+
+.glyphicon.ot-logo {
+  line-height: 27px;
+  padding: 4px;
+  background: @blue;
+}
+
+.ot-logo img {
+  max-width: 27px;
+  max-height: 27px;
+  vertical-align: top;
+}
