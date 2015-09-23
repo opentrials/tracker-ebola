@@ -1,9 +1,10 @@
 'use strict';
 
 
-module.exports.slash = function(request, response, next) {
-  if(request.url.length > 1 && request.url.substr(-1) == '/') {
-    response.redirect(301, request.url.slice(0, -1));
+// Trailing slash redirect
+module.exports.slash = function(req, res, next) {
+  if(req.url.length > 1 && req.url.substr(-1) == '/') {
+    res.redirect(301, req.url.slice(0, -1));
   } else {
     next();
   }

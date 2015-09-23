@@ -16,7 +16,10 @@ router.use(express.static(statics));
 // Trailing slash
 router.use(middlewares.helpers.slash);
 
-// Dynamic pages
+// Site API
+router.get('/api/data', controllers.api.data);
+
+// Site pages
 router.get('/', controllers.pages.index);
 router.get('/about', controllers.pages.about);
 router.get('/patients', controllers.pages.patients);

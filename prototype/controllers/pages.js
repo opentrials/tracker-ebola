@@ -2,37 +2,37 @@
 
 
 // Index
-module.exports.index = function(request, response) {
-  response.render('index.html', {
+module.exports.index = function(req, res) {
+  res.render('index.html', {
     title: 'Ebola',
     subtitle: 'A live tracker of Ebola trials',
   });
 }
 
 // About
-module.exports.about = function(request, response) {
-  response.render('about.html', {
+module.exports.about = function(req, res) {
+  res.render('about.html', {
     title: 'About',
   });
 }
 
 // Patients
-module.exports.patients = function(request, response) {
-  response.render('patients.html', {
+module.exports.patients = function(req, res) {
+  res.render('patients.html', {
     title: 'Patients',
   });
 }
 
 // Researches
-module.exports.researchers = function(request, response) {
-  response.render('researchers.html', {
+module.exports.researchers = function(req, res) {
+  res.render('researchers.html', {
     title: 'Researchers',
   });
 }
 
 // Transparency
-module.exports.transparency = function(request, response) {
-  response.render('transparency.html', {
+module.exports.transparency = function(req, res) {
+  res.render('transparency.html', {
     title: 'Transparency',
   });
 }
