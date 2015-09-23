@@ -1,7 +1,7 @@
 'use strict';
+// jscs:disable maximumLineLength
 var path = require('path');
 var nconf = require('nconf');
-
 
 // User settings
 nconf.file({

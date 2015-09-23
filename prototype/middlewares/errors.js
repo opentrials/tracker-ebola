@@ -1,6 +1,5 @@
 'use strict';
 
-
 // Not found
 module.exports.notfound = function(req, res, next) {
   res.status(404).render('errors/notfound.html', {

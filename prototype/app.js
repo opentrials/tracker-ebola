@@ -7,7 +7,6 @@ var config = require('./config');
 var routes = reqdir('./routes');
 var views = path.join(__dirname, '/views');
 
-
 // Init application
 var app = express();
 

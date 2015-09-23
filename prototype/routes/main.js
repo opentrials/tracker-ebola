@@ -6,7 +6,6 @@ var controllers = reqdir('../controllers');
 var middlewares = reqdir('../middlewares');
 var statics = path.join(__dirname, '../public');
 
-
 // Init router
 var router = express.Router();
 
