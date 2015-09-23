@@ -1,20 +1,27 @@
 'use strict';
-
-var express = require('express');
 var path = require('path');
-var app = express();
+var reqdir = require('require-dir');
+var express = require('express');
 var nunjucks  = require('nunjucks');
-var views = path.join(__dirname, '/views');
-var router = require('./routes/index');
 var config = require('./config');
+var routes = reqdir('./routes');
+var views = path.join(__dirname, '/views');
 
+
+// Init application
+var app = express();
+
+// Set config
 app.set('config', config);
 
-app.use(router);
+// Add routes
+app.use(routes.main);
 
+// Configure views
 nunjucks.configure(views, {
   autoescape: true,
-  express: app
+  express: app,
 });
 
+// Module interface
 module.exports = app;

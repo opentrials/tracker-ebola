@@ -1,28 +1,38 @@
 'use strict';
 
-var express = require('express');
 
-function pageIndex(request, response) {
+// Index
+module.exports.index = function(request, response) {
   response.render('index.html', {
-    title: 'Index'
+    title: 'Ebola',
+    subtitle: 'A live tracker of Ebola trials',
   });
 }
 
-function pageAbout(request, response) {
+// About
+module.exports.about = function(request, response) {
   response.render('about.html', {
-    title: 'About'
+    title: 'About',
   });
 }
 
-function pageContacts(request, response) {
-  response.render('contacts.html', {
-    title: 'Contacts'
+// Patients
+module.exports.patients = function(request, response) {
+  response.render('patients.html', {
+    title: 'Patients',
   });
 }
 
-var router = express.Router();
-router.get('/', pageIndex);
-router.get('/contacts', pageContacts);
-router.get('/about', pageAbout);
+// Researches
+module.exports.researchers = function(request, response) {
+  response.render('researchers.html', {
+    title: 'Researchers',
+  });
+}
 
-module.exports = router;
+// Transparency
+module.exports.transparency = function(request, response) {
+  response.render('transparency.html', {
+    title: 'Transparency',
+  });
+}

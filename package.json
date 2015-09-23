@@ -34,6 +34,7 @@
     "nunjucks": "^2.0.0",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
+    "require-dir": "^0.3.0",
     "resolve": "^1.1.6",
     "sequelize": "^3.8.0",
     "streamqueue": "^1.1.0",

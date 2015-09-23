@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
+
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{{ title }}</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- OK Panel CSS -->
   <link rel="stylesheet" href="//cdn.rawgit.com/okfn/ok-panel/v1.0.0/assets/css/frontend.css">
@@ -13,17 +15,20 @@
   <!-- Theme CSS -->
   <link rel="stylesheet" href="//cdn.rawgit.com/okfn/app-theme/924b03098a3d0fcaa5acf573f51571f519f80c94/css/main.min.css">
 
+  <!-- Application CSS -->
   <link rel="stylesheet" type="text/css" href="/styles/vendor.min.css" />
   <link rel="stylesheet" type="text/css" href="/styles/app.min.css" />
 
+  <!-- Icons -->
   <link rel="shortcut icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+
 </head>
 
 <body>
 
 {% include "partials/header.html"  %}
-{% include "partials/navigation.html"  %}
+{% include "partials/navbar.html"  %}
 
 <div class="jumbotron inverse ot-header-jumbotron">
   <div class="container">
@@ -41,6 +46,7 @@
 <!-- Optional Modernizr -->
 <script src="//cdn.rawgit.com/okfn/app-theme/2114842a6bdf0c49eb94faca4b7c5dc4a29d2249/js/vendor/modernizr-2.8.3.min.js"></script>
 
+<!-- Application JS -->
 <script src="/scripts/vendor.min.js"></script>
 <script src="/scripts/app.min.js"></script>
 

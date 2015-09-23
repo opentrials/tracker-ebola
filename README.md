@@ -5,5 +5,5 @@ A mini app to track trials.
 ## Quick start
 
 ```
-npm run develop
+$ npm run develop
 ```
