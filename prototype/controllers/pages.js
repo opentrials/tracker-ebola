@@ -14,24 +14,3 @@ module.exports.about = function(req, res) {
     title: 'About',
   });
 };
-
-// Patients
-module.exports.patients = function(req, res) {
-  res.render('patients.html', {
-    title: 'Patients',
-  });
-};
-
-// Researches
-module.exports.researchers = function(req, res) {
-  res.render('researchers.html', {
-    title: 'Researchers',
-  });
-};
-
-// Transparency
-module.exports.transparency = function(req, res) {
-  res.render('transparency.html', {
-    title: 'Transparency',
-  });
-};
