@@ -79,7 +79,7 @@ function cleanDate(value) {
       throw Error('Bad date');
     }
   } catch (err) {
-    return undefined;
+    return '';
   }
   return value;
 }
