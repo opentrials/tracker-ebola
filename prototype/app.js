@@ -20,7 +20,9 @@ app.use(routes.main);
 nunjucks.configure(views, {
   autoescape: true,
   express: app,
-});
+}).addGlobal(
+  'contactEmail', config.get('contactEmail')
+);
 
 // Module interface
 module.exports = app;

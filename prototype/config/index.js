@@ -1,7 +1,19 @@
 'use strict';
 // jscs:disable maximumLineLength
+// TODO: use conf.json for default settings
 var path = require('path');
 var nconf = require('nconf');
+
+/**
+ * Module provides config
+ */
+module.exports = {
+  get: function(key) {
+    return nconf.get.call(nconf, key);
+  },
+  set: nconf.set.bind(nconf),
+  reset: nconf.reset.bind(nconf),
+};
 
 // User settings
 nconf.file({
@@ -10,17 +22,9 @@ nconf.file({
 
 // Default settings
 nconf.defaults({
+  contactEmail: process.env.CONTACT_EMAIL || 'opentrials@okfn.org',
   trackerData: process.env.TRACKER_DATA || 'https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=0&single=true&output=csv',
   appConfig: {
     port: process.env.PORT || 3000,
   },
 });
-
-// Module interface
-module.exports = {
-  get: function(key) {
-    return nconf.get.call(nconf, key);
-  },
-  set: nconf.set.bind(nconf),
-  reset: nconf.reset.bind(nconf),
-};

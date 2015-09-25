@@ -8,13 +8,13 @@ var services = reqdir('../../prototype/services');
 var app = require('../../prototype/app');
 
 // Prepare browser
-Browser.localhost('127.0.0.1', process.env.PORT || 3001);
+Browser.localhost('127.0.0.1', process.env.PORT || 3002);
 
 // Prepare server
 before(function(done) {
 
   // Run the server
-  app.listen(3001, function() {
+  app.listen(3002, function() {
     done();
   });
 
@@ -27,7 +27,7 @@ describe('Data endpoint', function() {
 
   it('Should be alive', function (done) {
     browser.visit('/api/data', function() {
-      assert.ok(browser.success);
+      browser.assert.success();
       done();
     });
   });
