@@ -35,7 +35,9 @@ describe('Data endpoint', function() {
   it('Should follow data service return', function (done) {
     browser.visit('/api/data', function() {
       services.data.get().then(function (data) {
-        assert.deepEqual(JSON.parse(browser.text()), {'results': data});
+        assert.deepEqual(
+          JSON.parse(browser.text()),
+          JSON.parse(JSON.stringify({'results': data})));
       });
       done();
     });

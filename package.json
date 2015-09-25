@@ -37,7 +37,7 @@
     "jquery": "^2.1.4",
     "jscs": "^2.1.1",
     "lodash": "^3.10.1",
-    "mocha": "^2.2.5",
+    "mocha": "^2.3.3",
     "resolve": "^1.1.6",
     "uglify-js": "^2.4.21",
     "vinyl-buffer": "^1.0.0",
