@@ -4,6 +4,7 @@ var reqdir = require('require-dir');
 var Browser = require('zombie');
 var lodash = require('lodash');
 var assert = require('chai').assert;
+var config = require('../../prototype/config');
 var services = reqdir('../../prototype/services');
 var app = require('../../prototype/app');
 
@@ -37,6 +38,34 @@ describe('Add data email link', function() {
     browser.visit('/', function() {
       browser.assert.link('a', 'Add data', link);
       done();
+    });
+  });
+
+});
+
+describe('Access Token', function() {
+
+  var browser = new Browser({maxWait: 5000});
+  // Ensure we have time for request to resolve, etc.
+  this.timeout(2000);
+
+  it('Should return 403 Forbidden', function(done) {
+    config.set('access:isProtected', true);
+    browser.visit('/', function() {
+      assert(browser.statusCode == 403, 'Status should be "403 Forbidden"');
+      done();
+    });
+  });
+
+  it('Should allow access after providing access token', function(done) {
+    config.set('access:isProtected', true);
+    browser.visit('/', function() {
+      browser.fill('#token', config.get('access:token'));
+      browser.document.forms[0].submit();
+      browser.wait().then(function() {
+        assert.ok(browser.success);
+        done();
+      });
     });
   });
 

@@ -10,9 +10,10 @@ module.exports.notfound = function(req, res, next) {
 
 // Server
 module.exports.server = function(err, req, res, next) {
+  //TODO: show error only in dev environ
   res.status(500).render('errors/server.html', {
     title: 'Something went wrong...',
-    error: error,
+    error: err,
   });
   return next();
 };
