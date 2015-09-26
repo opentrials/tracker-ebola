@@ -12,26 +12,30 @@ var sourcemaps = require('gulp-sourcemaps');
 var less = require('gulp-less');
 var prefixer = require('gulp-autoprefixer');
 var faker = require('faker');
+var app = require('./prototype')
+var config = app.get('config');
 
-var baseDir = './prototype';
-var nodeModulesDir = baseDir + '/../node_modules';
-var uiDir = baseDir + '/ui';
-var publicDir = baseDir + '/public';
-var publicStylesDir = publicDir + '/styles';
-var publicScriptsDir = publicDir + '/scripts';
-var publicImagesDir = publicDir + '/images';
-var publicFontsDir = publicDir + '/fonts';
-var stylesDir = uiDir + '/styles';
-var scriptsDir = uiDir + '/scripts';
-var imagesDir = uiDir + '/images';
-var vendorJS = 'vendor.min.js';
-var appJS = 'app.min.js';
-var appCSS = 'app.min.css';
-var vendorCSS = 'vendor.min.css';
-var frontendDependencies = [
-  'bootstrap',
-  'jquery'
-];
+
+/**
+ * Project automation tasks
+ */
+gulp.task('default', [
+  'app.scripts',
+  'app.styles',
+  'app.images',
+  'app.favicon',
+  'vendor.scripts',
+  'vendor.styles',
+  'vendor.fonts'
+]);
+gulp.task('app.scripts', distAppScripts);
+gulp.task('app.styles', distAppStyles);
+gulp.task('app.images', distAppImages);
+gulp.task('app.favicon', distAppIcon);
+gulp.task('vendor.scripts', distVendorScripts);
+gulp.task('vendor.styles', distVendorStyles);
+gulp.task('vendor.fonts', distVendorFonts);
+
 var production = (process.env.NODE_ENV === 'production');
 
 if (!production) {
@@ -44,15 +48,13 @@ if (!production) {
  * Run and return the scripts pipeline on bundle
  */
 function scriptPipeline(bundle, outfile) {
-
   return bundle
     //.pipe(sourcemaps.init())
     .pipe(source(outfile))
     .pipe(buffer())
     .pipe(uglify())
-    //.pipe(sourcemaps.write(publicDir))
-    .pipe(gulp.dest(publicScriptsDir));
-
+    //.pipe(sourcemaps.write(config.get('build:publicDir))
+    .pipe(gulp.dest(config.get('build:publicScriptsDir')));
 }
 
 /**
@@ -60,10 +62,10 @@ function scriptPipeline(bundle, outfile) {
  */
 function distVendorScripts() {
   var bundler = browserify({});
-  frontendDependencies.forEach(function(id) {
+  config.get('build:frontendDependencies').forEach(function(id) {
     bundler.require(resolve.sync(id), {expose: id});
   });
-  return scriptPipeline(bundler.bundle(), vendorJS);
+  return scriptPipeline(bundler.bundle(), config.get('build:vendorJS'));
 }
 
 /**
@@ -71,7 +73,7 @@ function distVendorScripts() {
  */
 function distAppScripts() {
   var bundler = browserify({
-    entries: [scriptsDir + '/app.js'],
+    entries: [config.get('build:scriptsDir') + '/app.js'],
     debug: production,
     cache: {},
     packageCache: {},
@@ -79,17 +81,17 @@ function distAppScripts() {
     // transform: [],
   });
   // Don't include vendor dependencies in this bundle
-  bundler.external(frontendDependencies);
+  bundler.external(config.get('build:frontendDependencies'));
   if (process.env.WATCH === 'true') {
     bundler = watchify(bundler);
     bundler
       .on('update', function() {
-        scriptPipeline(bundler.bundle(), appJS);
+        scriptPipeline(bundler.bundle(), config.get('build:appJS'));
       });
-    return scriptPipeline(bundler.bundle(), appJS)
+    return scriptPipeline(bundler.bundle(), config.get('build:appJS'))
       .pipe(reload({stream: true}));
   }
-  return scriptPipeline(bundler.bundle(), appJS);
+  return scriptPipeline(bundler.bundle(), config.get('build:appJS'));
 }
 
 /**
@@ -97,58 +99,41 @@ function distAppScripts() {
  */
 function distAppStyles() {
   return gulp
-    .src(stylesDir + '/app.less')
+    .src(config.get('build:stylesDir') + '/app.less')
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(prefixer({browsers: ['last 4 versions']}))
-    .pipe(sourcemaps.write(publicDir))
+    .pipe(sourcemaps.write(config.get('build:publicDir')))
     .pipe(minifyCss({compatibility: 'ie8'}))
-    .pipe(rename(appCSS))
-    .pipe(gulp.dest(publicStylesDir));
+    .pipe(rename(config.get('build:appCSS')))
+    .pipe(gulp.dest(config.get('build:publicStylesDir')));
 }
 
 function distAppImages() {
   return gulp
-    .src(imagesDir + '/*')
-    .pipe(gulp.dest(publicImagesDir));
+    .src(config.get('build:imagesDir') + '/*')
+    .pipe(gulp.dest(config.get('build:publicImagesDir')));
 }
 
 function distAppIcon() {
   return gulp
-    .src(imagesDir + '/favicon.png')
-    .pipe(gulp.dest(publicDir));
+    .src(config.get('build:imagesDir') + '/favicon.png')
+    .pipe(gulp.dest(config.get('build:publicDir')));
 }
 
 function distVendorStyles() {
   return gulp
     .src([
-      nodeModulesDir + '/bootstrap/dist/css/bootstrap.min.css'
+      config.get('build:nodeModulesDir') + '/bootstrap/dist/css/bootstrap.min.css'
     ])
-    .pipe(concat(vendorCSS))
-    .pipe(gulp.dest(publicStylesDir));
+    .pipe(concat(config.get('build:appCSS')))
+    .pipe(gulp.dest(config.get('build:publicStylesDir')));
 }
 
 function distVendorFonts() {
   return gulp
     .src([
-      nodeModulesDir + '/bootstrap/dist/fonts/*'
+      config.get('build:nodeModulesDir') + '/bootstrap/dist/fonts/*'
     ])
-    .pipe(gulp.dest(publicFontsDir));
+    .pipe(gulp.dest(config.get('build:publicFontsDir')));
 }
-
-gulp.task('app.scripts', distAppScripts);
-gulp.task('app.styles', distAppStyles);
-gulp.task('app.images', distAppImages);
-gulp.task('app.favicon', distAppIcon);
-gulp.task('vendor.scripts', distVendorScripts);
-gulp.task('vendor.styles', distVendorStyles);
-gulp.task('vendor.fonts', distVendorFonts);
-gulp.task('default', [
-  'app.scripts',
-  'app.styles',
-  'app.images',
-  'app.favicon',
-  'vendor.scripts',
-  'vendor.styles',
-  'vendor.fonts'
-]);

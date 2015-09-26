@@ -16,5 +16,25 @@
     "access": {
         "protected": false,
         "token": "ACCESS_TOKEN"
+    },
+    "build": {
+        "nodeModulesDir": "node_modules",
+        "uiDir": "prototype/ui",
+        "stylesDir": "prototype/ui/styles",
+        "scriptsDir": "prototype/ui/scripts",
+        "imagesDir": "prototype/ui/images",
+        "publicDir": "prototype/public",
+        "publicStylesDir": "prototype/public/styles",
+        "publicScriptsDir": "prototype/public/scripts",
+        "publicImagesDir": "prototype/public/images",
+        "publicFontsDir": "prototype/public/fonts",
+        "appJS": "app.min.js",
+        "appCSS": "app.min.css",
+        "vendorJS": "vendor.min.js",
+        "vendorCSS": "vendor.min.css",
+        "frontendDependencies": [
+          "bootstrap",
+          "jquery"
+        ]
     }
 }
