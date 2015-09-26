@@ -56,7 +56,7 @@
     "build": "gulp",
     "jscs": "jscs prototype",
     "develop": "WATCH=true gulp & npm start",
-    "start": "node prototype",
+    "start": "node server.js",
     "test": "mocha tests --recursive --reporter spec"
   },
   "author": {
