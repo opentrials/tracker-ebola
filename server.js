@@ -1,5 +1,5 @@
 'use strict';
-var app = require('./prototype');
+var app = require('./app');
 var port = app.get('config').get('server:port');
 
 // Start listening

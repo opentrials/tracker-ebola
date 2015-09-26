@@ -12,7 +12,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var less = require('gulp-less');
 var prefixer = require('gulp-autoprefixer');
 var faker = require('faker');
-var app = require('./prototype')
+var app = require('./app')
 var config = app.get('config');
 
 

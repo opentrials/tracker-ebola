@@ -4,8 +4,8 @@ var reqdir = require('require-dir');
 var Browser = require('zombie');
 var lodash = require('lodash');
 var assert = require('chai').assert;
-var services = reqdir('../../prototype/services');
-var app = require('../../prototype');
+var app = require('../../app');
+var services = reqdir('../../app/services');
 
 // Prepare browser
 Browser.localhost('127.0.0.1', process.env.PORT || 3002);

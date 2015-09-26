@@ -3,7 +3,7 @@
 var reqdir = require('require-dir');
 var lodash = require('lodash');
 var assert = require('chai').assert;
-var services = reqdir('../../prototype/services')
+var services = reqdir('../../app/services')
 
 describe('Data Service', function() {
 
