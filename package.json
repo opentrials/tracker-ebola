@@ -54,7 +54,7 @@
   },
   "scripts": {
     "build": "gulp",
-    "jscs": "jscs prototype",
+    "jscs": "jscs app",
     "develop": "WATCH=true gulp & npm start",
     "start": "node server.js",
     "test": "mocha tests --recursive --reporter spec"

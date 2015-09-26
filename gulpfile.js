@@ -15,7 +15,6 @@ var faker = require('faker');
 var app = require('./app')
 var config = app.get('config');
 
-
 /**
  * Project automation tasks
  */

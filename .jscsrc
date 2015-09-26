@@ -1,4 +1,4 @@
 {
   "preset": "google",
-  "excludeFiles": ["prototype/public/**/*"]
+  "excludeFiles": ["app/public/**/*"]
 }
