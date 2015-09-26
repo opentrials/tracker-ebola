@@ -1,18 +1,4 @@
 {
-    "contacts": {
-        "email": "opentrials@okfn.org"
-    },
-    "database": {
-        "url": "https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=0&single=true&output=csv"
-    },
-    "server": {
-        "port": 3000
-    },
-    "session": {
-        "name": "NSESSID",
-        "secret" : "SECRET_TOKEN",
-        "maxAge": 86400
-    },
     "access": {
         "protected": false,
         "token": "ACCESS_TOKEN"
@@ -36,5 +22,17 @@
           "bootstrap",
           "jquery"
         ]
+    },
+    "contacts": {
+        "email": "opentrials@okfn.org"
+    },
+    "database": {
+        "url": "https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=0&single=true&output=csv"
+    },
+    "port": 3000,
+    "session": {
+        "name": "NSESSID",
+        "secret" : "SECRET_TOKEN",
+        "maxAge": 86400
     }
 }
