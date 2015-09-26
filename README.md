@@ -1,8 +1,8 @@
 # opentrials-ebola-tracker
 
-![Shippable](https://img.shields.io/shippable/5604ab341895ca447417f6fe.svg)
-
 A mini app to track trials.
+
+![Shippable](https://img.shields.io/shippable/5604ab341895ca447417f6fe.svg)
 
 ## Quick start
 
