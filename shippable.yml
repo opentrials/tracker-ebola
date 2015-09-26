@@ -8,7 +8,7 @@ env:
     - APP_NAME=opentrials-tracker
 
 before_script:
-  - echo 'Starting..'
+  - npm install
 
 script:
   - npm run build
