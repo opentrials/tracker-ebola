@@ -3,10 +3,6 @@ language: node_js
 node_js:
    - "0.12"
 
-env:
-  global:
-    - APP_NAME=opentrials-tracker
-
 before_script:
   - npm install
 
@@ -16,7 +12,7 @@ script:
   - npm run test
 
 after_script:
-  - git push -f git@heroku.com:$APP_NAME.git master
+  - git push -f git@heroku.com:opentrials-tracker.git master
 
 notifications:
   email:
