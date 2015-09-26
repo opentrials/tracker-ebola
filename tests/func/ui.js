@@ -50,7 +50,7 @@ describe('Access Token', function() {
   this.timeout(2000);
 
   it('Should return 403 Forbidden', function(done) {
-    config.set('access:isProtected', true);
+    config.set('access:protected', true);
     browser.visit('/', function() {
       assert(browser.statusCode == 403, 'Status should be "403 Forbidden"');
       done();
@@ -58,7 +58,7 @@ describe('Access Token', function() {
   });
 
   it('Should allow access after providing access token', function(done) {
-    config.set('access:isProtected', true);
+    config.set('access:protected', true);
     browser.visit('/', function() {
       browser.fill('#token', config.get('access:token'));
       browser.document.forms[0].submit();

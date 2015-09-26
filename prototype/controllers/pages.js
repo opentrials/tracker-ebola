@@ -1,5 +1,4 @@
 'use strict';
-var config = require('../config');
 
 // Index
 module.exports.index = function(req, res) {

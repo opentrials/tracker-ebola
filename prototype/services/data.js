@@ -20,9 +20,10 @@ function getData() {
   return loadData().then(parseData).then(cleanData);
 }
 
+//TODO: add timeout
 function loadData() {
   return new Promise(function(resolve, reject) {
-    request(config.get('trackerData'), function(err, res, data) {
+    request(config.get('database:url'), function(err, res, data) {
       if (!err && res.statusCode === 200) {
         resolve(data);
       } else {

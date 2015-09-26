@@ -10,8 +10,10 @@ var middlewares = reqdir('../middlewares');
 var statics = path.join(__dirname, '../public');
 var config = require('../config');
 
-// Init router
-var router = express.Router();
+/**
+ * Module provides router
+ */
+var router = module.exports = express.Router();
 
 // Static files
 router.use(express.static(statics));
@@ -35,6 +37,3 @@ router.get('/about', controllers.pages.about);
 // Error handling
 router.use(middlewares.errors.notfound);
 router.use(middlewares.errors.server);
-
-// Module interface
-module.exports = router;

@@ -7,8 +7,10 @@ var config = require('./config');
 var routes = reqdir('./routes');
 var views = path.join(__dirname, '/views');
 
-// Init application
-var app = express();
+/**
+ * Module provides application
+ */
+var app = module.exports = express();
 
 // Set config
 app.set('config', config);
@@ -21,8 +23,5 @@ nunjucks.configure(views, {
   autoescape: true,
   express: app,
 }).addGlobal(
-  'contactEmail', config.get('contactEmail')
+  'email', config.get('contacts:email')
 );
-
-// Module interface
-module.exports = app;

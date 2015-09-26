@@ -1,10 +1,9 @@
 'use strict';
-
 var config = require('../config');
 
 //Token
 module.exports.token = function(request, response, next) {
-  if (config.get('access:isProtected')) {
+  if (config.get('access:protected')) {
     var accessToken = config.get('access:token');
     if (request.session.token !== accessToken) {
       var hasErrors = false;
