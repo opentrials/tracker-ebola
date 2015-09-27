@@ -37,6 +37,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
+    "istanbul": "^0.3.21",
     "jquery": "^2.1.4",
     "jscs": "^2.1.1",
     "lodash": "^3.10.1",
@@ -54,10 +55,11 @@
   },
   "scripts": {
     "build": "gulp",
-    "jscs": "jscs app",
+    "config": "less config.json",
     "develop": "WATCH=true gulp & npm start",
+    "review": "jscs app",
     "start": "node server.js",
-    "test": "mocha tests --recursive --reporter spec"
+    "test": "istanbul cover _mocha -- tests --recursive --reporter spec"
   },
   "author": {
     "name": "Open Knowledge",

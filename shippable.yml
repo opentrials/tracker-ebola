@@ -10,7 +10,7 @@ before_script:
 
 script:
   - npm run build
-  - npm run jscs
+  - npm run style
   - npm run test
 
 after_script:
