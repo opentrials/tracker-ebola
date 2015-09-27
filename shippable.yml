@@ -15,7 +15,7 @@ script:
 
 after_script:
   - rm app/public/.gitignore
-  - git commit -a -m 'added public'
+  - git add . && git commit -a -m 'added public'
   - git push -f git@heroku.com:opentrials-tracker.git master
 
 notifications:
