@@ -1,7 +1,9 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-<h3>Overview</h3>
+
+<!-- Lead -->
+<h2>Overview</h2>
 <p>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit,
   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -11,4 +13,44 @@
   Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
   deserunt mollit anim id est laborum.
 </p>
+
+<hr>
+
+<div class="row" data-ng-app="Application" data-ng-controller="Controller">
+
+  <!-- Trials-->
+  <div class="col-md-6">
+    <h3>Completed Trials</h3>
+
+    {% raw %}
+    <div data-ng-repeat="result in results">
+      <h4><a href="{{ result['URL'] }}">{{ result['Title'] }}</a></h4>
+      <div>
+        <span class="badge">
+          <span class="glyphicon glyphicon-calendar"></span>
+          August 27, 2015
+        </span>
+        <span class="badge">No results</span>
+        <span class="badge">6 days since completed</span>
+      </div>
+      <hr>
+    </div>
+    {% endraw %}
+
+  </div>
+
+  <!-- Statistics -->
+  <div class="col-md-6">
+    <h3>Statistics</h3>
+    <p>
+      There is currently 51 Ebola trials on clinicaltrials.org,
+      11 completed, none with results.
+    </p>
+    <p>ICTRP lists 66 Ebola trials in total. </p>
+    <p><img src="/images/statistics.png" alt="Statistics"></p>
+    <p>Comparision of completed trials versus published results. </p>
+  </div>
+
+</div>
+
 {% endblock %}
