@@ -19,8 +19,7 @@
         "vendorJS": "vendor.min.js",
         "vendorCSS": "vendor.min.css",
         "frontendDependencies": [
-          "bootstrap",
-          "jquery"
+          "bootstrap"
         ]
     },
     "contacts": {
