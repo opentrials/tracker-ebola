@@ -29,13 +29,7 @@
 
 {% include "partials/header.html"  %}
 {% include "partials/navbar.html"  %}
-
-<div class="jumbotron inverse ot-header-jumbotron">
-  <div class="container">
-    {% block title %}<h1>{{ title }}</h1>{% endblock %}
-    {% block subtitle %}<p>{{ subtitle }}</p>{% endblock %}
-  </div>
-</div>
+{% include "partials/jumbotron.html"  %}
 
 <div class="container">
   {% block content %}{% endblock %}
