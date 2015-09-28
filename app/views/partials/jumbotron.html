@@ -1,6 +1,38 @@
 <div class="jumbotron inverse ot-header-jumbotron">
+
   <div class="container">
     {% block title %}<h1>{{ title }}</h1>{% endblock %}
-    {% block subtitle %}<p>{{ subtitle }}</p>{% endblock %}
+
+    <div class="row">
+
+      <!-- Subtitle -->
+      <div class="col-xs-8">
+        {% block subtitle %}<p>{{ subtitle }}</p>{% endblock %}
+      </div>
+
+      <!-- Download -->
+      <div class="col-xs-4">
+        <div class="btn-group pull-right">
+          <a href="/api/data" class="btn btn-default">
+            <span class="glyphicon glyphicon-download"></span>
+            JSON
+          </a>
+          <button type="button" class="btn btn-default dropdown-toggle"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
   </div>
+
+  <hr>
+
+  <div class="container">
+    OpenTrials &rsaquo; Tracker &rsaquo; Ebola
+  </div>
+
 </div>
