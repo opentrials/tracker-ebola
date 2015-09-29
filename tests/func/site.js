@@ -1,11 +1,13 @@
 'use strict';
 
+// TODO: split to multiple files?
 var reqdir = require('require-dir');
 var Browser = require('zombie');
 var lodash = require('lodash');
 var assert = require('chai').assert;
 var app = require('../../app');
 var config = require('../../app/config');
+var services = reqdir('../../app/services');
 
 // Prepare browser
 Browser.localhost('127.0.0.1', process.env.PORT || 3001);
@@ -16,6 +18,45 @@ before(function(done) {
   // Run the server
   app.listen(3001, function() {
     done();
+  });
+
+});
+
+describe('Data endpoint', function() {
+
+  var browser = new Browser({maxWait: 5000});
+  this.timeout(10000);
+
+  it('Should be alive', function (done) {
+    browser.visit('/api/data', function() {
+      browser.assert.success();
+      done();
+    });
+  });
+
+  it('Should follow data service return', function (done) {
+    browser.visit('/api/data', function() {
+      services.data.get().then(function (data) {
+        assert.deepEqual(
+          JSON.parse(browser.text()),
+          JSON.parse(JSON.stringify({'results': data})));
+      });
+      done();
+    });
+  });
+
+});
+
+describe('List of trials', function() {
+
+  var browser = new Browser({maxWait: 5000});
+  this.timeout(10000);
+
+  it('Ebola in Mali should be avaiable', function (done) {
+    browser.visit('/', function() {
+      browser.assert.link('a', 'Phase 1 Trial of Ebola Vaccine in Mali', 'https://ClinicalTrials.gov/show/NCT02267109');
+      done();
+    });
   });
 
 });
@@ -46,7 +87,7 @@ describe('Access Token', function() {
 
   var browser = new Browser({maxWait: 5000});
   // Ensure we have time for request to resolve, etc.
-  this.timeout(2000);
+  this.timeout(5000);
 
   it('Should return 403 Forbidden', function(done) {
     config.set('access:protected', true);

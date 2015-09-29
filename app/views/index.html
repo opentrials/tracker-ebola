@@ -16,19 +16,27 @@
   <!-- Trials-->
   <div class="col-md-6">
     <h3>Completed Trials</h3>
+    <p>Auto updates every 5 minutes.</p>
 
     {% raw %}
-    <div data-ng-repeat="result in results">
+    <div data-ng-repeat="result in results" data-ng-if="results.length">
       <h4><a href="{{ result['URL'] }}">{{ result['Title'] }}</a></h4>
       <div>
-        <span class="badge">
+        <span class="badge" data-ng-if="result['Completion Date']">
           <span class="glyphicon glyphicon-calendar"></span>
-          August 27, 2015
+          {{ result['Completion Date'] | date:'MMMM d, yyyy' }}
         </span>
-        <span class="badge">No results</span>
-        <span class="badge">6 days since completed</span>
+        <span class="badge" data-ng-if="result['Study Results']">
+          {{ result['Study Results'] }}
+        </span>
+        <span class="badge" data-ng-if="result['days'] > 0">
+          {{ result['days'] }} days since completed
+        </span>
       </div>
       <hr>
+    </div>
+    <div data-ng-if="!results.length">
+      <img src="/images/preloader.gif" alt="Loading">
     </div>
     {% endraw %}
 
