@@ -2,13 +2,13 @@ language: node_js
 
 before_script:
   - nvm install 4.1
-  - nvm use 4.1 npm install
+  - nvm use 4.1 && npm install
 
 script:
-  - nvm use 4.1 npm run build
-  - nvm use 4.1 npm run review
-  - nvm use 4.1 npm run test
-  - nvm use 4.1 npm run export
+  - nvm use 4.1 && npm run build
+  - nvm use 4.1 && npm run review
+  - nvm use 4.1 && npm run test
+  - nvm use 4.1 && npm run export
 
 after_script:
   - rm app/public/.gitignore
