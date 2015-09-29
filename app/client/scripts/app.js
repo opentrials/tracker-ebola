@@ -19,8 +19,23 @@ application.controller('Controller', ['$scope', '$http', '$interval', function($
       then(function(res) {
           var results = res.data.results;
           results.forEach(function (item) {
-            item['days'] = Math.floor((
-              new Date() - new Date(item['Completion Date']))/1000/60/60/24);
+
+            // Results
+            var res = item['Study Results'];
+            if (!res) {
+                res = 'No results';
+            }
+            item['_results'] = res;
+
+            // Days
+            var days = null;
+            if (item['Completion Date']) {
+              var today = new Date();
+              var compl = new Date(item['Completion Date']);
+              days = Math.floor((today - compl)/1000/60/60/24);
+            }
+            item['_days'] = (days > 0) ? days : null;
+
           });
           $scope.results = results;
       }, function(res) {

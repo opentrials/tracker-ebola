@@ -26,11 +26,11 @@
           <span class="glyphicon glyphicon-calendar"></span>
           {{ result['Completion Date'] | date:'MMMM d, yyyy' }}
         </span>
-        <span class="badge" data-ng-if="result['Study Results']">
-          {{ result['Study Results'] }}
+        <span class="badge" data-ng-if="result['_results']">
+          {{ result['_results'] }}
         </span>
-        <span class="badge" data-ng-if="result['days'] > 0">
-          {{ result['days'] }} days since completed
+        <span class="badge" data-ng-if="result['_days']">
+          {{ result['_days'] }} days since completed
         </span>
       </div>
       <hr>

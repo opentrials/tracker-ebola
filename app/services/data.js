@@ -49,6 +49,9 @@ function parseData(data) {
 function cleanData(data) {
   return new Promise(function(resolve, reject) {
     data.forEach(function(item) {
+      Object.keys(item).forEach(function (key) {
+        item[key] = cleanNull(item[key]);
+      });
       item['Conditions'] = cleanArray(item['Conditions']);
       item['Interventions'] = cleanArray(item['Interventions']);
       item['Sponsor/Collaborators'] = cleanArray(item['Sponsor/Collaborators']);
@@ -63,7 +66,17 @@ function cleanData(data) {
   });
 }
 
+function cleanNull(value) {
+    if (value === 'Null') {
+        value = null;
+    }
+    return value;
+}
+
 function cleanArray(value) {
+  if (value === null) {
+      return value;
+  }
   try {
     value = value.split('|');
   } catch (err) {
@@ -73,6 +86,9 @@ function cleanArray(value) {
 }
 
 function cleanDate(value) {
+  if (value === null) {
+      return value;
+  }
   try {
     // Join with "-" to make it ISO format with UTC
     value = new Date(value.split('/').reverse().join('-'));
