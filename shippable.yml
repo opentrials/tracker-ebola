@@ -3,16 +3,23 @@ language: node_js
 node_js:
   - '0.12'
 
+env:
+  - XUNIT_FILE=shippable/testresults/result.xml
+
 before_script:
-  -  npm install
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
+  - npm install
 
 script:
   - npm run build
   - npm run review
   - npm run test
-  - npm run export
 
 after_script:
+  - node_modules/.bin/istanbul report cobertura --dir shippable/codecoverage/
+
+after_success:
   - rm app/public/.gitignore
   - git add . && git commit -a -m 'added public'
   - git push -f git@heroku.com:opentrials-tracker.git master

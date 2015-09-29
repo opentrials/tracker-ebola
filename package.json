@@ -47,6 +47,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1",
+    "xunit-file": "0.0.7",
     "zombie": "^3.1.0"
   },
   "engines": {
@@ -57,10 +58,9 @@
     "build": "gulp",
     "config": "less config.json",
     "develop": "WATCH=true gulp & npm start",
-    "export": "istanbul report cobertura --dir shippable/codecoverage/",
     "review": "jscs app",
     "start": "node server.js",
-    "test": "istanbul cover _mocha -- tests --recursive --reporter=spec"
+    "test": "istanbul cover _mocha -- tests --recursive --reporter=xunit-file"
   },
   "author": {
     "name": "Open Knowledge",
