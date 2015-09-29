@@ -11,49 +11,62 @@
 
 <hr>
 
+{% raw %}
 <div class="row" data-ng-app="Application" data-ng-controller="Controller">
 
   <!-- Trials-->
   <div class="col-md-6">
+
     <h3>Completed Trials</h3>
     <p>Auto updates every 5 minutes.</p>
 
-    {% raw %}
-    <div data-ng-repeat="result in results" data-ng-if="results.length">
-      <h4><a href="{{ result['URL'] }}">{{ result['Title'] }}</a></h4>
+    <div data-ng-repeat="trial in trials" data-ng-if="trials.length">
+      <h4><a href="{{ trial['URL'] }}">{{ trial['Title'] }}</a></h4>
       <div>
-        <span class="badge" data-ng-if="result['Completion Date']">
+        <span class="badge" data-ng-if="trial['_completion']">
           <span class="glyphicon glyphicon-calendar"></span>
-          {{ result['Completion Date'] | date:'MMMM d, yyyy' }}
+          {{ trial['_completion'] | date:'MMMM d, yyyy' }}
         </span>
-        <span class="badge" data-ng-if="result['_results']">
-          {{ result['_results'] }}
+        <span class="badge" data-ng-if="trial['_results']">
+          {{ trial['_results'] }}
         </span>
-        <span class="badge" data-ng-if="result['_days']">
-          {{ result['_days'] }} days since completed
+        <span class="badge" data-ng-if="trial['_days']">
+          {{ trial['_days'] }} days since completed
         </span>
       </div>
       <hr>
     </div>
-    <div data-ng-if="!results.length">
+
+    <div data-ng-if="!trials.length">
       <img src="/images/preloader.gif" alt="Loading">
     </div>
-    {% endraw %}
 
   </div>
 
   <!-- Statistics -->
   <div class="col-md-6">
+
     <h3>Statistics</h3>
-    <p>
-      There is currently 51 Ebola trials on clinicaltrials.org,
-      11 completed, none with results.
-    </p>
-    <p>ICTRP lists 66 Ebola trials in total. </p>
-    <p><img src="/images/statistics.png" alt="Statistics"></p>
-    <p>Comparision of completed trials versus published results. </p>
+    <p>Auto updates every 5 minutes.</p>
+
+    <div data-ng-if="trials.length">
+      <p>
+        We currently have {{ counter.trials }} Ebola trials in our tracker
+        from {{ counter.sources }} sources ({{ counter.source_list }}).
+        {{ counter.completed }} of these trials are complete,
+        and {{ counter.resulted }} with results.
+      </p>
+      <p><img src="/images/statistics.png" alt="Statistics"></p>
+      <p>Comparision of completed trials versus published results. </p>
+    </div>
+
+    <div data-ng-if="!trials.length">
+      <img src="/images/preloader.gif" alt="Loading">
+    </div>
+
   </div>
 
 </div>
+{% endraw %}
 
 {% endblock %}
