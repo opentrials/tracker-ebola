@@ -1,7 +1,7 @@
 language: node_js
 
 before_script:
-  - nvm install 4.1
+  - sudo nvm install 4.1
   - nvm use 4.1 && npm install
 
 script:
