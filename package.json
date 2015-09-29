@@ -47,11 +47,11 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1",
-    "zombie": "^4.1.0"
+    "zombie": "^3.1.0"
   },
   "engines": {
-    "node": "v4.1.x",
-    "npm": "v2.14.x"
+    "node": "^0.12.0",
+    "npm": "^2.0.0"
   },
   "scripts": {
     "build": "gulp",
