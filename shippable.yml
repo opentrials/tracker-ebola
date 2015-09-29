@@ -1,15 +1,16 @@
 language: node_js
 
+node_js:
+  - '0.12'
+
 before_script:
-  - rm -rf node_modules
-  - mkdir -p ~/.nvm/versions
-  - source ~/.nvm/nvm.sh && nvm install 4.1 && npm install
+  -  npm install
 
 script:
-  - source ~/.nvm/nvm.sh && nvm use 4.1 && npm run build
-  - source ~/.nvm/nvm.sh && nvm use 4.1 && npm run review
-  - source ~/.nvm/nvm.sh && nvm use 4.1 && npm run test
-  - source ~/.nvm/nvm.sh && nvm use 4.1 && npm run export
+  - npm run build
+  - npm run review
+  - npm run test
+  - npm run export
 
 after_script:
   - rm app/public/.gitignore
