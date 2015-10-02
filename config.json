@@ -26,8 +26,8 @@
         "email": "opentrials@okfn.org"
     },
     "database": {
-        "url": "https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=0&single=true&output=csv",
-        "url_cases": "https://docs.google.com/spreadsheets/d/1nhU-zC-PPaqnyA79xYS9SFoMQpF066TH5JPIKt_NE-I/pub?gid=0&single=true&output=csv"
+        "trials": "https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=0&single=true&output=csv",
+        "cases": "https://docs.google.com/spreadsheets/d/1nhU-zC-PPaqnyA79xYS9SFoMQpF066TH5JPIKt_NE-I/pub?gid=0&single=true&output=csv"
     },
     "port": 3000,
     "session": {

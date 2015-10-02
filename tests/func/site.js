@@ -28,15 +28,15 @@ describe('Data endpoint', function() {
   this.timeout(10000);
 
   it('Should be alive', function (done) {
-    browser.visit('/api/data', function() {
+    browser.visit('/api/trials', function() {
       browser.assert.success();
       done();
     });
   });
 
   it('Should follow data service return', function (done) {
-    browser.visit('/api/data', function() {
-      services.data.get().then(function (data) {
+    browser.visit('/api/trials', function() {
+      services.trials.get().then(function (data) {
         assert.deepEqual(
           JSON.parse(browser.text()),
           JSON.parse(JSON.stringify({'results': data})));

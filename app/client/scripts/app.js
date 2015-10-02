@@ -13,7 +13,7 @@ application.controller('Controller', ['$scope', '$http', '$interval', function($
   // Update model
   function update_model() {
     $scope.trials = [];
-    $http.get('/api/data').
+    $http.get('/api/trials').
       then(function(res) {
           var trials = res.data.results;
           process_trials(trials);

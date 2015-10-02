@@ -5,7 +5,7 @@ var Promise = require('bluebird');
 var config =  require('../config');
 
 /**
- * Module provides tracker data service
+ * Module provides trials service
  */
 module.exports = {
   get: getData,
@@ -23,7 +23,7 @@ function getData() {
 //TODO: add timeout
 function loadData() {
   return new Promise(function(resolve, reject) {
-    request(config.get('database:url'), function(err, res, data) {
+    request(config.get('database:trials'), function(err, res, data) {
       if (!err && res.statusCode === 200) {
         resolve(data);
       } else {

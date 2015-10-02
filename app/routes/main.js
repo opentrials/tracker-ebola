@@ -28,8 +28,8 @@ router.use(middlewares.helpers.slash);
 router.use(middlewares.access.token);
 
 // Site API
-router.get('/api/data', controllers.api.data);
 router.get('/api/cases', controllers.api.cases);
+router.get('/api/trials', controllers.api.trials);
 
 // Site pages
 router.get('/', controllers.pages.index);

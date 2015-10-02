@@ -23,7 +23,7 @@ function getData() {
 //TODO: add timeout
 function loadData() {
   return new Promise(function(resolve, reject) {
-    request(config.get('database:url_cases'), function(err, res, data) {
+    request(config.get('database:cases'), function(err, res, data) {
       if (!err && res.statusCode === 200) {
         resolve(data);
       } else {

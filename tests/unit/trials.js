@@ -5,10 +5,10 @@ var lodash = require('lodash');
 var assert = require('chai').assert;
 var services = reqdir('../../app/services')
 
-describe('Data Service', function() {
+describe('Trials Service', function() {
 
   it('Should get an items array', function (done) {
-    services.data.get().then(function(data) {
+    services.trials.get().then(function(data) {
       assert.isArray(data);
       assert.isAbove(data.length, 20);
       done();
@@ -16,7 +16,7 @@ describe('Data Service', function() {
   });
 
   it('Should get the right object with id=3NCT02342171', function (done) {
-    services.data.get().then(function(data) {
+    services.trials.get().then(function(data) {
       var item = lodash.find(data, function(value) {
         if (value['Trial ID'] === 'NCT02342171') return true;
       });
