@@ -29,6 +29,7 @@ router.use(middlewares.access.token);
 
 // Site API
 router.get('/api/data', controllers.api.data);
+router.get('/api/cases', controllers.api.cases);
 
 // Site pages
 router.get('/', controllers.pages.index);

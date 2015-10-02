@@ -8,3 +8,10 @@ module.exports.data = function(req, res) {
     res.send({results: data});
   });
 };
+
+// Cases
+module.exports.cases = function(req, res) {
+  services.cases.get().then(function(data) {
+    res.send({results: data});
+  });
+};

@@ -47,6 +47,31 @@ describe('Data endpoint', function() {
 
 });
 
+describe('Cases endpoint', function() {
+
+  var browser = new Browser({maxWait: 5000});
+  this.timeout(10000);
+
+  it('Should be alive', function (done) {
+    browser.visit('/api/cases', function() {
+      browser.assert.success();
+      done();
+    });
+  });
+
+  it('Should follow cases service return', function (done) {
+    browser.visit('/api/cases', function() {
+      services.cases.get().then(function (data) {
+        assert.deepEqual(
+          JSON.parse(browser.text()),
+          JSON.parse(JSON.stringify({'results': data})));
+      });
+      done();
+    });
+  });
+
+});
+
 describe('List of trials', function() {
 
   var browser = new Browser({maxWait: 5000});
