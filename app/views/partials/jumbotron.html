@@ -13,15 +13,20 @@
       <!-- Download -->
       <div class="col-xs-4">
         <div class="btn-group pull-right">
-          <a href="/api/trials" class="btn btn-default">
+          <a href="/api/all" class="btn btn-default">
             <span class="glyphicon glyphicon-download"></span>
             JSON
           </a>
           <button type="button" class="btn btn-default dropdown-toggle"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
           </button>
+          <ul class="dropdown-menu">
+            <li><a href="/api/cases">Cases</a></li>
+            <li><a href="/api/trials">Trials</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/api/all">All</a></li>
+          </ul>
         </div>
       </div>
 
