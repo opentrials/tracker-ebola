@@ -16,7 +16,6 @@ before_script:
   - source ~/.nvm/nvm.sh && nvm install $SHIPPABLE_NODE_VERSION
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
-  - node --version
   - npm install
 
 script:
