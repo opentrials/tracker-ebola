@@ -27,6 +27,38 @@ application.controller('Controller', ['$scope', '$http', '$interval', function($
 
 }]);
 
+// Draw the stub chart
+var chart = c3.generate({
+  bindto: '#chart',
+  data: {
+    columns: [
+      ['trials', 30, 50, 100, 200, 250, 300],
+      ['deaths', 500, 600, 400, 100, 50, 10],
+    ],
+    axes: {
+      deaths: 'y2',
+    },
+    types: {
+      deaths: 'bar',
+    },
+  },
+  axis: {
+    y: {
+      label: {
+        text: 'trials',
+        position: 'outer-middle'
+      },
+    },
+    y2: {
+      show: true,
+      label: {
+        text: 'deaths',
+        position: 'outer-middle'
+      }
+    }
+  },
+});
+
 /**
  * Process every trial
  *
