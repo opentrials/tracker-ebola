@@ -22,7 +22,7 @@ application.controller('Controller', ['$scope', '$http', '$interval', function($
   function update_model() {
     $scope.trials = [];
     $scope.chart.hide();
-    $http.get('/api/trials', {withCredentials: true}).
+    $http.get('/api/trials').
       then(function(res) {
           var trials = res.data.results;
           process_trials(trials);

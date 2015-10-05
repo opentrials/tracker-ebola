@@ -78,7 +78,7 @@ describe('List of trials', function() {
   this.timeout(10000);
 
   // TODO: fix it! npm run test problems
-  it.skip('Ebola in Mali should be avaiable', function (done) {
+  it('Ebola in Mali should be avaiable', function (done) {
     browser.visit('/', function() {
       browser.assert.link('a', 'Phase 1 Trial of Ebola Vaccine in Mali', 'https://ClinicalTrials.gov/show/NCT02267109');
       done();

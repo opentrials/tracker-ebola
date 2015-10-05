@@ -33,7 +33,7 @@
     "session": {
         "name": "NSESSID",
         "secret" : "SECRET_TOKEN",
-        "maxAge": 86400
+        "maxAge": 86400000
     },
     "updates": {
         "interval": 5
