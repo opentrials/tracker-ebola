@@ -19,9 +19,9 @@ app.set('config', config);
 app.use(routes.main);
 
 // Configure views
-nunjucks.configure(views, {
+var env = nunjucks.configure(views, {
   autoescape: true,
   express: app,
-}).addGlobal(
-  'email', config.get('contacts:email')
-);
+});
+env.addGlobal('email', config.get('contacts:email'));
+env.addGlobal('interval', config.get('updates:interval'));

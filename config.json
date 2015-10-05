@@ -34,5 +34,8 @@
         "name": "NSESSID",
         "secret" : "SECRET_TOKEN",
         "maxAge": 86400
+    },
+    "updates": {
+        "interval": 5
     }
 }

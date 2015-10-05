@@ -6,13 +6,17 @@ var application = angular.module('Application',[]);
 // Root controller
 application.controller('Controller', ['$scope', '$http', '$interval', function($scope, $http, $interval) { // jscs:disable
 
+  // TODO: refactor
+  // Interval of updates
+  $scope.interval = parseFloat($('#interval').text()) * 60 * 1000;
+
   // Create chart
   $scope.chart = create_chart();
   $scope.chart.element = document.getElementById('chart');
 
   // Run reloading
   update_model();
-  $interval(update_model, 5*60*1000); // 5 min
+  $interval(update_model, $scope.interval);
 
   // Update model
   function update_model() {
