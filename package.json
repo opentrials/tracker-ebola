@@ -57,10 +57,11 @@
   "scripts": {
     "build": "gulp",
     "config": "less config.json",
+    "coverage": "istanbul cover _mocha -- tests --recursive --reporter=xunit-file",
     "develop": "WATCH=true gulp & npm start",
     "review": "jscs app",
     "start": "node server.js",
-    "test": "istanbul cover _mocha -- tests --recursive --reporter=xunit-file"
+    "test": "mocha --recursive tests"
   },
   "author": {
     "name": "Open Knowledge",

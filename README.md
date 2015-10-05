@@ -47,12 +47,17 @@ $ npm run build
 
 ## Testing
 
-To start tests with coverage:
+To start tests:
 ```
 $ npm run test
 ```
 
-All coverage data will be in the `coverage` directory.
+To start tests with coverage:
+```
+$ npm run coverage
+```
+
+Coverage data will be in the `coverage` directory.
 
 ## Deployment
 
