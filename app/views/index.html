@@ -56,13 +56,14 @@
         {{ counter.completed }} of these trials are complete,
         and {{ counter.resulted }} with results.
       </p>
-      <div id="chart"></div>
-      <p>How publishing trial results affects on deaths count.</p>
     </div>
 
     <div data-ng-if="!trials.length">
       <img src="/images/preloader.gif" alt="Loading">
     </div>
+
+    <div id="chart"></div>
+    <p>How publishing trial results affects on deaths count.</p>
 
   </div>
 

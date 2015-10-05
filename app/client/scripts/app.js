@@ -6,19 +6,25 @@ var application = angular.module('Application',[]);
 // Root controller
 application.controller('Controller', ['$scope', '$http', '$interval', function($scope, $http, $interval) { // jscs:disable
 
-  // Run
+  // Create chart
+  $scope.chart = create_chart();
+  $scope.chart.element = document.getElementById('chart');
+
+  // Run reloading
   update_model();
   $interval(update_model, 5*60*1000); // 5 min
 
   // Update model
   function update_model() {
     $scope.trials = [];
+    $scope.chart.hide();
     $http.get('/api/trials').
       then(function(res) {
           var trials = res.data.results;
           process_trials(trials);
           $scope.trials = trials;
           $scope.counter = count_trials(trials);
+          $scope.chart.show();
       }, function(res) {
           //TODO: implement
           console.log(res);
@@ -27,51 +33,6 @@ application.controller('Controller', ['$scope', '$http', '$interval', function($
 
 }]);
 
-// Draw the stub chart
-var chart = c3.generate({
-  bindto: '#chart',
-  data: {
-    columns: [
-      ['trials', 10, 10, 10, 10, 10, 12, 16, 16, 17],
-      ['deaths', 939, 831, 785, 445, 252, 78, 60, 9, 7],
-    ],
-    axes: {
-      deaths: 'y2',
-    },
-    types: {
-      deaths: 'bar',
-    },
-  },
-  axis: {
-    x: {
-      type: 'category',
-      categories: [
-        '01.15',
-        '02.15',
-        '03.15',
-        '04.15',
-        '05.15',
-        '06.15',
-        '07.15',
-        '08.15',
-        '09.15',
-      ],
-    },
-    y: {
-      label: {
-        text: 'trials',
-        position: 'outer-middle'
-      },
-    },
-    y2: {
-      show: true,
-      label: {
-        text: 'deaths',
-        position: 'outer-middle'
-      }
-    }
-  },
-});
 
 /**
  * Process every trial
@@ -127,4 +88,51 @@ function count_trials(trials) {
 
   return counter;
 
+}
+
+// Update chart
+function create_chart() {
+  return c3.generate({
+    data: {
+      columns: [
+        ['trials', 10, 10, 10, 10, 10, 12, 16, 16, 17],
+        ['deaths', 939, 831, 785, 445, 252, 78, 60, 9, 7],
+      ],
+      axes: {
+        deaths: 'y2',
+      },
+      types: {
+        deaths: 'bar',
+      },
+    },
+    axis: {
+      x: {
+        type: 'category',
+        categories: [
+          '01.15',
+          '02.15',
+          '03.15',
+          '04.15',
+          '05.15',
+          '06.15',
+          '07.15',
+          '08.15',
+          '09.15',
+        ],
+      },
+      y: {
+        label: {
+          text: 'trials',
+          position: 'outer-middle'
+        },
+      },
+      y2: {
+        show: true,
+        label: {
+          text: 'deaths',
+          position: 'outer-middle'
+        }
+      }
+    },
+  });
 }
