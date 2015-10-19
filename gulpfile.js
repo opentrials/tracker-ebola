@@ -27,7 +27,8 @@ gulp.task('default', [
   'vendor.styles',
   'vendor.fonts'
 ]);
-gulp.task('app.scripts', distAppScripts);
+gulp.task('app.scripts', distApplication);
+//gulp.task('app.scripts', distAppScripts);
 gulp.task('app.styles', distAppStyles);
 gulp.task('app.images', distAppImages);
 gulp.task('app.favicon', distAppIcon);
@@ -60,11 +61,41 @@ function scriptPipeline(bundle, outfile) {
  * Provide frontend dependencies as a single bundle.
  */
 function distVendorScripts() {
-  var bundler = browserify({});
+  var files = [];
+  var nodeModulesDir = config.get('build:nodeModulesDir');
   config.get('build:frontendDependencies').forEach(function(id) {
-    bundler.require(resolve.sync(id), {expose: id});
+    files.push(__dirname + '/' + nodeModulesDir + '/' + id);
   });
-  return scriptPipeline(bundler.bundle(), config.get('build:vendorJS'));
+
+  return gulp.src(files)
+    //.pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(concat(config.get('build:vendorJS')))
+    //.pipe(sourcemaps.write(config.get('build:publicDir))
+    .pipe(gulp.dest(config.get('build:publicScriptsDir')));
+
+  //var bundler = browserify({});
+  //config.get('build:frontendDependencies').forEach(function(id) {
+  //  bundler.require(resolve.sync(id), {expose: id});
+  //});
+  //bundler.add(config.get('build:scriptsDir') + '/vendor.js');
+  //return scriptPipeline(bundler.bundle(), config.get('build:vendorJS'));
+}
+
+function distApplication() {
+  return gulp.src([
+    __dirname + '/app/client/scripts/application.js',
+    __dirname + '/app/client/scripts/config/env.js',
+    __dirname + '/app/client/scripts/config/config.js',
+    __dirname + '/app/client/scripts/services/api.js',
+    __dirname + '/app/client/scripts/directives/chart.js',
+    __dirname + '/app/client/scripts/controllers/index.js'
+  ])
+    //.pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(concat(config.get('build:appJS')))
+    //.pipe(sourcemaps.write(config.get('build:publicDir))
+    .pipe(gulp.dest(config.get('build:publicScriptsDir')));
 }
 
 /**
@@ -123,9 +154,10 @@ function distAppIcon() {
 function distVendorStyles() {
   return gulp
     .src([
-      config.get('build:nodeModulesDir') + '/bootstrap/dist/css/bootstrap.min.css'
+      config.get('build:nodeModulesDir') + '/bootstrap/dist/css/bootstrap.min.css',
+      config.get('build:nodeModulesDir') + '/c3.c3.min.css'
     ])
-    .pipe(concat(config.get('build:appCSS')))
+    .pipe(concat(config.get('build:vendorCSS')))
     .pipe(gulp.dest(config.get('build:publicStylesDir')));
 }
 

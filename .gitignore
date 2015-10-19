@@ -28,3 +28,6 @@ node_modules
 
 # Tests
 xunit.xml
+
+# Editor files
+.idea

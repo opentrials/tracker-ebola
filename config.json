@@ -19,7 +19,13 @@
         "vendorJS": "vendor.min.js",
         "vendorCSS": "vendor.min.css",
         "frontendDependencies": [
-          "bootstrap"
+          "lodash/index.js",
+          "jquery/dist/jquery.js",
+          "d3/d3.js",
+          "c3/c3.js",
+          "bootstrap/dist/js/bootstrap.js",
+          "angular/angular.js",
+          "angular-sanitize/angular-sanitize.js"
         ]
     },
     "contacts": {

@@ -11,27 +11,27 @@
 
 <hr>
 
-<div class="row" data-ng-app="Application" data-ng-controller="Controller">
+{% raw %}
+
+<div class="row" ng-app="Application" ng-controller="IndexController">
 
   <!-- Trials-->
   <div class="col-md-6">
-
     <h3>Completed Trials</h3>
-    <p>Auto updates every <span id="interval">{{ interval }}</span> minutes.</p>
+    <p>Auto updates every <span id="interval">{{ refreshInterval }}</span> minutes.</p>
 
-    {% raw %}
-    <div data-ng-repeat="trial in trials" data-ng-if="trials.length">
-      <h4><a href="{{ trial['URL'] }}">{{ trial['Title'] }}</a></h4>
+    <div ng-repeat="trial in trials" ng-if="trials.length">
+      <h4><a ng-href="{{ trial.URL }}">{{ trial.Title }}</a></h4>
       <div>
-        <span class="badge" data-ng-if="trial['_completion']">
+        <span class="badge" ng-if="trial._completion">
           <span class="glyphicon glyphicon-calendar"></span>
-          {{ trial['_completion'] | date:'MMMM d, yyyy' }}
+          {{ trial._completion | date:'MMMM d, yyyy' }}
         </span>
-        <span class="badge" data-ng-if="trial['_results']">
-          {{ trial['_results'] }}
+        <span class="badge" ng-if="trial._results">
+          {{ trial._results }}
         </span>
-        <span class="badge" data-ng-if="trial['_days']">
-          {{ trial['_days'] }} days since completed
+        <span class="badge" ng-if="trial._days">
+          {{ trial._days }} days since completed
         </span>
       </div>
       <hr>
@@ -40,18 +40,15 @@
     <div data-ng-if="!trials.length">
       <img src="/images/preloader.gif" alt="Loading">
     </div>
-    {% endraw %}
-
   </div>
 
   <!-- Statistics -->
   <div class="col-md-6">
 
     <h3>Statistics</h3>
-    <p>Auto updates every {{ interval }} minutes.</p>
+    <p>Auto updates every {{ refreshInterval }} minutes.</p>
 
-    {% raw %}
-    <div data-ng-if="trials.length">
+    <div ng-if="trials.length > 0">
       <p>
         We currently have {{ counter.trials }} Ebola trials in our tracker
         from {{ counter.sources }} sources ({{ counter.source_list }}).
@@ -60,16 +57,16 @@
       </p>
     </div>
 
-    <div data-ng-if="!trials.length">
+    <div ng-if="trials.length == 0">
       <img src="/images/preloader.gif" alt="Loading">
     </div>
 
-    <div id="chart"></div>
+    <div id="chart" c3-chart></div>
     <p>How publishing trial results affects on deaths count.</p>
-    {% endraw %}
-
   </div>
 
 </div>
+
+{% endraw %}
 
 {% endblock %}
