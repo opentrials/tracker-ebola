@@ -2,58 +2,81 @@
 
   angular.module("Application")
     .directive('c3Chart', [
-      function() {
+      'Configuration',
+      function(Configuration) {
         return {
           restrict: 'A',
           replace: false,
           template: '',
           scope: true,
           link: function($scope, element, attrs) {
+            element.hide();
+
+            var legends = {
+              'all': 'Patients in known trials',
+              'completed': 'Patients in completed trials',
+              'death': 'Ebola deaths'
+            };
+
             var chart = c3.generate({
               data: {
-                columns: [
-                  ['trials', 10, 10, 10, 10, 10, 12, 16, 16, 17],
-                  ['deaths', 939, 831, 785, 445, 252, 78, 60, 9, 7]
-                ],
-                axes: {
-                  deaths: 'y2'
-                },
-                types: {
-                  deaths: 'bar'
-                }
-              },
-              axis: {
-                x: {
-                  type: 'category',
-                  categories: [
-                    '01.15',
-                    '02.15',
-                    '03.15',
-                    '04.15',
-                    '05.15',
-                    '06.15',
-                    '07.15',
-                    '08.15',
-                    '09.15'
-                  ]
-                },
-                y: {
-                  label: {
-                    text: 'trials',
-                    position: 'outer-middle'
-                  }
-                },
-                y2: {
-                  show: true,
-                  label: {
-                    text: 'deaths',
-                    position: 'outer-middle'
-                  }
-                }
+                x: 'x',
+                columns: [['x']]
               }
             });
             chart.element = element.get(0);
-            chart.show();
+
+            $scope.$on(Configuration.events.TRIALS_LOADED,
+              function(event, trials) {
+                var minYear = null;
+                var maxYear = null;
+                _.forEach(trials, function(trial) {
+                  if ((trial.year < minYear) || (minYear === null)) {
+                    minYear = trial.year;
+                  }
+                  if ((trial.year > maxYear) || (maxYear === null)) {
+                    maxYear = trial.year;
+                  }
+                });
+
+                var data = {
+                  x: new Array(maxYear - minYear + 1),
+                  all: _.fill(new Array(maxYear - minYear + 1), 0),
+                  completed: _.fill(new Array(maxYear - minYear + 1), 0),
+                  death: new Array(maxYear - minYear + 1)
+                };
+
+                for (var i = 0; i < data.x.length; i++) {
+                  data.x[i] = minYear + i;
+                }
+
+                var deathMax = 10;
+                _.forEach(trials, function(trial) {
+                  var i = trial.year - minYear;
+                  data.all[i] = (data.all[i] || 0) + trial.participants;
+                  if (trial.completed) {
+                    data.completed[i] = (data.completed[i] || 0) +
+                      trial.participants;
+                  }
+                  if (trial.participants > deathMax) {
+                    deathMax = trial.participants;
+                  }
+                });
+
+                data.death = _.map(data.death, function(item) {
+                  return Math.round(Math.random() * deathMax);
+                });
+
+                chart.load({
+                  columns: _.map(data, function(items, key) {
+                    var result = [legends[key] || key];
+                    [].push.apply(result, items);
+                    return result;
+                  })
+                });
+                element.show();
+                chart.flush();
+              });
           }
         };
       }

@@ -1,6 +1,9 @@
 ;(function(angular){
 
   var config = {
+    events: {
+      TRIALS_LOADED: 'api.trialsLoaded'
+    },
     api: {
       endpoint: '/api/trials',
       refreshInterval: 5

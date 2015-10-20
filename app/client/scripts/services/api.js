@@ -2,9 +2,12 @@
 
   function processTrials(trials) {
     // Iterate over trials
+    var currentYear = (new Date()).getUTCFullYear();
     trials.forEach(function(trial) {
+      trial.participants = trial['Enrollment'] || 0;
       // Completion
       trial['_completion'] = trial['Completion Date'];
+      trial.completed = false;
       // Results
       trial['_results'] = trial['Study Results'] || 'No results';
       // Days
@@ -13,7 +16,15 @@
         var today = new Date();
         var completion = new Date(trial['Completion Date']);
         days = Math.floor((today - completion) / 1000 / 60 / 60 / 24);
+        trial.completed = completion.getUTCFullYear() <= currentYear;
       }
+
+      if (trial['Start Date']) {
+        trial.year = (new Date(trial['Start Date'])).getUTCFullYear();
+      } else {
+        trial.year = currentYear;
+      }
+
       trial['_days'] = (days > 0) ? days : null;
     });
     return trials;

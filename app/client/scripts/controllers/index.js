@@ -2,17 +2,23 @@
 
   angular.module('Application')
     .controller('IndexController', [
-      '$scope', 'Configuration', 'ApiService',
-      function ($scope, Configuration, ApiService) {
+      '$scope', '$timeout', 'Configuration', 'ApiService',
+      function ($scope, $timeout, Configuration, ApiService) {
         $scope.trials = [];
         $scope.counter = null;
         $scope.refreshInterval = Configuration.api.refreshInterval;
 
-        ApiService.loadTrials().then(function(result) {
-          $scope.trials = result.trials;
-          $scope.counter = result.counter;
-          return result;
-        });
+        var refresh = function() {
+          ApiService.loadTrials().then(function(result) {
+            $scope.trials = result.trials;
+            $scope.counter = result.counter;
+            $scope.$broadcast(Configuration.events.TRIALS_LOADED, result.trials);
+            return result;
+          });
+        };
+
+        refresh();
+        $timeout(refresh, Configuration.api.refreshInterval * 60 * 1000);
       }
     ]);
 

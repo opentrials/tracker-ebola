@@ -12,7 +12,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var less = require('gulp-less');
 var prefixer = require('gulp-autoprefixer');
 var faker = require('faker');
-var app = require('./app')
+var app = require('./app');
 var config = app.get('config');
 
 /**
@@ -78,7 +78,6 @@ function distVendorScripts() {
   //config.get('build:frontendDependencies').forEach(function(id) {
   //  bundler.require(resolve.sync(id), {expose: id});
   //});
-  //bundler.add(config.get('build:scriptsDir') + '/vendor.js');
   //return scriptPipeline(bundler.bundle(), config.get('build:vendorJS'));
 }
 
@@ -92,7 +91,7 @@ function distApplication() {
     __dirname + '/app/client/scripts/controllers/index.js'
   ])
     //.pipe(sourcemaps.init())
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(concat(config.get('build:appJS')))
     //.pipe(sourcemaps.write(config.get('build:publicDir))
     .pipe(gulp.dest(config.get('build:publicScriptsDir')));
@@ -155,7 +154,7 @@ function distVendorStyles() {
   return gulp
     .src([
       config.get('build:nodeModulesDir') + '/bootstrap/dist/css/bootstrap.min.css',
-      config.get('build:nodeModulesDir') + '/c3.c3.min.css'
+      config.get('build:nodeModulesDir') + '/c3/c3.min.css'
     ])
     .pipe(concat(config.get('build:vendorCSS')))
     .pipe(gulp.dest(config.get('build:publicStylesDir')));
