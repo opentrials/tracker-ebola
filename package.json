@@ -25,7 +25,7 @@
     "nunjucks": "^2.0.0",
     "request": "^2.63.0",
     "require-dir": "^0.3.0",
-    "smooth-scroll": "git+ssh://git@github.com/cferdinandi/smooth-scroll.git"
+    "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git"
   },
   "devDependencies": {
     "bootstrap": "^3.3.5",
