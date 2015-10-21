@@ -1,33 +1,74 @@
 ;(function(angular, undefined) {
 
+  function joinSponsors() {
+    var result = this;
+    if (this.length > 2) {
+      var last = this.pop();
+      result = [this.join(', '), last];
+      this.push(last);
+    }
+    return result.join(' and ');
+  }
+
   function processTrials(trials) {
-    // Iterate over trials
-    var currentYear = (new Date()).getUTCFullYear();
-    trials.forEach(function(trial) {
-      trial.participants = trial['Enrollment'] || 0;
-      // Completion
-      trial['_completion'] = trial['Completion Date'];
-      trial.completed = false;
-      // Results
-      trial['_results'] = trial['Study Results'] || 'No results';
-      // Days
-      var days = null;
-      if (trial['Completion Date']) {
-        var today = new Date();
-        var completion = new Date(trial['Completion Date']);
-        days = Math.floor((today - completion) / 1000 / 60 / 60 / 24);
-        trial.completed = completion.getUTCFullYear() <= currentYear;
+    var daysDivider = 24 * 60 * 60 * 1000;
+    var currentDate = new Date();
+    var today = Math.round(currentDate.getTime() / daysDivider);
+    return _.map(trials, function(trial) {
+      var result = {
+        trialId: trial['Trial ID'],
+        title: trial['Title'],
+        publicTitle: trial['Public title'],
+        participantCount: trial['Participant Count'],
+        startDate: !!trial['Start Date'] ? new Date(trial['Start Date']) : null,
+        completionDate: !!trial['Completion Date'] ?
+          new Date(trial['Completion Date']) : null,
+        investigator: trial['Principal Investigator'],
+        sponsors: trial['Sponsor/Collaborators'],
+        isPublished: !!trial['Are results available?'],
+        url: trial['URL']
+      };
+
+      if (result.sponsors) {
+        result.sponsors.toHumanReadableString = joinSponsors;
       }
 
-      if (trial['Start Date']) {
-        trial.year = (new Date(trial['Start Date'])).getUTCFullYear();
+      if (result.startDate) {
+        var started = Math.round(result.startDate.getTime() / daysDivider);
+        if (result.completionDate) {
+          var completed = Math.round(result.completionDate.getTime() /
+            daysDivider);
+          result.isCompleted = today >= completed;
+          result.daysAfterCompletion = today - completed;
+          if (result.daysAfterCompletion < 0) {
+            result.daysAfterCompletion = 0;
+          }
+        } else {
+          result.isCompleted = false;
+          result.daysAfterCompletion = 0;
+        }
+
+        result.isStarted = today >= started;
+        result.isInProgress = result.isStarted && !result.isCompleted;
+        result.isPublished = result.isCompleted && result.isPublished;
+
+        result.daysAfterStart = today - started;
+        if (result.daysAfterStart < 0) {
+          result.daysAfterStart = 0;
+        }
       } else {
-        trial.year = currentYear;
+        result.isStarted = false;
+        result.isCompleted = false;
+        result.isInProgress = false;
+        result.daysAfterStart = 0;
+        result.daysAfterCompletion = 0;
       }
 
-      trial['_days'] = (days > 0) ? days : null;
+      result.year = result.isCompleted ? result.completionDate.getFullYear()
+        : currentDate.getFullYear();
+
+      return result;
     });
-    return trials;
   }
 
   function countTrials(trials) {

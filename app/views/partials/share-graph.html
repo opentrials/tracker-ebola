@@ -1,0 +1,26 @@
+{% raw %}
+<div class="share-graph-modal" ng-controller="ShareGraphController">
+  <div>
+    <h4>Link</h4>
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+      <tr>
+        <td>
+          <input type="text" value="{{ shareUrl }}" readonly="on">
+        </td>
+        <td width="1%">
+          <a class="icon-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(shareUrl) }}"></a>
+          <a class="icon-twitter" target="_blank" href="https://twitter.com/intent/tweet?url={{ urlencode(shareUrl) }}"></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h4>Embed</h4>
+    <div>
+      <textarea readonly="readonly"><iframe src="{{ shareUrl }}" width="960" height="450"></iframe></textarea>
+    </div>
+  </div>
+</div>
+{% endraw %}

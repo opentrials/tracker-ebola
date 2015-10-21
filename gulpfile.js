@@ -10,6 +10,7 @@ var file = require('gulp-file');
 var minifyCss = require('gulp-minify-css');
 var sourcemaps = require('gulp-sourcemaps');
 var less = require('gulp-less');
+var sass = require('gulp-ruby-sass');
 var prefixer = require('gulp-autoprefixer');
 var faker = require('faker');
 var app = require('./app');
@@ -25,16 +26,21 @@ gulp.task('default', [
   'app.favicon',
   'vendor.scripts',
   'vendor.styles',
-  'vendor.fonts'
+  'app.fonts',
+  'vendor.fonts',
+  'app.media'
 ]);
 gulp.task('app.scripts', distApplication);
 //gulp.task('app.scripts', distAppScripts);
 gulp.task('app.styles', distAppStyles);
+gulp.task('app.compileStyles', compileAppStyles);
 gulp.task('app.images', distAppImages);
 gulp.task('app.favicon', distAppIcon);
 gulp.task('vendor.scripts', distVendorScripts);
 gulp.task('vendor.styles', distVendorStyles);
+gulp.task('app.fonts', distAppFonts);
 gulp.task('vendor.fonts', distVendorFonts);
+gulp.task('app.media', distAppMedia);
 
 var production = (process.env.NODE_ENV === 'production');
 
@@ -83,12 +89,13 @@ function distVendorScripts() {
 
 function distApplication() {
   return gulp.src([
+    __dirname + '/app/client/scripts/modernizr.min.js',
+    __dirname + '/app/client/scripts/main.js', // TODO: Should be removed
     __dirname + '/app/client/scripts/application.js',
-    __dirname + '/app/client/scripts/config/env.js',
-    __dirname + '/app/client/scripts/config/config.js',
-    __dirname + '/app/client/scripts/services/api.js',
-    __dirname + '/app/client/scripts/directives/chart.js',
-    __dirname + '/app/client/scripts/controllers/index.js'
+    __dirname + '/app/client/scripts/config/*',
+    __dirname + '/app/client/scripts/services/*',
+    __dirname + '/app/client/scripts/directives/*',
+    __dirname + '/app/client/scripts/controllers/*'
   ])
     //.pipe(sourcemaps.init())
     //.pipe(uglify())
@@ -126,7 +133,23 @@ function distAppScripts() {
 /**
  * Provide frontend styles as a single bundle.
  */
+function compileAppStyles() {
+  return sass([
+    config.get('build:stylesDir') + '/scss/main.scss'
+  ])
+    .pipe(prefixer({browsers: ['last 4 versions']}))
+    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(rename(config.get('build:appCSS')))
+    .pipe(gulp.dest(config.get('build:stylesDir')));
+}
+
 function distAppStyles() {
+  return gulp
+    .src([
+      config.get('build:stylesDir') + '/' + config.get('build:appCSS')
+    ])
+    .pipe(gulp.dest(config.get('build:publicStylesDir')));
+/*
   return gulp
     .src(config.get('build:stylesDir') + '/app.less')
     .pipe(sourcemaps.init())
@@ -136,6 +159,13 @@ function distAppStyles() {
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(rename(config.get('build:appCSS')))
     .pipe(gulp.dest(config.get('build:publicStylesDir')));
+*/
+}
+
+function distAppMedia() {
+  return gulp
+    .src(config.get('build:mediaDir') + '/*')
+    .pipe(gulp.dest(config.get('build:publicMediaDir')));
 }
 
 function distAppImages() {
@@ -153,17 +183,25 @@ function distAppIcon() {
 function distVendorStyles() {
   return gulp
     .src([
-      config.get('build:nodeModulesDir') + '/bootstrap/dist/css/bootstrap.min.css',
+      //config.get('build:nodeModulesDir') + '/bootstrap/dist/css/bootstrap.min.css',
       config.get('build:nodeModulesDir') + '/c3/c3.min.css'
     ])
     .pipe(concat(config.get('build:vendorCSS')))
     .pipe(gulp.dest(config.get('build:publicStylesDir')));
 }
 
+function distAppFonts() {
+  return gulp
+    .src([
+      config.get('build:fontsDir') + '/*'
+    ])
+    .pipe(gulp.dest(config.get('build:publicFontsDir')));
+}
+
 function distVendorFonts() {
   return gulp
     .src([
-      config.get('build:nodeModulesDir') + '/bootstrap/dist/fonts/*'
+      //config.get('build:nodeModulesDir') + '/bootstrap/dist/fonts/*'
     ])
     .pipe(gulp.dest(config.get('build:publicFontsDir')));
 }
