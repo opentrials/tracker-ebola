@@ -1,0 +1,62 @@
+
+<section class="leaderboard">
+  <article>
+    <a class="upload-missing-data" href="mailto:{{ email }}?subject=Data for the Ebola Trials Tracker" target="_blank">
+      Have we missed a trial? <b>Get in touch!</b>
+    </a>
+    <h3>Trial “leaderboard”</h3>
+    <p>We currently have 34 Ebola trials in our tracker from 3 sources (Clinical Trials, Pan African Clinical Trials Registry and ISRCN Registry). 17 of these trials are complete, and 34 with results. 5 different funders are currently backing Ebola trials, including NAME, NAME, and NAME.</p>
+
+    {% if trials.length > 0 %}
+    <ol class="trial-list">
+    {% for trial in trials %}
+      {% set class = '' %}
+      {% if not trial.isCompleted %}{% set class = 'ongoing' %}{% endif %}
+      {% if trial.isCompleted and not trial.isPublished %}{% set class = 'no-results' %}{% endif %}
+      <li class="{{ class }}">
+        <div class="description">
+          <h4>{{ trial.title }}</h4>
+          <a class="id" href="javascript:void(0)" target="_blank" href="{{ trial.url }}">{{ trial.trialId }}</a>
+          <p>
+            {% if trial.investigator %}
+              <span>This Trial was lead by principal investigator
+              <strong>{{ trial.investigator }}</strong></span>{% if trial.sponsors.length > 0 %}, sponsored by
+              <strong>{{ trial.sponsorsAsString }}</strong>.{% endif %}
+            {% endif %}
+            {% if trial.isCompleted and not trial.isPublished %}
+            <strong>No results have been published.</strong>
+            {% endif %}
+            {% if trial.isInProgress %}
+            <span>Trial is ongoing.</span>
+            {% endif %}
+            {% if trial.isPublished %}
+            <span>Results have been published.</span>
+            {% endif %}
+          </p>
+        </div>
+        <div class="stats">
+          <div class="days">
+            {% if trial.isCompleted %}
+            <p>{{ trial.daysAfterCompletion }} days <span>since completed</span></p>
+            {% endif %}
+            {% if trial.isInProgress %}
+            <p>{{ trial.daysAfterStart }} days <span>until completed</span></p>
+            {% endif %}
+            {% if not trial.isStarted %}
+            <p>N/A</p>
+            {% endif %}
+          </div>
+          <div class="participants">
+          {% if trial.participantCount %}
+            <p>{{ trial.participantCount }} <span>participants</span></p>
+          {% else %}
+            <p>Unknown</p>
+          {% endif %}
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+    </ol>
+    {% endif %}
+  </article>
+</section>

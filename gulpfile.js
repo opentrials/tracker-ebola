@@ -89,13 +89,7 @@ function distVendorScripts() {
 
 function distApplication() {
   return gulp.src([
-    __dirname + '/app/client/scripts/modernizr.min.js',
-    __dirname + '/app/client/scripts/main.js', // TODO: Should be removed
-    __dirname + '/app/client/scripts/application.js',
-    __dirname + '/app/client/scripts/config/*',
-    __dirname + '/app/client/scripts/services/*',
-    __dirname + '/app/client/scripts/directives/*',
-    __dirname + '/app/client/scripts/controllers/*'
+    __dirname + '/app/client/scripts/*'
   ])
     //.pipe(sourcemaps.init())
     //.pipe(uglify())
