@@ -7,8 +7,29 @@ var nunjucksGlobals = require('nunjucks/src/globals');
 var config = require('./config');
 var routes = reqdir('./routes');
 var views = path.join(__dirname, '/views');
+var _ = require('lodash');
 
 nunjucksGlobals.urlencode = encodeURIComponent;
+nunjucksGlobals.joinListOfNames = function(items) {
+  if (_.isArray(items)) {
+    var result = items;
+    if (items.length > 2) {
+      var last = items.pop();
+      result = [items.join(', '), last];
+      items.push(last);
+    }
+    return result.join(' and ');
+  }
+  return items;
+};
+nunjucksGlobals.wrapWithTag = function(items, tag) {
+  if (_.isArray(items)) {
+    return _.map(items, function(item) {
+      return '<' + tag + '>' + item + '</' + tag + '>';
+    });
+  }
+  return items;
+};
 
 /**
  * Module provides application

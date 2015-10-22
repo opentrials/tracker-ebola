@@ -5,7 +5,16 @@
       Have we missed a trial? <b>Get in touch!</b>
     </a>
     <h3>Trial “leaderboard”</h3>
-    <p>We currently have 34 Ebola trials in our tracker from 3 sources (Clinical Trials, Pan African Clinical Trials Registry and ISRCN Registry). 17 of these trials are complete, and 34 with results. 5 different funders are currently backing Ebola trials, including NAME, NAME, and NAME.</p>
+    <p>
+      We currently have <b>{{ trials.length }}</b> Ebola trials in our tracker
+      from {{ info.sources.length }} sources ({{ joinListOfNames(wrapWithTag(info.sources, 'i')) | safe }}).
+      <b>{{ info.completedTrials }}</b> of these trials are complete, and
+      <b>{{ info.publishedTrials }}</b> with results.
+      {% if info.funders.length > 0 %}
+      <b>{{ info.funders.length }}</b> different funders are currently backing Ebola trials,
+      including {{ joinListOfNames(wrapWithTag(info.funders, 'i')) | safe }}.
+      {% endif %}
+    </p>
 
     {% if trials.length > 0 %}
     <ol class="trial-list">
@@ -21,7 +30,7 @@
             {% if trial.investigator %}
               <span>This Trial was lead by principal investigator
               <strong>{{ trial.investigator }}</strong></span>{% if trial.sponsors.length > 0 %}, sponsored by
-              <strong>{{ trial.sponsorsAsString }}</strong>.{% endif %}
+              <strong>{{ joinListOfNames(trial.sponsors) }}</strong>.{% endif %}
             {% endif %}
             {% if trial.isCompleted and not trial.isPublished %}
             <strong>No results have been published.</strong>

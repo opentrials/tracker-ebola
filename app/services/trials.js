@@ -10,8 +10,36 @@ var _ = require('lodash');
  */
 module.exports = {
   get: getData,
-  getMapped: getMappedData
+  getMapped: getMappedData,
+  collectTrialsInfo: collectTrialsInfo
 };
+
+/**
+ * Collects some useful data from trials, such as unique sources, total
+ * number of trials and so on
+ * @param trials
+ */
+function collectTrialsInfo(trials) {
+  var result = {
+    sources: [],
+    funders: [],
+    completedTrials: 0,
+    publishedTrials: 0
+  };
+  _.forEach(trials, function(trial) {
+    if (trial.isCompleted) {
+      result.completedTrials++;
+    }
+    if (trial.isPublished) {
+      result.publishedTrials++;
+    }
+    result.sources.push(trial.source);
+    [].push.apply(result.funders, trial.funders)
+  });
+  result.sources = _.uniq(result.sources);
+  result.funders = _.uniq(result.funders);
+  return result;
+}
 
 /**
  * Load and return tracker data
@@ -31,16 +59,6 @@ function getMappedData() {
   return loadData().then(parseData).then(cleanData).then(processData);
 }
 
-function joinSponsors(items) {
-  var result = items;
-  if (items.length > 2) {
-    var last = items.pop();
-    result = [items.join(', '), last];
-    items.push(last);
-  }
-  return result.join(' and ');
-}
-
 function processData(trials) {
   return new Promise(function(resolve, reject) {
     var daysDivider = 24 * 60 * 60 * 1000;
@@ -58,13 +76,18 @@ function processData(trials) {
         investigator: trial['Principal Investigator'],
         sponsors: trial['Sponsor/Collaborators'],
         isPublished: !!trial['Are results available?'],
-        url: trial['URL']
+        url: trial['URL'],
+        funders: trial['Funded Bys'],
+        source: trial['Source']
       };
 
       if (!_.isArray(result.sponsors)) {
         result.sponsors = [];
       }
-      result.sponsorsAsString = joinSponsors(result.sponsors);
+
+      if (!_.isArray(result.funders)) {
+        result.funders = [];
+      }
 
       if (result.startDate) {
         var started = Math.round(result.startDate.getTime() / daysDivider);

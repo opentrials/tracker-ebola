@@ -11,6 +11,7 @@ module.exports.index = function(req, res) {
       title: 'Ebola',
       subtitle: 'A live tracker of Ebola trials',
       trials: data,
+      info: services.trials.collectTrialsInfo(data),
       req: req
     });
   });
