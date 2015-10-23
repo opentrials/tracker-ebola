@@ -1,6 +1,6 @@
 {
     "access": {
-        "protected": false,
+        "protected": true,
         "token": "ACCESS_TOKEN"
     },
     "build": {
