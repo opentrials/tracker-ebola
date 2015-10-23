@@ -101,6 +101,17 @@
   .modal-state:checked + .modal-fade-screen .modal-inner {
     top: 0.5em;
   }
+
+    &.about-page {
+      .modal-inner {
+        border-top-color: $blue;
+
+        .modal-header {
+          background-color: $modal-background;
+          color: $base-font-color;
+        }
+      }
+    }
     
     &.video {
         .modal-inner {
@@ -118,6 +129,7 @@
                     }
                 }
             }
+
         }
     }
 }

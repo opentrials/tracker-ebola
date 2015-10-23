@@ -18,13 +18,6 @@ module.exports.index = function(req, res) {
   });
 };
 
-// About
-module.exports.about = function(req, res) {
-  res.render('about.html', {
-    title: 'About'
-  });
-};
-
 module.exports.chart = function(req, res) {
   var promises = [
     services.trials.getMapped(),
