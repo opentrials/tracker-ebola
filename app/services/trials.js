@@ -95,8 +95,26 @@ function processData(trials) {
       result.year = result.isCompleted ? result.completionDate.getFullYear()
         : currentDate.getFullYear();
 
+      // 1. completed but not published - days DESC
+      // 2. not completed - days DESC
+      // 3. completed and published days DESC
+      if (result.isCompleted) {
+        if (result.isPublished) {
+          result.publicationDelay = -result.daysAfterCompletion;
+        } else {
+          result.publicationDelay = -(2000000 + result.daysAfterCompletion);
+        }
+      } else {
+        result.publicationDelay = -(1000000 + result.daysAfterStart);
+      }
+
       return result;
     });
+
+    results = _.sortBy(results, function(item) {
+      return item.publicationDelay;
+    });
+
     resolve(results);
   });
 }

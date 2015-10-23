@@ -17,12 +17,22 @@
     </p>
 
     {% if trials.length > 0 %}
-    <ol class="trial-list">
+    <div class="trials-sorting">
+      <span>Sort by:</span>
+      <span class="current icon">Publication Delay</span>
+      <div class="options">
+        <div data-sort-trials="data-sort-publication" class="icon">Publication Delay</div>
+        <div data-sort-trials="data-sort-participants" class="icon">Participant Count</div>
+      </div>
+    </div>
+
+    <ol class="trial-list" id="trials-list">
     {% for trial in trials %}
       {% set class = '' %}
       {% if not trial.isCompleted %}{% set class = 'ongoing' %}{% endif %}
       {% if trial.isCompleted and not trial.isPublished %}{% set class = 'no-results' %}{% endif %}
-      <li class="{{ class }}">
+      <li class="{{ class }}" data-sort-participants="{{ -trial.participantCount }}"
+        data-sort-publication="{{ trial.publicationDelay }}">
         <div class="description">
           <h4>{{ trial.title }}</h4>
           <a class="id" href="javascript:void(0)" target="_blank" href="{{ trial.url }}">{{ trial.trialId }}</a>
