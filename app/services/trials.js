@@ -10,36 +10,8 @@ var _ = require('lodash');
  */
 module.exports = {
   get: getData,
-  getMapped: getMappedData,
-  collectTrialsInfo: collectTrialsInfo
+  getMapped: getMappedData
 };
-
-/**
- * Collects some useful data from trials, such as unique sources, total
- * number of trials and so on
- * @param trials
- */
-function collectTrialsInfo(trials) {
-  var result = {
-    sources: [],
-    funders: [],
-    completedTrials: 0,
-    publishedTrials: 0
-  };
-  _.forEach(trials, function(trial) {
-    if (trial.isCompleted) {
-      result.completedTrials++;
-    }
-    if (trial.isPublished) {
-      result.publishedTrials++;
-    }
-    result.sources.push(trial.source);
-    [].push.apply(result.funders, trial.funders)
-  });
-  result.sources = _.uniq(result.sources);
-  result.funders = _.uniq(result.funders);
-  return result;
-}
 
 /**
  * Load and return tracker data
@@ -93,7 +65,7 @@ function processData(trials) {
         var started = Math.round(result.startDate.getTime() / daysDivider);
         if (result.completionDate) {
           var completed = Math.round(result.completionDate.getTime() /
-          daysDivider);
+            daysDivider);
           result.isCompleted = today >= completed;
           result.daysAfterCompletion = today - completed;
           if (result.daysAfterCompletion < 0) {

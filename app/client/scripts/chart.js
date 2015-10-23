@@ -29,6 +29,9 @@
         position: 'inset'
       },
       axis: {
+        x: {
+          type: 'category'
+        },
         y: {
           show: false
         }

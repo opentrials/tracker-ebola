@@ -63,7 +63,7 @@
   $('[data-chart="trials"]').chart({{ chartData | safe }}, {
     all: {
       title: 'Patients in known trials',
-      color: '#022f5a'
+      color: '#ffd756'
     },
     completed: {
       title: 'Patients in completed trials',
@@ -71,13 +71,13 @@
     },
     death: {
       title: 'Ebola deaths',
-      color: '#ffd756'
+      color: '#e34312'
     }
   });
 
   setTimeout(function() {
     // Force refresh
-    window.location.reload(true);
+    //window.location.reload(true);
   }, 5 * 60 * 1000); // 5 mins
 </script>
 
