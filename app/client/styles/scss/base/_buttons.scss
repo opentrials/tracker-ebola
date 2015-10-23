@@ -1,0 +1,47 @@
+#{$all-button-inputs},
+button {
+  @include appearance(none);
+  -webkit-font-smoothing: antialiased;
+  background-color: $action-color;
+  border-radius: $base-border-radius;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.75em 1em;
+  text-decoration: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  &:hover,
+  &:focus {
+    background-color: darken($action-color, 15%);
+    color: #fff;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+@mixin round-button($colour: $action-color, $hover_colour: $dark-gray) {
+    @extend button;
+    background-color: transparent;
+    border: solid 3px $colour;
+    color: $colour;
+    border-radius: 30px;
+    font-size: rem(18);
+    transition: background-color 0.1s linear;
+    
+    &:hover,
+    &:focus {
+        background-color: $colour;
+        color: $hover_colour;
+    }
+}

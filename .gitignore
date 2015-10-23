@@ -28,3 +28,7 @@ node_modules
 
 # Tests
 xunit.xml
+
+# Editor files & cache
+.idea
+.sass-cache
