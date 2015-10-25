@@ -28,30 +28,38 @@
 
     <ol class="trial-list" id="trials-list">
     {% for trial in trials %}
+    {% if trial.isCompleted %}
       {% set class = '' %}
       {% if not trial.isCompleted %}{% set class = 'ongoing' %}{% endif %}
       {% if trial.isCompleted and not trial.isPublished %}{% set class = 'no-results' %}{% endif %}
       <li class="{{ class }}" data-sort-participants="{{ -trial.participantCount }}"
         data-sort-publication="{{ trial.publicationDelay }}">
         <div class="description">
-          <h4>{{ trial.title }}</h4>
           <a class="id" href="javascript:void(0)" target="_blank" href="{{ trial.url }}">{{ trial.trialId }}</a>
-          <p>
+          <h4 title="{{ trial.title }}">{{ trial.title }}</h4>
+          <ul>
             {% if trial.investigator %}
-              <span>This Trial was lead by principal investigator
-              <strong>{{ trial.investigator }}</strong></span>{% if trial.sponsors.length > 0 %}, sponsored by
-              <strong>{{ joinListOfNames(trial.sponsors) }}</strong>.{% endif %}
+              {% set text = 'Principal investigator: ' + trial.investigator + '.' %}
+              <li><span title="{{ text }}">{{ text }}</span></li>
             {% endif %}
+            {% if trial.sponsors.length > 0 %}
+              {% set text = 'Sponsored by: ' + joinListOfNames(trial.sponsors) + '.' %}
+              <li><span title="{{ text }}">{{ text }}</span></li>
+            {% endif %}
+
             {% if trial.isCompleted and not trial.isPublished %}
-            <strong>No results have been published.</strong>
+              {% set text = 'No results have been published.' %}
+              <li class="status"><span title="{{ text }}">{{ text }}</span></li>
             {% endif %}
             {% if trial.isInProgress %}
-            <span>Trial is ongoing.</span>
+              {% set text = 'Trial is ongoing.' %}
+              <li class="status"><span title="{{ text }}">{{ text }}</span></li>
             {% endif %}
             {% if trial.isPublished %}
-            <span>Results have been published.</span>
+              {% set text = 'Results have been published.' %}
+              <li class="status"><span title="{{ text }}">{{ text }}</span></li>
             {% endif %}
-          </p>
+          </ul>
         </div>
         <div class="stats">
           <div class="days">
@@ -74,6 +82,7 @@
           </div>
         </div>
       </li>
+    {% endif %}
     {% endfor %}
     </ol>
     {% endif %}

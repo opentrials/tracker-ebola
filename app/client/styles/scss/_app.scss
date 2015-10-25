@@ -203,7 +203,11 @@ body {
                     
                     h4 {
                         font-size: 22px;
-                        display: inline;
+                        display: block;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        margin-right: 170px;
                     }
                     
                     .id {
@@ -213,10 +217,40 @@ body {
                         padding: $small-spacing / 3 $small-spacing;
                         display: inline-block;
                         border-radius: $base-border-radius;
-                        position: relative;
-                        top: -3px;
-                        margin-top: 10px;
+                        float: right;
                     }
+
+                  ul {
+                    list-style: none;
+                    margin-top: 0.7em;
+
+                    li {
+                      display: block;
+                      list-style: none;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      white-space: nowrap;
+                      margin: 0.2em 0;
+                      border: 0 !important;
+                      border-radius: 0 !important;
+                      width: auto !important;
+                      box-sizing: border-box;
+
+                      &.status {
+                        font-weight: bold;
+
+                        span {
+                          background-color: lighten($blue, 33%);
+                        }
+                      }
+
+                      span {
+                        background: $light-gray;
+                        padding: 0.2em;
+                        box-sizing: border-box;
+                      }
+                    }
+                  }
                     
                     p {
                         margin-top: 8px;
@@ -315,10 +349,19 @@ body {
                     div.days {
                         background-color: $red;
                     }
+
+                    ul li.status span {
+                      background-color: lighten($red, 33%);
+                    }
                 }
                 
                 &.ongoing {
                     border-left-color: $yellow;
+
+
+                    ul li.status span {
+                      background-color: lighten($yellow, 17%);
+                    }
                     
                     div.days {
                         background-color: $yellow;
