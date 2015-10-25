@@ -10,8 +10,6 @@
   ],
   "main": "prototype/index.js",
   "dependencies": {
-    "angular": "^1.4.7",
-    "angular-sanitize": "^1.4.7",
     "bluebird": "^2.9.31",
     "body-parser": "^1.14.0",
     "c3": "git+https://github.com/masayuki0812/c3.git",
@@ -29,7 +27,6 @@
     "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git"
   },
   "devDependencies": {
-    "bootstrap": "^3.3.5",
     "browser-sync": "^2.8.2",
     "browserify": "^10.2.0",
     "chai": "^2.3.0",
@@ -47,7 +44,6 @@
     "gulp-uglify": "^1.2.0",
     "istanbul": "^0.3.21",
     "jscs": "^2.1.1",
-    "lodash": "^3.10.1",
     "mocha": "^2.3.3",
     "resolve": "^1.1.6",
     "uglify-js": "^2.4.21",
