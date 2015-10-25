@@ -4,7 +4,6 @@ body {
 }
 
 html {
-    background-color: $footer-colour;
     overflow-x: hidden;
 }
     
@@ -477,6 +476,16 @@ body {
   background-color: $footer-colour;
   color: #fff;
 
+  &.fixed-footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+  }
+
+  &.fixed-placeholder {
+    visibility: hidden;
+  }
+
   a, a:hover, a:active {
     color: inherit;
   }
@@ -615,4 +624,9 @@ body {
   .icon-twitter {
     background: #55acee;
   }
+}
+
+.error-page-container {
+  @include outer-container;
+  padding: $base-spacing;
 }
