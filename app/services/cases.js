@@ -26,11 +26,11 @@ function processData(trials) {
   return new Promise(function(resolve, reject) {
     var results = _.map(trials, function(trial) {
       return {
-        year: trial['Year'],
-        month: trial['Month'],
-        cases: trial['Cases'],
-        deaths: trial['Deaths'],
-        dataPackage: trial['Datapackage']
+        year: trial.Year,
+        month: trial.Month,
+        cases: trial.Cases,
+        deaths: trial.Deaths,
+        dataPackage: trial.Datapackage
       };
     });
     resolve(results);

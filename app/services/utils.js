@@ -10,7 +10,6 @@ module.exports = {
 /**
  * Collects some useful data from trials, such as unique sources, total
  * number of trials and so on
- * @param trials
  */
 function collectTrialsInfo(trials) {
   var result = {
@@ -27,7 +26,7 @@ function collectTrialsInfo(trials) {
       result.publishedTrials++;
     }
     result.sources.push(trial.source);
-    [].push.apply(result.funders, trial.funders)
+    [].push.apply(result.funders, trial.funders);
   });
   result.sources = _.uniq(result.sources);
   result.funders = _.uniq(result.funders);
@@ -50,8 +49,8 @@ function mapTrialsData(trials, cases) {
 
       var from = trial.startDate;
       from = from.getUTCFullYear() * 12 + from.getUTCMonth();
-      var to = (trial.isCompleted && trial.completionDate)
-        ? trial.completionDate : now;
+      var to = (trial.isCompleted && trial.completionDate) ?
+        trial.completionDate : now;
 
       to = to.getUTCFullYear() * 12 + to.getUTCMonth();
 

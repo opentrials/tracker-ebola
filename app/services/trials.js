@@ -39,7 +39,7 @@ function processData(trials) {
     var results = _.map(trials, function(trial) {
       var result = {
         trialId: trial['Trial ID'],
-        title: trial['Title'],
+        title: trial.Title,
         publicTitle: trial['Public title'],
         participantCount: trial['Participant Count'],
         startDate: !!trial['Start Date'] ? new Date(trial['Start Date']) : null,
@@ -48,9 +48,9 @@ function processData(trials) {
         investigator: trial['Principal Investigator'],
         sponsors: trial['Sponsor/Collaborators'],
         isPublished: !!trial['Are results available?'],
-        url: trial['URL'],
+        url: trial.URL,
         funders: trial['Funded Bys'],
-        source: trial['Source']
+        source: trial.Source
       };
 
       if (!_.isArray(result.sponsors)) {
