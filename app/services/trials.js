@@ -10,36 +10,8 @@ var _ = require('lodash');
  */
 module.exports = {
   get: getData,
-  getMapped: getMappedData,
-  collectTrialsInfo: collectTrialsInfo
+  getMapped: getMappedData
 };
-
-/**
- * Collects some useful data from trials, such as unique sources, total
- * number of trials and so on
- * @param trials
- */
-function collectTrialsInfo(trials) {
-  var result = {
-    sources: [],
-    funders: [],
-    completedTrials: 0,
-    publishedTrials: 0
-  };
-  _.forEach(trials, function(trial) {
-    if (trial.isCompleted) {
-      result.completedTrials++;
-    }
-    if (trial.isPublished) {
-      result.publishedTrials++;
-    }
-    result.sources.push(trial.source);
-    [].push.apply(result.funders, trial.funders)
-  });
-  result.sources = _.uniq(result.sources);
-  result.funders = _.uniq(result.funders);
-  return result;
-}
 
 /**
  * Load and return tracker data
@@ -67,7 +39,7 @@ function processData(trials) {
     var results = _.map(trials, function(trial) {
       var result = {
         trialId: trial['Trial ID'],
-        title: trial['Title'],
+        title: trial.Title,
         publicTitle: trial['Public title'],
         participantCount: trial['Participant Count'],
         startDate: !!trial['Start Date'] ? new Date(trial['Start Date']) : null,
@@ -76,9 +48,9 @@ function processData(trials) {
         investigator: trial['Principal Investigator'],
         sponsors: trial['Sponsor/Collaborators'],
         isPublished: !!trial['Are results available?'],
-        url: trial['URL'],
+        url: trial.URL,
         funders: trial['Funded Bys'],
-        source: trial['Source']
+        source: trial.Source
       };
 
       if (!_.isArray(result.sponsors)) {
@@ -93,7 +65,7 @@ function processData(trials) {
         var started = Math.round(result.startDate.getTime() / daysDivider);
         if (result.completionDate) {
           var completed = Math.round(result.completionDate.getTime() /
-          daysDivider);
+            daysDivider);
           result.isCompleted = today >= completed;
           result.daysAfterCompletion = today - completed;
           if (result.daysAfterCompletion < 0) {
@@ -123,8 +95,26 @@ function processData(trials) {
       result.year = result.isCompleted ? result.completionDate.getFullYear()
         : currentDate.getFullYear();
 
+      // 1. completed but not published - days DESC
+      // 2. not completed - days DESC
+      // 3. completed and published days DESC
+      if (result.isCompleted) {
+        if (result.isPublished) {
+          result.publicationDelay = -result.daysAfterCompletion;
+        } else {
+          result.publicationDelay = -(2000000 + result.daysAfterCompletion);
+        }
+      } else {
+        result.publicationDelay = -(1000000 + result.daysAfterStart);
+      }
+
       return result;
     });
+
+    results = _.sortBy(results, function(item) {
+      return item.publicationDelay;
+    });
+
     resolve(results);
   });
 }

@@ -34,7 +34,6 @@ router.get('/api/trials', controllers.api.trials);
 
 // Site pages
 router.get('/', controllers.pages.index);
-router.get('/about', controllers.pages.about);
 router.get('/graph', controllers.pages.chart);
 
 // Error handling
