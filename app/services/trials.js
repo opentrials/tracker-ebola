@@ -47,7 +47,11 @@ function processData(trials) {
           new Date(trial['Completion Date']) : null,
         investigator: trial['Principal Investigator'],
         sponsors: trial['Sponsor/Collaborators'],
-        isPublished: !!trial['Are results available?'],
+        isPublished: (
+          (('' + trial['Results Available?']).toUpperCase() == 'TRUE') &&
+          (('' + trial['Preliminary or full']).toUpperCase() == 'FULL')
+
+        ),
         url: trial.URL,
         funders: trial['Funded Bys'],
         source: trial.Source
