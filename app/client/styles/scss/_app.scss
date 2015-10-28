@@ -179,7 +179,7 @@ body {
                 background-position: 75.1% top;
                 border-radius: $base-border-radius;
                 overflow: hidden;
-                border-left: solid em(7) $blue;
+                border-left: solid em(7) $green;
                 margin-bottom: $small-spacing;
                 
                 @include media($large-screen) {
@@ -239,7 +239,7 @@ body {
                         font-weight: bold;
 
                         span {
-                          background-color: lighten($blue, 33%);
+                          background-color: lighten($green, 33%);
                         }
                       }
 
@@ -317,7 +317,7 @@ body {
                         }
                         
                         &.days {
-                            background-color: $blue;
+                            background-color: $green;
                             color: #fff;
                             
                             p {
