@@ -266,17 +266,13 @@ body {
                     }
                     
                     @include reset-display;
-                    height: 144px;
+                    height: 150px;
                     vertical-align: top;
                     
                     & > div {
                         display: block;
                         font-weight: bold;
-                        
-                        @include media($medium-screen) {
-                            height: 50%;
-                        }
-                        
+
                         p {
                             margin: 0;
                             text-align: center;
@@ -308,7 +304,7 @@ body {
                             span {
                                 display: none;
                                 font-weight: normal;
-                                font-size: 13px;
+                                font-size: 12px;
 
                                 @include media($medium-screen) {
                                     display: block;
@@ -325,6 +321,10 @@ body {
                                     content: "\e802";
                                 }
                             }
+
+							@include media($medium-screen) {
+	                            min-height: 52%;
+	                        }
                         }
                         
                         &.participants {
