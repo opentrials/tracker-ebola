@@ -37,7 +37,7 @@
         x: {
           type: 'category',
           tick: {
-            rotate: 65,
+            rotate: 75,
             multiline: false
           }
         },
