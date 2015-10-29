@@ -62,11 +62,11 @@
 <script type="text/javascript">
   $('[data-chart="trials"]').chart({{ chartData | safe }}, {
     all: {
-      title: 'Patients in known trials',
+      title: 'Cumulative number of patients in completed trials',
       color: '#ffd756'
     },
     completed: {
-      title: 'Patients in completed trials',
+      title: 'Cumulative number of patients in completed and reported trials',
       color: '#12b2e3'
     },
     death: {
