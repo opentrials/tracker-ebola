@@ -80,6 +80,7 @@ body {
 .banner {
     background-color: $dark-gray;
     @include retina-image("../media/banner", cover, jpg);
+	background-size: cover;
     background-position: center center;
     color: #fff;
 
