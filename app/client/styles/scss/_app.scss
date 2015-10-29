@@ -80,6 +80,7 @@ body {
 .banner {
     background-color: $dark-gray;
     @include retina-image("../media/banner", cover, jpg);
+	background-size: cover;
     background-position: center center;
     color: #fff;
 
@@ -133,6 +134,12 @@ body {
     padding: $base-spacing;
     text-align: center;
 
+	.graph-header {
+		@include media($medium-screen) {
+			text-align: right;
+		}
+	}
+
     @include media($max-width) {
         top: -75px;
         min-height: 75px;
@@ -169,7 +176,7 @@ body {
         }
 
         .trial-list {
-            li {
+            & > li {
                 background-color: #fff;
                 @include fill-parent();
                 @include row(table);
@@ -229,21 +236,17 @@ body {
                       overflow: hidden;
                       white-space: nowrap;
                       margin: 0.2em 0;
-                      border: 0 !important;
-                      border-radius: 0 !important;
-                      width: auto !important;
                       box-sizing: border-box;
 
                       &.status {
                         font-weight: bold;
 
                         span {
-                          background-color: lighten($green, 33%);
+                          background-color: lighten($green, 40%);
                         }
                       }
 
                       span {
-                        background: $light-gray;
                         padding: 0.2em;
                         box-sizing: border-box;
                       }
@@ -349,7 +352,7 @@ body {
                     }
 
                     ul li.status span {
-                      background-color: lighten($red, 33%);
+                      background-color: lighten($red, 40%);
                     }
                 }
 
@@ -475,6 +478,11 @@ body {
   background-color: $footer-colour;
   color: #fff;
 
+  & > div {
+	  padding-top: $base-spacing + $small-spacing;
+	  padding-bottom: $base-spacing;
+  }
+
   &.fixed-footer {
     position: fixed;
     bottom: 0px;
@@ -491,6 +499,8 @@ body {
 
   hr {
     border-color: $blue;
+	margin-top: $small-spacing / 2;
+	margin-bottom: $small-spacing;
   }
 
   .clear {
@@ -500,32 +510,14 @@ body {
 
   .footer-block {
     float: left;
-    margin-right: 1em;
+    margin-right: $gutter;
     white-space: nowrap;
     line-height: normal;
 
-    .image, .text {
-      float: left;
-    }
-
-    .image {
-      margin-right: 0.4em;
-    }
-
     img {
-      max-height: 50px;
+      height: 34px;
     }
 
-    .text {
-      span {
-        display: block;
-        margin-bottom: 0.3em;
-      }
-      small {
-        display: block;
-        font-size: 0.7em;
-      }
-    }
   }
 
   .footer-links-block {
@@ -553,10 +545,11 @@ body {
 
   p {
     font-size: 0.7em;
+	opacity: 0.9;
   }
 
   .footer-icons {
-    margin-bottom: 1.5em;
+    margin-bottom: $small-spacing;
     i {
       font-size: 1.2em;
       vertical-align: middle;
@@ -569,17 +562,23 @@ body {
 }
 
 .trials-graph-overview-block {
-  display: inline-block;
+  display: block;
   padding: 0.7em 1em;
-  background: #000;
+  background: $dark-gray;
   color: #fff;
 
-  :first-child {
-    font-size: 1.1em;
+  h4 {
+	  margin-bottom: 0.1em;
   }
 
-  :last-child {
-    font-size: 0.75em;
+  p {
+    font-size: em(13);
+	margin: 0;
+  }
+
+  @include media($medium-screen) {
+	  text-align: left;
+	  float: left;
   }
 }
 
