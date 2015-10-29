@@ -64,7 +64,13 @@
         <div class="stats">
           <div class="days">
             {% if trial.isCompleted %}
-            <p>{{ trial.daysAfterCompletion }} days <span>since completed</span></p>
+            <p><span class="published">{% if trial.isPublished %}Results published{% else %}No results published{% endif %}</span>{{ trial.daysAfterCompletion }} days
+            {% if trial.isPublished %}
+            <span>after completion</span>
+            {% else %}
+            <span>since completed</span>
+            {% endif %}
+            </p>
             {% endif %}
             {% if trial.isInProgress %}
             <p>{{ trial.daysAfterStart }} days <span>until completed</span></p>
