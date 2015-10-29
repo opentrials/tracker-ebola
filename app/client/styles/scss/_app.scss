@@ -134,6 +134,12 @@ body {
     padding: $base-spacing;
     text-align: center;
 
+	.graph-header {
+		@include media($medium-screen) {
+			text-align: right;
+		}
+	}
+
     @include media($max-width) {
         top: -75px;
         min-height: 75px;
@@ -570,17 +576,23 @@ body {
 }
 
 .trials-graph-overview-block {
-  display: inline-block;
+  display: block;
   padding: 0.7em 1em;
-  background: #000;
+  background: $dark-gray;
   color: #fff;
 
-  :first-child {
-    font-size: 1.1em;
+  h4 {
+	  margin-bottom: 0.1em;
   }
 
-  :last-child {
-    font-size: 0.75em;
+  p {
+    font-size: em(13);
+	margin: 0;
+  }
+
+  @include media($medium-screen) {
+	  text-align: left;
+	  float: left;
   }
 }
 
