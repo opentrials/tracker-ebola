@@ -133,8 +133,8 @@ function collectDataForChart(trials, cases) {
   trialsData = reduceTrialsData(trialsData, minYear * 12,
     breakpoint * 12);
 
-  var months = ['01', '02', '03', '04', '05', '06',
-    '07', '08', '09', '10', '11', '12'];
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   var result = {
     x: [],
@@ -146,7 +146,7 @@ function collectDataForChart(trials, cases) {
     if (item.year < breakpoint) {
       result.x.push(item.year);
     } else {
-      result.x.push(item.year + '/' + months[item.month]);
+      result.x.push(item.year + ', ' + months[item.month]);
     }
     result.all.push(item.all);
     result.completed.push(item.completed);
