@@ -176,7 +176,7 @@ body {
         }
 
         .trial-list {
-            li {
+            & > li {
                 background-color: #fff;
                 @include fill-parent();
                 @include row(table);
