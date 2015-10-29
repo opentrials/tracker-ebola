@@ -35,7 +35,11 @@
       },
       axis: {
         x: {
-          type: 'category'
+          type: 'category',
+          tick: {
+            rotate: 75,
+            multiline: false
+          }
         },
         y: {
           show: false
