@@ -236,21 +236,17 @@ body {
                       overflow: hidden;
                       white-space: nowrap;
                       margin: 0.2em 0;
-                      border: 0 !important;
-                      border-radius: 0 !important;
-                      width: auto !important;
                       box-sizing: border-box;
 
                       &.status {
                         font-weight: bold;
 
                         span {
-                          background-color: lighten($green, 33%);
+                          background-color: lighten($green, 40%);
                         }
                       }
 
                       span {
-                        background: $light-gray;
                         padding: 0.2em;
                         box-sizing: border-box;
                       }
@@ -356,7 +352,7 @@ body {
                     }
 
                     ul li.status span {
-                      background-color: lighten($red, 33%);
+                      background-color: lighten($red, 40%);
                     }
                 }
 
