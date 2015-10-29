@@ -482,6 +482,11 @@ body {
   background-color: $footer-colour;
   color: #fff;
 
+  & > div {
+	  padding-top: $base-spacing + $small-spacing;
+	  padding-bottom: $base-spacing;
+  }
+
   &.fixed-footer {
     position: fixed;
     bottom: 0px;
@@ -498,6 +503,8 @@ body {
 
   hr {
     border-color: $blue;
+	margin-top: $small-spacing / 2;
+	margin-bottom: $small-spacing;
   }
 
   .clear {
@@ -507,32 +514,14 @@ body {
 
   .footer-block {
     float: left;
-    margin-right: 1em;
+    margin-right: $gutter;
     white-space: nowrap;
     line-height: normal;
 
-    .image, .text {
-      float: left;
-    }
-
-    .image {
-      margin-right: 0.4em;
-    }
-
     img {
-      max-height: 50px;
+      height: 34px;
     }
 
-    .text {
-      span {
-        display: block;
-        margin-bottom: 0.3em;
-      }
-      small {
-        display: block;
-        font-size: 0.7em;
-      }
-    }
   }
 
   .footer-links-block {
@@ -560,10 +549,11 @@ body {
 
   p {
     font-size: 0.7em;
+	opacity: 0.9;
   }
 
   .footer-icons {
-    margin-bottom: 1.5em;
+    margin-bottom: $small-spacing;
     i {
       font-size: 1.2em;
       vertical-align: middle;
