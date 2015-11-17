@@ -46,12 +46,12 @@
             {% if trial.investigator %}
               {% set text = '<b>Principal investigator:</b> ' + trial.investigator + '.' %}
               {% set hint = 'Principal investigator: ' + trial.investigator + '.' %}
-              <li><span title="{{ hint }}">{{ text | safe }}</span></li>
+              <li class="clamp"><span title="{{ hint }}">{{ text | safe }}</span></li>
             {% endif %}
             {% if trial.sponsors.length > 0 %}
               {% set text = '<b>Sponsored by:</b> ' + joinListOfNames(trial.sponsors) + '.' %}
               {% set hint = 'Sponsored by: ' + joinListOfNames(trial.sponsors) + '.' %}
-              <li><span title="{{ hint }}">{{ text | safe }}</span></li>
+              <li class="clamp"><span title="{{ hint }}">{{ text | safe }}</span></li>
             {% endif %}
 
             {% if trial.isCompleted and not trial.isPublished %}
