@@ -1,0 +1,141 @@
+.modal {
+  $modal-padding: $base-spacing;
+  $modal-background: $base-background-color;
+  $modal-close-color: #6d6d6d;
+  $modal-image-height: 135px;
+  $modal-image-width: $modal-image-height;
+  $modal-trigger-image-width: 300px;
+
+  label {
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+
+  .modal-state {
+    display: none;
+  }
+
+  .modal-fade-screen { // overlay
+    @include transition(opacity 0.25s ease);
+    @include position(fixed, 0);
+    background-color: rgba(#000, 0.85);
+    opacity: 0;
+    padding-top: 0.6em;
+    text-align: left;
+    visibility: hidden;
+    z-index: 99999999999;
+
+    @include media($large-screen) {
+      padding-top: 10em;
+    }
+
+    .modal-bg {
+      @include position(absolute, 0);
+      cursor: pointer;
+    }
+  }
+    
+    .modal-header {
+        padding: $modal-padding;
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-size: rem(18);
+            margin: 0;
+            
+            &:before {
+                @include icon-font();
+                font-size: 28px;
+                float: left;
+                margin-right: 8px;
+                margin-top: -3px;
+            }
+        }
+        
+       .modal-close {
+            @include position(absolute, ($modal-padding) ($modal-padding) null null);
+            cursor: pointer;
+            @include icon-font();
+
+            &:before {
+               content: "\e807";
+                color: $modal-close-color;
+            }
+          } 
+    }
+
+
+  .modal-inner {
+    @include transition(opacity 0.25s ease);
+    background: $modal-background;
+    border-radius: $base-border-radius;
+    margin-top: 0;
+    margin: auto;
+    max-height: 95%;
+    overflow: auto;
+    position: relative;
+    width: 95%;
+    color: $base-font-color;
+    border-top: solid 6px $action-color;
+
+    @include media($medium-screen) {
+      max-height: 80%;
+      width: 60%;
+    }
+
+    @include media($large-screen) {
+      width: 50%;
+    }
+
+    .modal-content {
+      color: $base-font-color;
+        border-top: solid 1px $light-gray;
+        padding: $modal-padding;
+    }
+  }
+
+  .modal-state:checked + .modal-fade-screen {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-state:checked + .modal-fade-screen .modal-inner {
+    top: 0.5em;
+  }
+
+    &.about-page {
+      .modal-inner {
+        border-top-color: $blue;
+
+        .modal-header {
+          background-color: $modal-background;
+          color: $base-font-color;
+        }
+      }
+    }
+    
+    &.video {
+        .modal-inner {
+            background-color: $dark-gray;
+            color: #fff;
+            border-top-color: $blue;
+            
+            .modal-header {
+                background-color: $modal-background;
+                color: $base-font-color;
+                
+                h1, h2, h3, h4, h5, h6 {
+                    &:before {
+                        content: "\e801";
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+// Based on code by Kasper Mikiewicz

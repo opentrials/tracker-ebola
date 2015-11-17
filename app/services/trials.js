@@ -3,12 +3,14 @@ var csv = require('csv');
 var request = require('request');
 var Promise = require('bluebird');
 var config =  require('../config');
+var _ = require('lodash');
 
 /**
  * Module provides trials service
  */
 module.exports = {
   get: getData,
+  getMapped: getMappedData
 };
 
 /**
@@ -18,6 +20,107 @@ module.exports = {
  */
 function getData() {
   return loadData().then(parseData).then(cleanData);
+}
+
+/**
+ * Load and return normalized tracker data
+ *
+ * @returns {Promise}
+ */
+function getMappedData() {
+  return loadData().then(parseData).then(cleanData).then(processData);
+}
+
+function processData(trials) {
+  return new Promise(function(resolve, reject) {
+    var daysDivider = 24 * 60 * 60 * 1000;
+    var currentDate = new Date();
+    var today = Math.round(currentDate.getTime() / daysDivider);
+    var results = _.map(trials, function(trial) {
+      var result = {
+        trialId: trial['Trial ID'],
+        title: trial.Title,
+        publicTitle: trial['Public title'],
+        participantCount: trial['Participant Count'],
+        startDate: !!trial['Start Date'] ? new Date(trial['Start Date']) : null,
+        completionDate: !!trial['Completion Date'] ?
+          new Date(trial['Completion Date']) : null,
+        investigator: trial['Principal Investigator'],
+        sponsors: trial['Sponsor/Collaborators'],
+        isPublished: (
+          (('' + trial['Results Available?']).toUpperCase() == 'TRUE') &&
+          (('' + trial['Preliminary or full']).toUpperCase() == 'FULL')
+
+        ),
+        url: trial.URL,
+        funders: trial['Funded Bys'],
+        source: trial.Source
+      };
+
+      if (!_.isArray(result.sponsors)) {
+        result.sponsors = [];
+      }
+
+      if (!_.isArray(result.funders)) {
+        result.funders = [];
+      }
+
+      if (result.startDate) {
+        var started = Math.round(result.startDate.getTime() / daysDivider);
+        if (result.completionDate) {
+          var completed = Math.round(result.completionDate.getTime() /
+            daysDivider);
+          result.isCompleted = today >= completed;
+          result.daysAfterCompletion = today - completed;
+          if (result.daysAfterCompletion < 0) {
+            result.daysAfterCompletion = 0;
+          }
+        } else {
+          result.isCompleted = false;
+          result.daysAfterCompletion = 0;
+        }
+
+        result.isStarted = today >= started;
+        result.isInProgress = result.isStarted && !result.isCompleted;
+        result.isPublished = result.isCompleted && result.isPublished;
+
+        result.daysAfterStart = today - started;
+        if (result.daysAfterStart < 0) {
+          result.daysAfterStart = 0;
+        }
+      } else {
+        result.isStarted = false;
+        result.isCompleted = false;
+        result.isInProgress = false;
+        result.daysAfterStart = 0;
+        result.daysAfterCompletion = 0;
+      }
+
+      result.year = result.isCompleted ? result.completionDate.getFullYear()
+        : currentDate.getFullYear();
+
+      // 1. completed but not published - days DESC
+      // 2. not completed - days DESC
+      // 3. completed and published days DESC
+      if (result.isCompleted) {
+        if (result.isPublished) {
+          result.publicationDelay = -result.daysAfterCompletion;
+        } else {
+          result.publicationDelay = -(2000000 + result.daysAfterCompletion);
+        }
+      } else {
+        result.publicationDelay = -(1000000 + result.daysAfterStart);
+      }
+
+      return result;
+    });
+
+    results = _.sortBy(results, function(item) {
+      return item.publicationDelay;
+    });
+
+    resolve(results);
+  });
 }
 
 //TODO: add timeout

@@ -9,17 +9,27 @@
         "stylesDir": "app/client/styles",
         "scriptsDir": "app/client/scripts",
         "imagesDir": "app/client/images",
+        "mediaDir": "app/client/media",
+        "fontsDir": "app/client/fonts",
         "publicDir": "app/public",
         "publicStylesDir": "app/public/styles",
         "publicScriptsDir": "app/public/scripts",
         "publicImagesDir": "app/public/images",
-        "publicFontsDir": "app/public/fonts",
+        "publicMediaDir": "app/public/media",
+        "publicFontsDir": "app/public/styles/fonts",
         "appJS": "app.min.js",
         "appCSS": "app.min.css",
         "vendorJS": "vendor.min.js",
         "vendorCSS": "vendor.min.css",
         "frontendDependencies": [
-          "bootstrap"
+          "lodash/index.js",
+          "jquery/dist/jquery.js",
+          "smooth-scroll/dist/js/smooth-scroll.js",
+          "d3/d3.js",
+          "c3/c3.js",
+          "bootstrap/dist/js/bootstrap.js",
+          "angular/angular.js",
+          "angular-sanitize/angular-sanitize.js"
         ]
     },
     "contacts": {

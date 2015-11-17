@@ -19,9 +19,9 @@ var router = module.exports = express.Router();
 router.use(express.static(statics));
 
 // General middlewares
-router.use(cookieParser()),
-router.use(session(config.get('session'))),
-router.use(bodyParser.urlencoded({extended: true})),
+router.use(cookieParser());
+router.use(session(config.get('session')));
+router.use(bodyParser.urlencoded({extended: true}));
 
 // Site middlewares
 router.use(middlewares.helpers.slash);
@@ -34,7 +34,7 @@ router.get('/api/trials', controllers.api.trials);
 
 // Site pages
 router.get('/', controllers.pages.index);
-router.get('/about', controllers.pages.about);
+router.get('/graph', controllers.pages.chart);
 
 // Error handling
 router.use(middlewares.errors.notfound);

@@ -1,0 +1,96 @@
+
+<section class="leaderboard">
+  <article>
+    <a class="upload-missing-data" href="mailto:{{ email }}?subject=Data for the Ebola Trials Tracker" target="_blank">
+      Have we missed a trial? <b>Get in touch!</b>
+    </a>
+    <h3>Trial “leaderboard”</h3>
+    <p>
+      We currently have <b>{{ trials.length }}</b> Ebola trials in our tracker
+      from {{ info.sources.length }} sources ({{ joinListOfNames(wrapWithTag(info.sources, 'i')) | safe }}).
+      <b>{{ info.completedTrials }}</b> of these trials are complete, and
+      <b>{{ info.publishedTrials }}</b> with results.
+      {% if info.funders.length > 0 %}
+      <b>{{ info.funders.length }}</b> different funders are currently backing Ebola trials,
+      including {{ joinListOfNames(wrapWithTag(info.funders, 'i')) | safe }}.
+      {% endif %}
+    </p>
+
+    {% if trials.length > 0 %}
+    <div class="trials-sorting">
+      <span>Sort by:</span>
+      <span class="current icon">Publication Delay</span>
+      <div class="options">
+        <div data-sort-trials="data-sort-publication" class="icon">Publication Delay</div>
+        <div data-sort-trials="data-sort-participants" class="icon">Participant Count</div>
+      </div>
+    </div>
+
+    <ol class="trial-list" id="trials-list">
+    {% for trial in trials %}
+    {% if trial.isCompleted %}
+      {% set class = '' %}
+      {% if not trial.isCompleted %}{% set class = 'ongoing' %}{% endif %}
+      {% if trial.isCompleted and not trial.isPublished %}{% set class = 'no-results' %}{% endif %}
+      <li class="{{ class }}" data-sort-participants="{{ -trial.participantCount }}"
+        data-sort-publication="{{ trial.publicationDelay }}">
+        <div class="description">
+          <a class="id" href="javascript:void(0)" target="_blank" href="{{ trial.url }}">{{ trial.trialId }}</a>
+          <h4 title="{{ trial.title }}">{{ trial.title }}</h4>
+          <ul>
+            {% if trial.investigator %}
+              {% set text = 'Principal investigator: ' + trial.investigator + '.' %}
+              <li><span title="{{ text }}">{{ text }}</span></li>
+            {% endif %}
+            {% if trial.sponsors.length > 0 %}
+              {% set text = 'Sponsored by: ' + joinListOfNames(trial.sponsors) + '.' %}
+              <li><span title="{{ text }}">{{ text }}</span></li>
+            {% endif %}
+
+            {% if trial.isCompleted and not trial.isPublished %}
+              {% set text = 'No results have been published.' %}
+              <li class="status"><span title="{{ text }}">{{ text }}</span></li>
+            {% endif %}
+            {% if trial.isInProgress %}
+              {% set text = 'Trial is ongoing.' %}
+              <li class="status"><span title="{{ text }}">{{ text }}</span></li>
+            {% endif %}
+            {% if trial.isPublished %}
+              {% set text = 'Results have been published.' %}
+              <li class="status"><span title="{{ text }}">{{ text }}</span></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="stats">
+          <div class="days">
+            {% if trial.isCompleted %}
+            <p><span class="published">{% if trial.isPublished %}Results published{% else %}No results published{% endif %}</span>{{ trial.daysAfterCompletion }} days
+            {% if trial.isPublished %}
+            <span>after completion</span>
+            {% else %}
+            <span>since completed</span>
+            {% endif %}
+            </p>
+            {% endif %}
+            {% if trial.isInProgress %}
+            <p>{{ trial.daysAfterStart }} days <span>until completed</span></p>
+            {% endif %}
+            {% if not trial.isStarted %}
+            <p>N/A</p>
+            {% endif %}
+          </div>
+          <div class="participants">
+          {% if trial.participantCount %}
+            <p>{{ trial.participantCount }} <span>participants</span></p>
+          {% else %}
+            <p>Unknown</p>
+          {% endif %}
+          </div>
+        </div>
+      </li>
+    {% endif %}
+    {% endfor %}
+    </ol>
+    {% endif %}
+  </article>
+</section>
