@@ -30,26 +30,38 @@
     {% for trial in trials %}
     {% if trial.isCompleted %}
       {% set class = '' %}
-      {% if not trial.isCompleted %}{% set class = 'ongoing' %}{% endif %}
-      {% if trial.isCompleted and not trial.isPublished %}{% set class = 'no-results' %}{% endif %}
+      {% if trial.isCompleted and not trial.isPublished %}
+        {% if trial.daysAfterCompletion <= 150 %}
+          {% set class = 'ongoing' %}
+        {% else %}
+          {% set class = 'no-results' %}
+        {% endif %}
+      {% endif %}
       <li class="{{ class }}" data-sort-participants="{{ -trial.participantCount }}"
         data-sort-publication="{{ trial.publicationDelay }}">
         <div class="description">
-          <a class="id" href="javascript:void(0)" target="_blank" href="{{ trial.url }}">{{ trial.trialId }}</a>
+          <a class="id" target="_blank" href="{{ trial.url }}">{{ trial.trialId }}</a>
           <h4 title="{{ trial.title }}">{{ trial.title }}</h4>
           <ul>
             {% if trial.investigator %}
-              {% set text = 'Principal investigator: ' + trial.investigator + '.' %}
-              <li><span title="{{ text }}">{{ text }}</span></li>
+              {% set text = '<b>Principal investigator:</b> ' + trial.investigator + '.' %}
+              {% set hint = 'Principal investigator: ' + trial.investigator + '.' %}
+              <li><span title="{{ hint }}">{{ text | safe }}</span></li>
             {% endif %}
             {% if trial.sponsors.length > 0 %}
-              {% set text = 'Sponsored by: ' + joinListOfNames(trial.sponsors) + '.' %}
-              <li><span title="{{ text }}">{{ text }}</span></li>
+              {% set text = '<b>Sponsored by:</b> ' + joinListOfNames(trial.sponsors) + '.' %}
+              {% set hint = 'Sponsored by: ' + joinListOfNames(trial.sponsors) + '.' %}
+              <li><span title="{{ hint }}">{{ text | safe }}</span></li>
             {% endif %}
 
             {% if trial.isCompleted and not trial.isPublished %}
               {% set text = 'No results have been published.' %}
-              <li class="status"><span title="{{ text }}">{{ text }}</span></li>
+              <li class="status">
+                <span title="{{ text }}">{{ text }}</span>
+                <div>
+                  <a class="upload-missing-data" href="mailto:{{ email }}?subject=Submission of information on {{ trial.trialId }} from the Ebola Trials Tracker">Submit information on this trial</a>
+                </div>
+              </li>
             {% endif %}
             {% if trial.isInProgress %}
               {% set text = 'Trial is ongoing.' %}

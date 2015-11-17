@@ -244,6 +244,16 @@ body {
                         span {
                           background-color: lighten($green, 40%);
                         }
+
+                        div {
+                          margin-top: 0.5em;
+
+                          .upload-missing-data {
+                            float: none;
+                            display: inline-block;
+                            font-weight: normal;
+                          }
+                        }
                       }
 
                       span {
