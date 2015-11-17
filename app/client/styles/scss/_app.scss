@@ -271,10 +271,15 @@ body {
                         div {
                           margin-top: 0.5em;
 
-                          .upload-missing-data {
-                            float: none;
-                            display: inline-block;
+                          a {
                             font-weight: normal;
+                            font-size: 80%;
+                            color: $red;
+                            text-decoration: underline;
+
+                            &:hover {
+                              color: darken($red, 20%);
+                            }
                           }
                         }
                       }
