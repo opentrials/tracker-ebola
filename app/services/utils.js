@@ -91,10 +91,12 @@ function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
     deaths: 0
   };
 
-  var increment = 12;
-  if ((fromDate > detalizationBreakpoint) && (increment != 1)) {
-    fromDate = detalizationBreakpoint;
-    increment = 1;
+  var detailedIncrement = 3; // In months
+
+  var increment = 12; // In months
+  if (fromDate >= detalizationBreakpoint) {
+    increment = detailedIncrement;
+    fromDate = Math.floor(detalizationBreakpoint / increment) * increment;
   }
 
   _.forEach(trialsData, function(item) {
@@ -105,11 +107,15 @@ function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
       var temp = _.clone(collected);
       temp.year = Math.floor(fromDate / 12);
       temp.month = fromDate % 12;
+      temp.quarter = Math.floor((fromDate % 12) / 3);
       result.push(temp);
       fromDate += increment;
-      if ((fromDate > detalizationBreakpoint) && (increment != 1)) {
-        fromDate = detalizationBreakpoint + 1;
-        increment = 1;
+      if (
+        (fromDate >= detalizationBreakpoint) &&
+        (increment != detailedIncrement)
+      ) {
+        increment = detailedIncrement;
+        fromDate = Math.floor(detalizationBreakpoint / increment) * increment;
       }
     }
   });
@@ -135,6 +141,7 @@ function collectDataForChart(trials, cases) {
 
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var quarters = ['I', 'II', 'III', 'IV'];
 
   var result = {
     x: [],
@@ -146,7 +153,7 @@ function collectDataForChart(trials, cases) {
     if (item.year < breakpoint) {
       result.x.push(item.year);
     } else {
-      result.x.push(item.year + ', ' + months[item.month]);
+      result.x.push(item.year + ', ' + quarters[item.quarter]);
     }
     result.all.push(item.all);
     result.completed.push(item.completed);

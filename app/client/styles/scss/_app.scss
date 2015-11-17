@@ -230,24 +230,57 @@ body {
                     margin-top: 0.7em;
 
                     li {
+                      $line-limit: 2;
+
                       display: block;
                       list-style: none;
-                      text-overflow: ellipsis;
-                      overflow: hidden;
-                      white-space: nowrap;
                       margin: 0.2em 0;
                       box-sizing: border-box;
+
+                      &.clamp {
+                        overflow: hidden;
+                        line-height: 1.5em;
+                        max-height: 1.5em * $line-limit;
+                        white-space: normal;
+
+                        /* Opera 12- */
+                        -o-text-overflow: -o-ellipsis-lastline;
+                        text-overflow: -o-ellipsis-lastline;
+
+                        @supports (-webkit-line-clamp: $line-limit) {
+
+                          & {
+                            /* Chrome, Safari, Opera 15+ */
+                            display: -webkit-box;
+                            -webkit-line-clamp: $line-limit;
+                            -webkit-box-orient: vertical;
+                          }
+
+                        }
+
+                      }
 
                       &.status {
                         font-weight: bold;
 
                         span {
                           background-color: lighten($green, 40%);
+                          padding: 0.2em;
+                        }
+
+                        div {
+                          margin-top: 0.5em;
+
+                          .upload-missing-data {
+                            float: none;
+                            display: inline-block;
+                            font-weight: normal;
+                          }
                         }
                       }
 
                       span {
-                        padding: 0.2em;
+                        padding: 0.2em 0;
                         box-sizing: border-box;
                       }
                     }
