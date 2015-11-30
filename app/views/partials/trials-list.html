@@ -1,4 +1,4 @@
-
+{% if not disableLeaderboard %}
 <section class="leaderboard">
   <article>
     <a class="upload-missing-data" href="mailto:{{ email }}?subject=Data for the Ebola Trials Tracker" target="_blank">
@@ -106,3 +106,4 @@
     {% endif %}
   </article>
 </section>
+{% endif %}

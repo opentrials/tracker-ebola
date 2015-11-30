@@ -106,4 +106,18 @@ describe('Access Token', function() {
     });
   });
 
+  it('Should disable leaderboard', function(done) {
+    config.set('access:protected', false);
+
+    config.set('disableLeaderboard', false);
+    browser.visit('/', function() {
+      assert(browser.query('.leaderboard'), 'Leaderboard should be present');
+      config.set('disableLeaderboard', true);
+      browser.visit('/', function() {
+        assert(!browser.query('.leaderboard'), 'Leaderboard should not render');
+        done();
+      });
+    });
+  });
+
 });
