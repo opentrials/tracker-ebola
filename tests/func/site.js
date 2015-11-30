@@ -56,6 +56,7 @@ describe('List of trials', function() {
   this.timeout(10000);
 
   it('List should contain some items', function (done) {
+    config.set('disableLeaderboard', false);
     browser.visit('/', function() {
       var list = browser.queryAll('.trial-list > li');
       assert.isAbove(list.length, 0);
@@ -72,6 +73,7 @@ describe('Add data email link', function() {
   this.timeout(10000);
 
   it('Should be available on index', function (done) {
+    config.set('disableLeaderboard', false);
     browser.visit('/', function() {
       assert.include(browser.html(), link);
       done();
@@ -87,6 +89,7 @@ describe('Access Token', function() {
   this.timeout(5000);
 
   it('Should return 403 Forbidden', function(done) {
+    config.set('disableLeaderboard', false);
     config.set('access:protected', true);
     browser.visit('/', function() {
       assert(browser.statusCode == 403, 'Status should be "403 Forbidden"');
@@ -95,6 +98,7 @@ describe('Access Token', function() {
   });
 
   it('Should allow access after providing access token', function(done) {
+    config.set('disableLeaderboard', false);
     config.set('access:protected', true);
     browser.visit('/', function() {
       browser.fill('#token', config.get('access:token'));
