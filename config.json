@@ -3,7 +3,9 @@
         "protected": false,
         "token": "ACCESS_TOKEN"
     },
-    "disableLeaderboard": false,
+    "disable": {
+      "leaderboard": false
+    },
     "build": {
         "nodeModulesDir": "node_modules",
         "uiDir": "app/client",
