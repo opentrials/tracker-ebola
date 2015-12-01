@@ -14,7 +14,7 @@ module.exports.index = function(req, res) {
       trials: data,
       info: services.utils.collectTrialsInfo(data),
       req: req,
-      disableLeaderboard: !!req.app.get('config').get('disableLeaderboard')
+      disableLeaderboard: !!req.app.get('config').get('disable:leaderboard')
     });
   });
 };

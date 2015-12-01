@@ -56,7 +56,7 @@ describe('List of trials', function() {
   this.timeout(10000);
 
   it('List should contain some items', function (done) {
-    config.set('disableLeaderboard', false);
+    config.set('disable:leaderboard', false);
     browser.visit('/', function() {
       var list = browser.queryAll('.trial-list > li');
       assert.isAbove(list.length, 0);
@@ -73,7 +73,7 @@ describe('Add data email link', function() {
   this.timeout(10000);
 
   it('Should be available on index', function (done) {
-    config.set('disableLeaderboard', false);
+    config.set('disable:leaderboard', false);
     browser.visit('/', function() {
       assert.include(browser.html(), link);
       done();
@@ -89,7 +89,7 @@ describe('Access Token', function() {
   this.timeout(5000);
 
   it('Should return 403 Forbidden', function(done) {
-    config.set('disableLeaderboard', false);
+    config.set('disable:leaderboard', false);
     config.set('access:protected', true);
     config.set('access:token', 'TEST');
     browser.visit('/', function() {
@@ -99,7 +99,7 @@ describe('Access Token', function() {
   });
 
   it('Should allow access after providing access token', function(done) {
-    config.set('disableLeaderboard', false);
+    config.set('disable:leaderboard', false);
     config.set('access:protected', true);
     config.set('access:token', 'TEST');
     browser.visit('/', function() {
@@ -114,10 +114,10 @@ describe('Access Token', function() {
   it('Should disable leaderboard', function(done) {
     config.set('access:protected', false);
 
-    config.set('disableLeaderboard', false);
+    config.set('disable:leaderboard', false);
     browser.visit('/', function() {
       assert(browser.query('.leaderboard'), 'Leaderboard should be present');
-      config.set('disableLeaderboard', true);
+      config.set('disable:leaderboard', true);
       browser.visit('/', function() {
         assert(!browser.query('.leaderboard'), 'Leaderboard should not render');
         done();
