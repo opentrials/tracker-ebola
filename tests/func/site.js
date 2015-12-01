@@ -91,6 +91,7 @@ describe('Access Token', function() {
   it('Should return 403 Forbidden', function(done) {
     config.set('disableLeaderboard', false);
     config.set('access:protected', true);
+    config.set('access:token', 'TEST');
     browser.visit('/', function() {
       assert(browser.statusCode == 403, 'Status should be "403 Forbidden"');
       done();
@@ -100,6 +101,7 @@ describe('Access Token', function() {
   it('Should allow access after providing access token', function(done) {
     config.set('disableLeaderboard', false);
     config.set('access:protected', true);
+    config.set('access:token', 'TEST');
     browser.visit('/', function() {
       browser.fill('#token', config.get('access:token'));
       browser.document.forms[0].submit();
