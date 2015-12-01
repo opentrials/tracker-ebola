@@ -104,8 +104,7 @@ describe('Access Token', function() {
     config.set('access:token', 'TEST');
     browser.visit('/', function() {
       browser.fill('#token', config.get('access:token'));
-      browser.document.forms[0].submit();
-      browser.wait().then(function() {
+      browser.pressButton('Submit', function() {
         assert.ok(browser.success);
         done();
       });

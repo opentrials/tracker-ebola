@@ -3,6 +3,7 @@
         "protected": false,
         "token": "ACCESS_TOKEN"
     },
+    "disableLeaderboard": false,
     "build": {
         "nodeModulesDir": "node_modules",
         "uiDir": "app/client",
