@@ -14,7 +14,7 @@ module.exports = {
 // 1. Config from env (overrides)
 nconf.env({
   separator: '_',
-  lowerCase: true,
+  lowerCase: true
 });
 
 // 2. Config from file (default)

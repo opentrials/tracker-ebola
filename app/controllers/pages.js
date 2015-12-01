@@ -13,7 +13,8 @@ module.exports.index = function(req, res) {
       subtitle: 'A live tracker of Ebola trials',
       trials: data,
       info: services.utils.collectTrialsInfo(data),
-      req: req
+      req: req,
+      disableLeaderboard: !!req.app.get('config').get('disableLeaderboard')
     });
   });
 };
