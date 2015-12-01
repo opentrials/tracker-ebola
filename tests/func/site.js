@@ -108,7 +108,7 @@ describe('Access Token', function() {
       browser.wait().then(function() {
         assert.ok(browser.success);
         done();
-      });
+      }).catch(console.trace.bind(console));
     });
   });
 
