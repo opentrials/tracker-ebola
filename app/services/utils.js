@@ -109,6 +109,7 @@ function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
       temp.month = fromDate % 12;
       temp.quarter = Math.floor((fromDate % 12) / 3);
       result.push(temp);
+      collected.deaths = 0;
       fromDate += increment;
       if (
         (fromDate >= detalizationBreakpoint) &&
