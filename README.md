@@ -1,8 +1,9 @@
-# opentrials-ebola-tracker
+# Ebola Tracker
+
+[![Gitter](https://img.shields.io/gitter/room/opentrials/chat.svg)](https://gitter.im/opentrials/chat)
+[![Shippable](https://img.shields.io/shippable/5604ab341895ca447417f6fe.svg)](https://app.shippable.com/projects/5604ab341895ca447417f6fe)
 
 A mini app to track trials - [link](https://opentrials-tracker.herokuapp.com/).
-
-[![Shippable](https://img.shields.io/shippable/5604ab341895ca447417f6fe.svg)](https://app.shippable.com/projects/5604ab341895ca447417f6fe)
 
 ## Development
 
