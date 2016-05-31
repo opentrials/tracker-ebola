@@ -44,7 +44,7 @@ gulp.task('app.media', distAppMedia);
 
 gulp.task('watch', ['default'], function() {
   gulp.watch([
-    config.get('build:stylesDir') + '/scss/main.scss',
+    config.get('build:stylesDir') + '/scss/**/*.scss',
     __dirname + '/app/client/scripts/*'
   ], ['app.styles', 'app.scripts']);
 });
