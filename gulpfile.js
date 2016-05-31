@@ -32,7 +32,7 @@ gulp.task('default', [
 ]);
 gulp.task('app.scripts', distApplication);
 //gulp.task('app.scripts', distAppScripts);
-gulp.task('app.styles', distAppStyles);
+gulp.task('app.styles', ['app.compileStyles'], distAppStyles);
 gulp.task('app.compileStyles', compileAppStyles);
 gulp.task('app.images', distAppImages);
 gulp.task('app.favicon', distAppIcon);
@@ -41,6 +41,13 @@ gulp.task('vendor.styles', distVendorStyles);
 gulp.task('app.fonts', distAppFonts);
 gulp.task('vendor.fonts', distVendorFonts);
 gulp.task('app.media', distAppMedia);
+
+gulp.task('watch', ['default'], function() {
+  gulp.watch([
+    config.get('build:stylesDir') + '/scss/main.scss',
+    __dirname + '/app/client/scripts/*'
+  ], ['app.styles', 'app.scripts']);
+});
 
 var production = (process.env.NODE_ENV === 'production');
 
