@@ -48,6 +48,21 @@ body {
           }
         }
 
+				.open-menu {
+					float: right;
+					font-size: 1.5em;
+					color: inherit;
+					margin-top: 0.6em;
+
+					span {
+						@include hide-text;
+						display: block;
+					}
+
+					@include media($medium-screen) {
+						display: none;
+					}
+				}
 
         .cd-main-menu {
           position: absolute;
@@ -58,16 +73,19 @@ body {
           text-align: right;
           white-space: nowrap;
 
-          .cd-menu-text {
-            cursor: pointer;
-            display: inline-block;
-            height: 70px;
-            line-height: 70px;
-            text-transform: uppercase;
-            color: #fff;
-            font-weight: bold;
-            margin: 0px 0px 0px 0.5em;
-          }
+					li {
+						display: inline-block;
+						display: inline-block;
+						height: 70px;
+						line-height: 70px;
+						text-transform: uppercase;
+						font-weight: bold;
+						margin: 0px 0px 0px 0.5em;
+
+						a {
+							color: inherit;
+						}
+					}
 
             @include media($medium-screen) {
   			  display: inline-block;
@@ -457,6 +475,34 @@ body {
   }
 }
 
+section.text {
+	& > div {
+		@include outer-container;
+		padding: $base-spacing;
+
+		@include media($medium-screen) {
+				padding-top: $base-spacing * 2;
+				padding-bottom: $base-spacing * 2;
+		}
+
+		h3 {
+				font-size: rem(36);
+		}
+
+		ul {
+			@extend %default-ul;
+		}
+		ol {
+			@extend %default-ol;
+		}
+	}
+
+	&#about {
+		border-top: solid 6px $yellow;
+	}
+}
+
+
 .opentrials {
     background-color: $blue;
     color: #fff;
@@ -473,10 +519,6 @@ body {
         article {
             @include media($medium-screen) {
                 @include span-columns(7);
-            }
-
-            h3 {
-                font-size: rem(36);
             }
 
             & > a {

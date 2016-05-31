@@ -9,14 +9,9 @@
         <small>Powered by Open Trials</small>
       </a>
     </h1>
+    <a href="#menu" class="open-menu">&#9776;<span> Menu</span></a>
     <nav class="cd-main-menu">
-      <label for="about-page-modal" class="cd-menu-text">About</label>
-      <a class="cd-menu-text" href="mailto:{{ email }}?subject=Data for the Ebola Trials Tracker" target="_blank">
-        <span class="cd-menu-text">Something Missing?</span>
-      </a>
-      <a class="cd-menu-text" href="https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/edit#gid=1189650096" target="_blank">
-        <span class="cd-menu-text">Raw Data</span>
-      </a>
+      {% include "partials/menu.html" %}
     </nav>
   </div>
 </header>

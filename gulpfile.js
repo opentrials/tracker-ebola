@@ -185,7 +185,8 @@ function distVendorStyles() {
   return gulp
     .src([
       //config.get('build:nodeModulesDir') + '/bootstrap/dist/css/bootstrap.min.css',
-      config.get('build:nodeModulesDir') + '/c3/c3.min.css'
+      config.get('build:nodeModulesDir') + '/c3/c3.min.css',
+      config.get('build:stylesDir') + '/jquery.mmenu.all.css'
     ])
     .pipe(concat(config.get('build:vendorCSS')))
     .pipe(gulp.dest(config.get('build:publicStylesDir')));

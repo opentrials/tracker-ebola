@@ -19,11 +19,16 @@
 
 <body>
 
-{% include "partials/header.html" %}
-<main class="cd-main-content">
-  {% block content %}{% endblock %}
-  {% include "partials/footer.html" %}
-</main>
+  <div id="page">
+    {% include "partials/header.html" %}
+    <main class="cd-main-content">
+      {% block content %}{% endblock %}
+      {% include "partials/footer.html" %}
+    </main>
+  </div>
+  <nav id="menu">
+    {% include "partials/menu.html" %}
+  </nav>
 
 <!-- Libraries & application -->
 <script src="/scripts/vendor.min.js"></script>
