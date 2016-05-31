@@ -62,7 +62,8 @@
     "config": "less config.json",
     "coverage": "istanbul cover _mocha -- tests --recursive --reporter=xunit-file",
     "develop": "WATCH=true gulp & npm start",
-    "frontend": "gulp app.compileStyles && gulp app.styles app.scripts && npm start",
+    "frontend": "gulp app.styles app.scripts && npm start",
+    "watch": "gulp watch & npm start",
     "review": "jscs app",
     "start": "node server.js",
     "test": "mocha --recursive tests"
