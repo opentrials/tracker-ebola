@@ -188,7 +188,7 @@ body {
 
 		label[for=share-modal] {
 			font-size: rem(14);
-			
+
 			@include media($medium-screen) {
 				position: absolute;
 				top: $base-spacing;
