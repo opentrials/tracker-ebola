@@ -173,12 +173,6 @@ body {
     padding: $base-spacing;
     text-align: center;
 
-	.graph-header {
-		@include media($medium-screen) {
-			text-align: right;
-		}
-	}
-
     @include media($max-width) {
         margin-top: -75px;
         min-height: 75px;
@@ -194,6 +188,16 @@ body {
 				top: $base-spacing;
 				right: $base-spacing;
 			}
+		}
+
+		.trials-chart-wrapper {
+			overflow-x: auto;
+			clear: both;
+
+			iframe {
+				min-width: 400px;
+			}
+
 		}
 }
 
