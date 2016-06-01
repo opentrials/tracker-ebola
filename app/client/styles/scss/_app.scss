@@ -636,11 +636,14 @@ section.text {
     float: right;
     white-space: nowrap;
     li {
-      display: inline-block;
-      height: 50px;
-      line-height: 50px;
-      margin-left: 1em;
       font-size: 0.9em;
+
+			@include media($medium-screen) {
+	      display: inline-block;
+				height: 50px;
+	      line-height: 50px;
+	      margin-left: 1em;
+			}
 
       &:first-child {
         margin-left: 0;
