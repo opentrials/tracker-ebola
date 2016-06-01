@@ -610,7 +610,7 @@ section.text {
   }
 
   hr {
-    border-color: $blue;
+    border-color: rgba(255, 255, 255, 0.3);
 	margin-top: $small-spacing / 2;
 	margin-bottom: $small-spacing;
   }
