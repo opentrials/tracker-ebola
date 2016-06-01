@@ -44,9 +44,9 @@ $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $l
 
 // breakpoints
 
-$S:     320px; 
-$M:     em(640);     
-$L:     em(860); 
+$S:     320px;
+$M:     em(640);
+$L:     em(860);
 
 // colors
 
@@ -57,18 +57,18 @@ $color-1: $dark-gray;
 $color-2: $base-font-color;
 $color-3: $medium-gray;
 
-// fonts 
+// fonts
 
 $primary-font: $base-font-family;
 
-// z-index 
+// z-index
 
 $header-zindex: 3;
 $secondary-nav: 1;
 $content-zindex: 2;
 
 
-// header height 
+// header height
 
 $header-S: 44px;
 $header-M: 70px;
