@@ -180,10 +180,21 @@ body {
 	}
 
     @include media($max-width) {
-        top: -75px;
+        margin-top: -75px;
         min-height: 75px;
         border-radius: $base-border-radius $base-border-radius 0 0;
     }
+
+
+		label[for=share-modal] {
+			font-size: rem(14);
+			
+			@include media($medium-screen) {
+				position: absolute;
+				top: $base-spacing;
+				right: $base-spacing;
+			}
+		}
 }
 
 .leaderboard {
@@ -667,6 +678,7 @@ section.text {
   padding: 0.7em 1em;
   background: $dark-gray;
   color: #fff;
+	margin-bottom: $base-spacing;
 
   h4 {
 	  margin-bottom: 0.1em;
