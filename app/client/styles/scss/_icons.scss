@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?mwzrra');
-	src:url('fonts/icomoon.eot?mwzrra#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?mwzrra') format('truetype'),
-		url('fonts/icomoon.woff?mwzrra') format('woff'),
-		url('fonts/icomoon.svg?mwzrra#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?se9sau');
+	src:url('fonts/icomoon.eot?se9sau#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?se9sau') format('truetype'),
+		url('fonts/icomoon.woff?se9sau') format('woff'),
+		url('fonts/icomoon.svg?se9sau#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -27,30 +27,36 @@
     @include icon-font();
 }
 
+.icon-envelope:before {
+    content: "\e900";
+}
+.icon-link-external:before {
+    content: "\e901";
+}
 .icon-facebook:before {
-	content: "\e805";
+    content: "\e805";
 }
 .icon-person:before {
-	content: "\e800";
+    content: "\e800";
 }
 .icon-share:before {
-	content: "\e806";
+    content: "\e806";
 }
 .icon-stopwatch:before {
-	content: "\e802";
+    content: "\e802";
 }
 .icon-creative-commons-attribution:before {
-	content: "\e803";
+    content: "\e803";
 }
 .icon-creative-commons:before {
-	content: "\e804";
+    content: "\e804";
 }
 .icon-cross:before {
-	content: "\e807";
+    content: "\e807";
 }
 .icon-play:before {
-	content: "\e801";
+    content: "\e801";
 }
 .icon-twitter:before {
-	content: "\e808";
+    content: "\e808";
 }

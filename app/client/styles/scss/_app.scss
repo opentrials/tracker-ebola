@@ -270,234 +270,243 @@ body {
         .trial-list {
             & > li {
                 background-color: #fff;
-                @include fill-parent();
-                @include row(table);
-                background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P8+vXrfwAJpgPg8gE+iwAAAABJRU5ErkJggg==);
-                background-repeat: repeat-y;
-                background-position: 75.1% top;
                 border-radius: $base-border-radius;
                 overflow: hidden;
-                border-left: solid em(7) $green;
+                border-top: solid em(7) $green;
+								border-bottom: solid em(7) $green;
                 margin-bottom: $small-spacing;
 
-                @include media($large-screen) {
-                    background-position: 83.4% top;
-                }
+								@include media($large-screen) {
+									border-top: none;
+									border-bottom: none;
+									border-left: solid em(7) $green;
+									margin-bottom: $base-spacing;
+								}
+
                 @include media($max-width) {
                     width: $max-width;
                     margin-left: - ($gutter - em(3));
                     margin-right: - $gutter;
                 }
 
+								a {
+									color: inherit;
+								}
+
+								.days {
+									background-color: $green;
+									padding: $small-spacing $base-spacing 0 $base-spacing;
+									color: #fff;
+
+									@include media($large-screen) {
+										background-color: inherit;
+										color: inherit;
+										float: right;
+										color: inherit;
+										line-height: 1;
+										padding: $base-spacing;
+
+										&:before {
+											@include icon-font();
+											content: "\e802";
+											float: left;
+											font-size: 2em;
+										}
+									}
+
+									p {
+										font-weight: bold;
+										margin: 0;
+										font-size: 1.1em;
+
+										@include media($large-screen) {
+											margin-left: 2em;
+
+											span {
+												display: block;
+												font-size: 0.9em;
+											}
+										}
+
+										span {
+											font-weight: normal;
+										}
+									}
+								}
+
+								.status {
+									background-color: $green;
+									color: #fff;
+									display: block;
+									padding: 0 $base-spacing $small-spacing $base-spacing;
+									font-weight: bold;
+
+									@include media($large-screen) {
+										display: inline-block;
+										padding: $small-spacing $base-spacing;
+									}
+
+									span {
+										font-size: 1.1em;
+									}
+								}
+
                 .description {
-                    @include span-columns(9);
-                    padding: ($gutter - em(7));
-                    vertical-align: middle;
+									padding: $small-spacing $base-spacing;
 
-                    @include media($large-screen) {
-                        @include span-columns(10);
-                    }
+									@include media($large-screen) {
+										border-bottom: solid 1px $light-gray;
+									}
 
-                    h4 {
-                        font-size: 22px;
-                        display: block;
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        margin-right: 170px;
-                    }
-
-                    .id {
-                        font-size: 12px;
-                        background-color: $base-font-color;
-                        color: #fff;
-                        padding: $small-spacing / 3 $small-spacing;
-                        display: inline-block;
-                        border-radius: $base-border-radius;
-                        float: right;
-                    }
-
-                  ul {
-                    list-style: none;
-                    margin-top: 0.7em;
-
-                    li {
-                      $line-limit: 2;
-
-                      display: block;
-                      list-style: none;
-                      margin: 0.2em 0;
-                      box-sizing: border-box;
-
-                      &.clamp {
-                        overflow: hidden;
-                        line-height: 1.5em;
-                        max-height: 1.5em * $line-limit;
-                        white-space: normal;
-
-                        /* Opera 12- */
-                        -o-text-overflow: -o-ellipsis-lastline;
-                        text-overflow: -o-ellipsis-lastline;
-
-                        @supports (-webkit-line-clamp: $line-limit) {
-
-                          & {
-                            /* Chrome, Safari, Opera 15+ */
-                            display: -webkit-box;
-                            -webkit-line-clamp: $line-limit;
-                            -webkit-box-orient: vertical;
-                          }
-
-                        }
-
-                      }
-
-                      &.status {
-                        font-weight: bold;
-
-                        span {
-                          background-color: lighten($green, 40%);
-                          padding: 0.2em;
-                        }
-
-                        div {
-                          margin-top: 0.5em;
-
-                          a {
-                            font-weight: normal;
-                            font-size: 80%;
-                            color: $red;
-                            text-decoration: underline;
-
-                            &:hover {
-                              color: darken($red, 20%);
-                            }
-                          }
-                        }
-                      }
-
-                      span {
-                        padding: 0.2em 0;
-                        box-sizing: border-box;
-                      }
-                    }
+                  h4 {
+                      font-size: 22px;
                   }
 
-                    p {
-                        margin-top: 8px;
-                        margin-bottom: 0;
-                        font-size: rem(15);
-                    }
+									ul {
+										@include media($large-screen) {
+											&:first-of-type {
+												//pills
+												margin-bottom: $small-spacing;
+
+												li {
+													display: inline-block;
+												}
+
+												dl {
+
+													background-color: $dark-gray;
+													color: #fff;
+													border-radius: $base-border-radius;
+													font-size: em(13);
+													padding: $small-spacing / 3 $small-spacing;
+													margin-bottom: $small-spacing;
+													margin-right: $small-spacing / 2;
+
+													dt,
+													dd {
+														display: inline;
+													}
+												}
+											}
+										}
+
+									}
+
+									dl {
+										margin: 0;
+										padding: 0;
+
+										dt,
+										dd {
+											margin: 0;
+										}
+										dt {
+											float: left;
+											clear: left;
+
+											&:after {
+												content: ': \00a0';
+											}
+										}
+
+										dd {
+											margin-bottom: 0.5em;
+										}
+									}
                 }
 
-                .stats {
-                    @include span-columns(3);
+								.links {
+									padding-bottom: $small-spacing;
 
-                    @include media($large-screen) {
-                        @include span-columns(2);
-                    }
+									li {
+										padding: $small-spacing /4 $base-spacing;
+										border-top: dotted 1px rgba($green, 0.3);
 
-                    @include reset-display;
-                    height: 150px;
-                    vertical-align: top;
+										&:first-child {
+											padding-top: $small-spacing /2;
+										}
 
-                    & > div {
-                        display: block;
-                        font-weight: bold;
+										@include media($large-screen) {
+											padding-top: $small-spacing;
+										}
 
-                        p {
-                            margin: 0;
-                            text-align: center;
-                            padding: 10px;
-                            line-height: 1.1;
+										&.external,
+										&.email {
+											a {
+												margin-left: 1.1em;
+												display: block;
+												font-size: em(15);
 
-                            @include media($medium-screen) {
-                                margin-left: 40px;
-                                text-align: left;
-                                padding-top: 19px;
-                                font-size: 18px;
-                            }
+												@include media($large-screen) {
+													line-height: 1.1;
+												}
 
-                            &:before {
-                                @include icon-font();
-                                display: block;
-                                font-size: 24px;
-                                text-align: center;
+												&:before {
+													display: inline-block;
+													width: 1.3em;
+													@include icon-font();
+													content: "\e901";
+													margin-left: -1.1em;
+												}
+											}
+										}
+										&.email {
+											a {
+												&:before {
+													content: "\e900";
+												}
+											}
+										}
+									}
+									@include media($large-screen) {
+										padding-bottom: 0;
 
-                                @include media($medium-screen) {
-                                    float: left;
-                                    font-size: 31px;
-                                    margin-top: 2px;
-                                    margin-left: -42px;
-                                    width: 40px;
-                                }
-                            }
+										li {
+											display: inline-block;
+											border: none;
+											padding-right: 0;
+											padding-bottom: $small-spacing;
+										}
+									}
+								}
 
-                            span {
-                                display: none;
-                                font-weight: normal;
-                                font-size: 12px;
+								@mixin status($bg_colour, $fg_colour:#fff, $link_colour:$bg_colour) {
+									border-color: $bg_colour;
 
-                                @include media($medium-screen) {
-                                    display: block;
-                                }
-                            }
-                        }
+									.days {
+										background-color: $bg_colour;
+										color: $fg_colour;
 
-                        &.days {
-                            background-color: $green;
-                            color: #fff;
+										@include media($large-screen) {
+											background-color: inherit;
+										}
+									}
+									.status {
+										background-color: $bg_colour;
+										color: $fg_colour;
+									}
+									a {
+										color: $link_colour;
+									}
+									.links {
 
-                            p {
-                                &:before {
-                                    content: "\e802";
-                                }
-                            }
-
-							@include media($medium-screen) {
-	                            min-height: 52%;
-	                        }
-                        }
-
-                        &.participants {
-                            p {
-                                &:before {
-                                    content: "\e800";
-
-                                    @include media($medium-screen) {
-                                        font-size: 32px;
-                                        margin-top: 1px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+										li {
+											border-top-color: rgba($bg_colour, 0.3);
+										}
+									}
+								}
 
                 &.no-results {
-                    border-left-color: $red;
-
-                    div.days {
-                        background-color: $red;
-                    }
-
-                    ul li.status span {
-                      background-color: lighten($red, 40%);
-                    }
+									@include status($red);
+									.days {
+										@include media($large-screen) {
+											color: $red;
+										}
+									}
                 }
 
                 &.ongoing {
-                    border-left-color: $yellow;
-
-
-                    ul li.status span {
-                      background-color: lighten($yellow, 17%);
-                    }
-
-                    div.days {
-                        background-color: $yellow;
-                        color: $base-font-color;
-                    }
+									@include status($yellow, inherit, inherit);
                 }
             }
         }
