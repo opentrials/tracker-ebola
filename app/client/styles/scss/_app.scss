@@ -199,6 +199,58 @@ body {
             @include round-button(#fff);
             margin-top: 10px;
         }
+
+				.cta {
+					clear: both;
+					li {
+						display: block;
+
+						a {
+	            @include round-button(#fff);
+	            margin-top: 10px;
+							display: block;
+		        }
+
+						@include media($medium-screen) {
+							display: inline-block;
+
+							a {
+								display: inline-block;
+							}
+						}
+
+						&:first-child {
+							a {
+								background-color: #fff;
+								color: $dark-gray;
+
+								@include media($medium-screen) {
+									border-top-right-radius: 0;
+									border-bottom-right-radius: 0;
+								}
+
+								&:hover {
+									background-color: $yellow;
+									border-color: $yellow;
+								}
+							}
+						}
+						&:last-child {
+							a {
+								@include media($medium-screen) {
+									border-top-left-radius: 0;
+									border-bottom-left-radius: 0;
+								}
+
+								&:hover {
+									background-color: $blue;
+									border-color: $blue;
+									color: #fff;
+								}
+							}
+						}
+					}
+				}
     }
 }
 
