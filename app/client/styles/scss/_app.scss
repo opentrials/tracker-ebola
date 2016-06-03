@@ -11,20 +11,23 @@ body {
     background-color: #fff;
 }
 
+#ok-panel {
+	.container {
+		@include outer-container;
+	}
+}
+
 .site-header {
     background-color: $dark-gray;
     color: #fff;
 
     & > div {
         @include outer-container;
-
-        height: 70px;
         position: relative;
 
         h1 {
             display: inline-block;
             vertical-align: middle;
-          position: absolute;
           left: 0px;
             text-align: left;
             margin-top: 0;
@@ -101,14 +104,13 @@ body {
 
 					}
 
-					@include media($large-screen) {
+					@include media($max-width) {
 						display: none;
 					}
 				}
 
         .cd-main-menu {
-          position: absolute;
-          right: 0px;
+					float: right;
           display: none;
           height: 70px;
           line-height: 70px;
@@ -128,12 +130,17 @@ body {
 						}
 					}
 
-          @include media($large-screen) {
+          @include media($max-width) {
   			  	display: inline-block;
           }
         }
-
     }
+
+		#ok-panel-wrapper {
+			@media (min-width: 576px) {
+				float: right;
+			}
+		}
 }
 
 .banner {
