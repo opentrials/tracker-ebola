@@ -1,5 +1,6 @@
 ;(function($, undefined) {
 
+  // scroll to achors
   $(function() {
     smoothScroll.init({
       updateURL: false
@@ -7,6 +8,7 @@
   });
 
 
+  // mobile menu
   $(function() {
 		var $menu = $('nav#menu'),
 			$html = $('html, body');
