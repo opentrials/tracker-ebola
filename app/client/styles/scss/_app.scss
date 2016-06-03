@@ -139,6 +139,7 @@ body {
 		#ok-panel-wrapper {
 			@media (min-width: 576px) {
 				float: right;
+				margin-left: $small-spacing;
 			}
 		}
 }
