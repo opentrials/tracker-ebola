@@ -11,36 +11,48 @@ body {
     background-color: #fff;
 }
 
+#ok-panel {
+	.container {
+		@include outer-container;
+	}
+}
+
 .site-header {
     background-color: $dark-gray;
     color: #fff;
 
     & > div {
         @include outer-container;
-
-        height: 70px;
         position: relative;
 
         h1 {
             display: inline-block;
             vertical-align: middle;
-          position: absolute;
           left: 0px;
             text-align: left;
             margin-top: 0;
             margin-bottom: 0;
             height: 70px;
-            line-height: 70px;
-          padding-top: 0.3em;
+          line-height: 1.2;
+          padding-top: 0.6em;
+          padding-left: $small-spacing;
+          font-size: em(22);
 
-            @include media($medium-screen) {
-                font-size: 28px;
-            }
-
-          span, small {
-            display: block;
-            line-height: normal;
+          @include media($medium-screen) {
+	          padding-top: 0.4em;
+	          font-size: em(26);
           }
+
+					img {
+						width: 135px;
+						opacity: 0.8;
+						display: block;
+						margin: -1px 0 0 1px;
+
+						@include media($medium-screen) {
+							width: 158px;
+						}
+					}
 
           small {
             font-size: 0.5em;
@@ -48,33 +60,88 @@ body {
           }
         }
 
+				.open-menu {
+					float: right;
+					margin: 0.8em $small-spacing 0 0;
+					display: block;
+				  position: relative;
+				  overflow: hidden;
+				  padding: 0;
+				  width: 40px;
+				  height: 40px;
+				  text-indent: -9999px;
+				  cursor: pointer;
+
+					span {
+						display: block;
+					  position: absolute;
+					  top: 19px;
+					  left: 8px;
+					  right: 8px;
+					  height: 3px;
+					  background: white;
+						border-radius: 2px;
+					  font-size: 0;
+
+						&:before,
+						&:after {
+						  position: absolute;
+						  display: block;
+						  left: 0;
+						  width: 100%;
+						  height: 3px;
+						  background-color: #fff;
+						  content: "";
+							border-radius: 2px;
+						}
+
+						&:before {
+						  top: -7px;
+						}
+						&:after {
+						  bottom: -7px;
+						}
+
+					}
+
+					@include media($max-width) {
+						display: none;
+					}
+				}
 
         .cd-main-menu {
-          position: absolute;
-          right: 0px;
+					float: right;
           display: none;
           height: 70px;
           line-height: 70px;
           text-align: right;
           white-space: nowrap;
+					margin-right: $small-spacing;
 
-          .cd-menu-text {
-            cursor: pointer;
-            display: inline-block;
-            height: 70px;
-            line-height: 70px;
-            text-transform: uppercase;
-            color: #fff;
-            font-weight: bold;
-            margin: 0px 0px 0px 0.5em;
+					li {
+						display: inline-block;
+						display: inline-block;
+						height: 70px;
+						line-height: 70px;
+						margin: 0px 0px 0px $small-spacing;
+
+						a {
+							color: inherit;
+						}
+					}
+
+          @include media($max-width) {
+  			  	display: inline-block;
           }
-
-            @include media($medium-screen) {
-  			  display: inline-block;
-            }
         }
-
     }
+
+		#ok-panel-wrapper {
+			@media (min-width: 576px) {
+				float: right;
+				margin-left: $small-spacing;
+			}
+		}
 }
 
 .banner {
@@ -91,7 +158,12 @@ body {
     header {
         @include outer-container;
         text-align: center;
-        padding: 40px $base-spacing $base-spacing  $base-spacing;
+        padding: $base-spacing;
+
+				@include media($medium-screen) {
+					padding-top: $base-spacing * 2;
+					padding-bottom: $base-spacing * 2;
+				}
 
         h2,
         p {
@@ -102,10 +174,11 @@ body {
         }
 
         h2 {
-            font-size: rem(36);
+            font-size: rem(28);
             margin-bottom: 0.5em;
 
             @include media($medium-screen) {
+							font-size: rem(36);
                 span {
                     display: block;
                 }
@@ -113,16 +186,71 @@ body {
         }
 
         p {
-            font-size: rem(22);
+            font-size: rem(18);
             font-weight: 500;
             line-height: 1.3;
+
+						@include media($medium-screen) {
+							font-size: rem(22);
+						}
         }
 
         & > a {
             @include round-button(#fff);
             margin-top: 10px;
-            margin-bottom: 15px;
         }
+
+				.cta {
+					clear: both;
+					li {
+						display: block;
+
+						a {
+	            @include round-button(#fff);
+	            margin-top: 10px;
+							display: block;
+		        }
+
+						@include media($medium-screen) {
+							display: inline-block;
+
+							a {
+								display: inline-block;
+							}
+						}
+
+						&:first-child {
+							a {
+								background-color: #fff;
+								color: $dark-gray;
+
+								@include media($medium-screen) {
+									border-top-right-radius: 0;
+									border-bottom-right-radius: 0;
+								}
+
+								&:hover {
+									background-color: $yellow;
+									border-color: $yellow;
+								}
+							}
+						}
+						&:last-child {
+							a {
+								@include media($medium-screen) {
+									border-top-left-radius: 0;
+									border-bottom-left-radius: 0;
+								}
+
+								&:hover {
+									background-color: $blue;
+									border-color: $blue;
+									color: #fff;
+								}
+							}
+						}
+					}
+				}
     }
 }
 
@@ -134,17 +262,32 @@ body {
     padding: $base-spacing;
     text-align: center;
 
-	.graph-header {
-		@include media($medium-screen) {
-			text-align: right;
-		}
-	}
-
     @include media($max-width) {
-        top: -75px;
+        margin-top: -75px;
         min-height: 75px;
         border-radius: $base-border-radius $base-border-radius 0 0;
     }
+
+
+		label[for=share-modal] {
+			font-size: rem(14);
+
+			@include media($medium-screen) {
+				position: absolute;
+				top: $base-spacing;
+				right: $base-spacing;
+			}
+		}
+
+		.trials-chart-wrapper {
+			overflow-x: auto;
+			clear: both;
+
+			iframe {
+				min-width: 400px;
+			}
+
+		}
 }
 
 .leaderboard {
@@ -155,7 +298,14 @@ body {
       color: #000;
       padding: 0.3em 0.7em;
       border-radius: 5px;
-      float: right;
+			display: block;
+			text-align: center;
+			margin-bottom: $base-spacing;
+
+			@include media($medium-screen) {
+	      float: right;
+				margin-bottom: 0;
+			}
 
       &:hover, &active {
         color: #000;
@@ -178,234 +328,243 @@ body {
         .trial-list {
             & > li {
                 background-color: #fff;
-                @include fill-parent();
-                @include row(table);
-                background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P8+vXrfwAJpgPg8gE+iwAAAABJRU5ErkJggg==);
-                background-repeat: repeat-y;
-                background-position: 75.1% top;
                 border-radius: $base-border-radius;
                 overflow: hidden;
-                border-left: solid em(7) $green;
+                border-top: solid em(7) $green;
+								border-bottom: solid em(7) $green;
                 margin-bottom: $small-spacing;
 
-                @include media($large-screen) {
-                    background-position: 83.4% top;
-                }
+								@include media($large-screen) {
+									border-top: none;
+									border-bottom: none;
+									border-left: solid em(7) $green;
+									margin-bottom: $base-spacing;
+								}
+
                 @include media($max-width) {
                     width: $max-width;
                     margin-left: - ($gutter - em(3));
                     margin-right: - $gutter;
                 }
 
+								a {
+									color: inherit;
+								}
+
+								.days {
+									background-color: $green;
+									padding: $small-spacing $base-spacing 0 $base-spacing;
+									color: #fff;
+
+									@include media($large-screen) {
+										background-color: inherit;
+										color: inherit;
+										float: right;
+										color: inherit;
+										line-height: 1;
+										padding: $base-spacing;
+
+										&:before {
+											@include icon-font();
+											content: "\e802";
+											float: left;
+											font-size: 2em;
+										}
+									}
+
+									p {
+										font-weight: bold;
+										margin: 0;
+										font-size: 1.1em;
+
+										@include media($large-screen) {
+											margin-left: 2em;
+
+											span {
+												display: block;
+												font-size: 0.9em;
+											}
+										}
+
+										span {
+											font-weight: normal;
+										}
+									}
+								}
+
+								.status {
+									background-color: $green;
+									color: #fff;
+									display: block;
+									padding: 0 $base-spacing $small-spacing $base-spacing;
+									font-weight: bold;
+
+									@include media($large-screen) {
+										display: inline-block;
+										padding: $small-spacing $base-spacing;
+									}
+
+									span {
+										font-size: 1.1em;
+									}
+								}
+
                 .description {
-                    @include span-columns(9);
-                    padding: ($gutter - em(7));
-                    vertical-align: middle;
+									padding: $small-spacing $base-spacing;
 
-                    @include media($large-screen) {
-                        @include span-columns(10);
-                    }
+									@include media($large-screen) {
+										border-bottom: solid 1px $light-gray;
+									}
 
-                    h4 {
-                        font-size: 22px;
-                        display: block;
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        margin-right: 170px;
-                    }
-
-                    .id {
-                        font-size: 12px;
-                        background-color: $base-font-color;
-                        color: #fff;
-                        padding: $small-spacing / 3 $small-spacing;
-                        display: inline-block;
-                        border-radius: $base-border-radius;
-                        float: right;
-                    }
-
-                  ul {
-                    list-style: none;
-                    margin-top: 0.7em;
-
-                    li {
-                      $line-limit: 2;
-
-                      display: block;
-                      list-style: none;
-                      margin: 0.2em 0;
-                      box-sizing: border-box;
-
-                      &.clamp {
-                        overflow: hidden;
-                        line-height: 1.5em;
-                        max-height: 1.5em * $line-limit;
-                        white-space: normal;
-
-                        /* Opera 12- */
-                        -o-text-overflow: -o-ellipsis-lastline;
-                        text-overflow: -o-ellipsis-lastline;
-
-                        @supports (-webkit-line-clamp: $line-limit) {
-
-                          & {
-                            /* Chrome, Safari, Opera 15+ */
-                            display: -webkit-box;
-                            -webkit-line-clamp: $line-limit;
-                            -webkit-box-orient: vertical;
-                          }
-
-                        }
-
-                      }
-
-                      &.status {
-                        font-weight: bold;
-
-                        span {
-                          background-color: lighten($green, 40%);
-                          padding: 0.2em;
-                        }
-
-                        div {
-                          margin-top: 0.5em;
-
-                          a {
-                            font-weight: normal;
-                            font-size: 80%;
-                            color: $red;
-                            text-decoration: underline;
-
-                            &:hover {
-                              color: darken($red, 20%);
-                            }
-                          }
-                        }
-                      }
-
-                      span {
-                        padding: 0.2em 0;
-                        box-sizing: border-box;
-                      }
-                    }
+                  h4 {
+                      font-size: 22px;
                   }
 
-                    p {
-                        margin-top: 8px;
-                        margin-bottom: 0;
-                        font-size: rem(15);
-                    }
+									ul {
+										@include media($large-screen) {
+											&:first-of-type {
+												//pills
+												margin-bottom: $small-spacing;
+
+												li {
+													display: inline-block;
+												}
+
+												dl {
+
+													background-color: $dark-gray;
+													color: #fff;
+													border-radius: $base-border-radius;
+													font-size: em(13);
+													padding: $small-spacing / 3 $small-spacing;
+													margin-bottom: $small-spacing;
+													margin-right: $small-spacing / 2;
+
+													dt,
+													dd {
+														display: inline;
+													}
+												}
+											}
+										}
+
+									}
+
+									dl {
+										margin: 0;
+										padding: 0;
+
+										dt,
+										dd {
+											margin: 0;
+										}
+										dt {
+											float: left;
+											clear: left;
+
+											&:after {
+												content: ': \00a0';
+											}
+										}
+
+										dd {
+											margin-bottom: 0.5em;
+										}
+									}
                 }
 
-                .stats {
-                    @include span-columns(3);
+								.links {
+									padding-bottom: $small-spacing;
 
-                    @include media($large-screen) {
-                        @include span-columns(2);
-                    }
+									li {
+										padding: $small-spacing /4 $base-spacing;
+										border-top: dotted 1px rgba($green, 0.3);
 
-                    @include reset-display;
-                    height: 150px;
-                    vertical-align: top;
+										&:first-child {
+											padding-top: $small-spacing /2;
+										}
 
-                    & > div {
-                        display: block;
-                        font-weight: bold;
+										@include media($large-screen) {
+											padding-top: $small-spacing;
+										}
 
-                        p {
-                            margin: 0;
-                            text-align: center;
-                            padding: 10px;
-                            line-height: 1.1;
+										&.external,
+										&.email {
+											a {
+												margin-left: 1.1em;
+												display: block;
+												font-size: em(15);
 
-                            @include media($medium-screen) {
-                                margin-left: 40px;
-                                text-align: left;
-                                padding-top: 19px;
-                                font-size: 18px;
-                            }
+												@include media($large-screen) {
+													line-height: 1.1;
+												}
 
-                            &:before {
-                                @include icon-font();
-                                display: block;
-                                font-size: 24px;
-                                text-align: center;
+												&:before {
+													display: inline-block;
+													width: 1.3em;
+													@include icon-font();
+													content: "\e901";
+													margin-left: -1.1em;
+												}
+											}
+										}
+										&.email {
+											a {
+												&:before {
+													content: "\e900";
+												}
+											}
+										}
+									}
+									@include media($large-screen) {
+										padding-bottom: 0;
 
-                                @include media($medium-screen) {
-                                    float: left;
-                                    font-size: 31px;
-                                    margin-top: 2px;
-                                    margin-left: -42px;
-                                    width: 40px;
-                                }
-                            }
+										li {
+											display: inline-block;
+											border: none;
+											padding-right: 0;
+											padding-bottom: $small-spacing;
+										}
+									}
+								}
 
-                            span {
-                                display: none;
-                                font-weight: normal;
-                                font-size: 12px;
+								@mixin status($bg_colour, $fg_colour:#fff, $link_colour:$bg_colour) {
+									border-color: $bg_colour;
 
-                                @include media($medium-screen) {
-                                    display: block;
-                                }
-                            }
-                        }
+									.days {
+										background-color: $bg_colour;
+										color: $fg_colour;
 
-                        &.days {
-                            background-color: $green;
-                            color: #fff;
+										@include media($large-screen) {
+											background-color: inherit;
+										}
+									}
+									.status {
+										background-color: $bg_colour;
+										color: $fg_colour;
+									}
+									a {
+										color: $link_colour;
+									}
+									.links {
 
-                            p {
-                                &:before {
-                                    content: "\e802";
-                                }
-                            }
-
-							@include media($medium-screen) {
-	                            min-height: 52%;
-	                        }
-                        }
-
-                        &.participants {
-                            p {
-                                &:before {
-                                    content: "\e800";
-
-                                    @include media($medium-screen) {
-                                        font-size: 32px;
-                                        margin-top: 1px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+										li {
+											border-top-color: rgba($bg_colour, 0.3);
+										}
+									}
+								}
 
                 &.no-results {
-                    border-left-color: $red;
-
-                    div.days {
-                        background-color: $red;
-                    }
-
-                    ul li.status span {
-                      background-color: lighten($red, 40%);
-                    }
+									@include status($red);
+									.days {
+										@include media($large-screen) {
+											color: $red;
+										}
+									}
                 }
 
                 &.ongoing {
-                    border-left-color: $yellow;
-
-
-                    ul li.status span {
-                      background-color: lighten($yellow, 17%);
-                    }
-
-                    div.days {
-                        background-color: $yellow;
-                        color: $base-font-color;
-                    }
+									@include status($yellow, inherit, inherit);
                 }
             }
         }
@@ -457,6 +616,34 @@ body {
   }
 }
 
+section.text {
+	& > div {
+		@include outer-container;
+		padding: $base-spacing;
+
+		@include media($medium-screen) {
+				padding-top: $base-spacing * 2;
+				padding-bottom: $base-spacing * 2;
+		}
+
+		h3 {
+				font-size: rem(36);
+		}
+
+		ul {
+			@extend %default-ul;
+		}
+		ol {
+			@extend %default-ol;
+		}
+	}
+
+	&#about {
+		border-top: solid 6px $yellow;
+	}
+}
+
+
 .opentrials {
     background-color: $blue;
     color: #fff;
@@ -473,10 +660,6 @@ body {
         article {
             @include media($medium-screen) {
                 @include span-columns(7);
-            }
-
-            h3 {
-                font-size: rem(36);
             }
 
             & > a {
@@ -536,7 +719,7 @@ body {
   }
 
   hr {
-    border-color: $blue;
+    border-color: rgba(255, 255, 255, 0.3);
 	margin-top: $small-spacing / 2;
 	margin-bottom: $small-spacing;
   }
@@ -562,11 +745,14 @@ body {
     float: right;
     white-space: nowrap;
     li {
-      display: inline-block;
-      height: 50px;
-      line-height: 50px;
-      margin-left: 1em;
       font-size: 0.9em;
+
+			@include media($medium-screen) {
+	      display: inline-block;
+				height: 50px;
+	      line-height: 50px;
+	      margin-left: 1em;
+			}
 
       &:first-child {
         margin-left: 0;
@@ -604,6 +790,7 @@ body {
   padding: 0.7em 1em;
   background: $dark-gray;
   color: #fff;
+	margin-bottom: $base-spacing;
 
   h4 {
 	  margin-bottom: 0.1em;

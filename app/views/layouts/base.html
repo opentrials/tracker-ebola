@@ -10,6 +10,7 @@
 
   <!-- Application -->
   <link rel="stylesheet" type="text/css" href="/styles/vendor.min.css">
+  <link rel="stylesheet" href="//a.okfn.org/html/oki/panel/assets/css/frontend.css"/>
   <link rel="stylesheet" type="text/css" href="/styles/app.min.css">
 
   <!-- Icons -->
@@ -18,15 +19,23 @@
 </head>
 
 <body>
+  <div id="ok-panel" class="closed"><div class="container"><iframe src="//a.okfn.org/html/oki/panel/panel.html" scrolling="no"></iframe></div></div>
 
-{% include "partials/header.html" %}
-<main class="cd-main-content">
-  {% block content %}{% endblock %}
-  {% include "partials/footer.html" %}
-</main>
+  <div id="page">
+    {% include "partials/header.html" %}
+    <main class="cd-main-content">
+      {% block content %}{% endblock %}
+      {% include "partials/footer.html" %}
+    </main>
+  </div>
+  <nav id="menu">
+    {% include "partials/menu.html" %}
+  </nav>
 
 <!-- Libraries & application -->
 <script src="/scripts/vendor.min.js"></script>
+<script src="//a.okfn.org/html/oki/panel/assets/js/frontend.js" type="text/javascript"></script>
+<script type="text/javascript" src="//a.okfn.org/html/oki/cookie-bar/js/cookie-bar.js"></script>
 <script src="/scripts/app.min.js"></script>
 
 </body>
