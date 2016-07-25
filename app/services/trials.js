@@ -2,7 +2,7 @@
 var csv = require('csv');
 var request = require('request');
 var Promise = require('bluebird');
-var config =  require('../config');
+var config = require('../config');
 var _ = require('lodash');
 
 /**
@@ -32,29 +32,29 @@ function getMappedData() {
 }
 
 function processData(trials) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var daysDivider = 24 * 60 * 60 * 1000;
     var currentDate = new Date();
     var today = Math.round(currentDate.getTime() / daysDivider);
-    var results = _.map(trials, function(trial) {
+    var results = _.map(trials, function (trial) {
       var result = {
-        trialId: trial['Trial ID'],
-        title: trial.Title,
-        publicTitle: trial['Public title'],
-        participantCount: trial['Participant Count'],
-        startDate: !!trial['Start Date'] ? new Date(trial['Start Date']) : null,
-        completionDate: !!trial['Completion Date'] ?
-          new Date(trial['Completion Date']) : null,
-        investigator: trial['Principal Investigator'],
-        sponsors: trial['Sponsor/Collaborators'],
+        trialId: trial.trial_id,
+        title: trial.title,
+        publicTitle: trial.public_title,
+        participantCount: trial.participant_count,
+        startDate: !!trial.start_date ? new Date(trial.start_date) : null,
+        completionDate: (!!trial.completion_date || trial.completion_date !== '-') ?
+                        new Date(trial.completion_date) : null,
+        investigator: trial.principal_investigator,
+        sponsors: trial.sponsor_collaborators,
         isPublished: (
-          (('' + trial['Results Available?']).toUpperCase() == 'TRUE') &&
-          (('' + trial['Preliminary or full']).toUpperCase() == 'FULL')
+          (('' + trial.results_available).toUpperCase() == 'Yes') &&
+          (('' + trial.preliminary_or_full).toUpperCase() == 'FULL')
 
         ),
-        url: trial.URL,
-        funders: trial['Funded Bys'],
-        source: trial.Source
+        url: trial.url,
+        funders: trial.funded_by,
+        source: trial.source
       };
 
       if (!_.isArray(result.sponsors)) {
@@ -69,7 +69,7 @@ function processData(trials) {
         var started = Math.round(result.startDate.getTime() / daysDivider);
         if (result.completionDate) {
           var completed = Math.round(result.completionDate.getTime() /
-            daysDivider);
+                                     daysDivider);
           result.isCompleted = today >= completed;
           result.daysAfterCompletion = today - completed;
           if (result.daysAfterCompletion < 0) {
@@ -115,7 +115,7 @@ function processData(trials) {
       return result;
     });
 
-    results = _.sortBy(results, function(item) {
+    results = _.sortBy(results, function (item) {
       return item.publicationDelay;
     });
 
@@ -125,8 +125,8 @@ function processData(trials) {
 
 //TODO: add timeout
 function loadData() {
-  return new Promise(function(resolve, reject) {
-    request(config.get('database:trials'), function(err, res, data) {
+  return new Promise(function (resolve, reject) {
+    request(config.get('database:trials'), function (err, res, data) {
       if (!err && res.statusCode === 200) {
         resolve(data);
       } else {
@@ -137,9 +137,9 @@ function loadData() {
 }
 
 function parseData(data) {
-  return new Promise(function(resolve, reject) {
-    var options = {columns: true, auto_parse: true}; // jscs:disable
-    csv.parse(data, options, function(err, data) {
+  return new Promise(function (resolve, reject) {
+    var options = { columns: true, auto_parse: true }; // jscs:disable
+    csv.parse(data, options, function (err, data) {
       if (!err) {
         resolve(data);
       } else {
@@ -150,8 +150,8 @@ function parseData(data) {
 }
 
 function cleanData(data) {
-  return new Promise(function(resolve, reject) {
-    data.forEach(function(item) {
+  return new Promise(function (resolve, reject) {
+    data.forEach(function (item) {
       Object.keys(item).forEach(function (key) {
         item[key] = cleanNull(item[key]);
       });
@@ -170,15 +170,15 @@ function cleanData(data) {
 }
 
 function cleanNull(value) {
-    if (value === 'Null') {
-        value = null;
-    }
-    return value;
+  if (value === 'Null') {
+    value = null;
+  }
+  return value;
 }
 
 function cleanArray(value) {
   if (value === null) {
-      return value;
+    return value;
   }
   try {
     value = value.split('|');
@@ -190,7 +190,7 @@ function cleanArray(value) {
 
 function cleanDate(value) {
   if (value === null) {
-      return value;
+    return value;
   }
   try {
     // Join with "-" to make it ISO format with UTC

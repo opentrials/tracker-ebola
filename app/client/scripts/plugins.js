@@ -21,8 +21,8 @@
 			}
 		});
 
-		var API = $menu.data( "mmenu" );
-		API.setSelected( $menu.find( "li" ).first() );
+		// var API = $menu.data( "mmenu" );
+		// API.setSelected( $menu.find( "li" ).first() );
 
 		var closer = null;
 
@@ -30,16 +30,16 @@
 			closer = $(this).attr( "href" );
 		});
 
-		API.bind( "closed", function() {
-			if ( closer ) {
-				setTimeout( function() {
-					$html.animate({
-						scrollTop: $(closer).offset().top
-					});
-					closer = null;
-				}, 25 );
-			}
-		});
+		// API.bind( "closed", function() {
+		// 	if ( closer ) {
+		// 		setTimeout( function() {
+		// 			$html.animate({
+		// 				scrollTop: $(closer).offset().top
+		// 			});
+		// 			closer = null;
+		// 		}, 25 );
+		// 	}
+		// });
 	});
 
 
