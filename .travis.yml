@@ -15,7 +15,7 @@ install:
 
 script:
   - npm run build
- # - npm run review
+  - npm run review
   - npm run test
 
 after_script:

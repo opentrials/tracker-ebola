@@ -32,18 +32,19 @@ function getMappedData() {
 }
 
 function processData(trials) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     var daysDivider = 24 * 60 * 60 * 1000;
     var currentDate = new Date();
     var today = Math.round(currentDate.getTime() / daysDivider);
-    var results = _.map(trials, function (trial) {
+    var results = _.map(trials, function(trial) {
       var result = {
         trialId: trial.trial_id,
         title: trial.title,
         publicTitle: trial.public_title,
         participantCount: trial.participant_count,
         startDate: !!trial.start_date ? new Date(trial.start_date) : null,
-        completionDate: (!!trial.completion_date || trial.completion_date !== '-') ?
+        completionDate: (!!trial.completion_date ||
+                         trial.completion_date !== '-') ?
                         new Date(trial.completion_date) : null,
         investigator: trial.principal_investigator,
         sponsors: trial.sponsor_collaborators,
@@ -115,7 +116,7 @@ function processData(trials) {
       return result;
     });
 
-    results = _.sortBy(results, function (item) {
+    results = _.sortBy(results, function(item) {
       return item.publicationDelay;
     });
 
@@ -125,8 +126,8 @@ function processData(trials) {
 
 //TODO: add timeout
 function loadData() {
-  return new Promise(function (resolve, reject) {
-    request(config.get('database:trials'), function (err, res, data) {
+  return new Promise(function(resolve, reject) {
+    request(config.get('database:trials'), function(err, res, data) {
       if (!err && res.statusCode === 200) {
         resolve(data);
       } else {
@@ -137,9 +138,9 @@ function loadData() {
 }
 
 function parseData(data) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     var options = { columns: true, auto_parse: true }; // jscs:disable
-    csv.parse(data, options, function (err, data) {
+    csv.parse(data, options, function(err, data) {
       if (!err) {
         resolve(data);
       } else {
@@ -150,9 +151,9 @@ function parseData(data) {
 }
 
 function cleanData(data) {
-  return new Promise(function (resolve, reject) {
-    data.forEach(function (item) {
-      Object.keys(item).forEach(function (key) {
+  return new Promise(function(resolve, reject) {
+    data.forEach(function(item) {
+      Object.keys(item).forEach(function(key) {
         item[key] = cleanNull(item[key]);
       });
       item['Conditions'] = cleanArray(item['Conditions']);
