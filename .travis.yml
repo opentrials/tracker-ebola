@@ -13,6 +13,10 @@ install:
   - mkdir -p coverage
   - npm install
 
+before_script:
+  - echo -e "Host heroku.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
 script:
   - npm run build
   - npm run review
@@ -24,4 +28,4 @@ after_script:
 after_success:
   - rm app/public/.gitignore
   - git add . && git commit -a -m 'added public'
-  - git push -f https://git.heroku.com/opentrials-ebola-tracker.git master
+  - git push -f git@heroku.com:opentrials-ebola-tracker.git master
