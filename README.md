@@ -1,7 +1,7 @@
 # Ebola Tracker
 
 [![Gitter](https://img.shields.io/gitter/room/opentrials/chat.svg)](https://gitter.im/opentrials/chat)
-[![Shippable](https://img.shields.io/shippable/5604ab341895ca447417f6fe.svg)](https://app.shippable.com/projects/5604ab341895ca447417f6fe)
+[![Travis Build Status](https://travis-ci.org/opentrials/tracker-ebola.svg?branch=master)](https://travis-ci.org/opentrials/tracker-ebola)
 
 A mini app to track trials - [link](https://opentrials-tracker.herokuapp.com/).
 
