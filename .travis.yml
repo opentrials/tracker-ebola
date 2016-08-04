@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - '4.1'
+
+before_script:
+  - npm install
+
+script:
+  - npm run build
+  - npm run review
+  - npm run test
