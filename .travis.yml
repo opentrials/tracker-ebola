@@ -4,10 +4,13 @@ node_js:
   - '4.1'
 
 before_install:
+  - rvm install 2.3.1
   - gem update --system
   - gem install sass
+  - gem install compass
 
 install:
+  - mkdir -p coverage
   - npm install
 
 script:
@@ -16,7 +19,7 @@ script:
   - npm run test
 
 after_script:
-  - node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+  - "node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
 
 #after_success:
 #  - rm app/public/.gitignore
