@@ -24,7 +24,6 @@ install:
 script:
   - npm run build
   - npm run review
-  - rm app/public/.gitignore
   - npm run test
 
 after_script:
@@ -35,10 +34,12 @@ after_script:
 #  - git add . && git commit -a -m 'added public'
 #  - git push -f git@heroku.com:opentrials-ebola-tracker.git master
 
+before_deploy:
+  - rm app/public/.gitignore
+
 deploy:
   provider: heroku
   app: opentrials-ebola-tracker
   api_key: 54632a2c-2498-4655-88af-19a0f233c4c7
   skip_cleanup: true
-  on:
-      branch: master
+  on: master
