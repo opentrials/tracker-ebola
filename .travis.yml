@@ -1,11 +1,11 @@
+sudo: false
 language: node_js
 node_js:
   - '4.1'
-before_install:
-  - rvm install
 
 before_install:
-  - sudo gem install sass
+  - gem update --system
+  - gem install sass
 
 install:
   - npm install
