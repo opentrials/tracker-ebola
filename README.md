@@ -74,5 +74,4 @@ Deployment to Heroku will be done only on master branch on green builds.
 > More sofisticated CI/CD strategy with stage/production splitting
 is planned for next stages of the project.
 
-To tweak the process use `shippable.yml` ([reference](http://docs.shippable.com/yml_reference/))
-file in the root of the project.
+To tweak the process use `.travis.yml` file in the root of the project.
