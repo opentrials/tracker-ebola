@@ -1,7 +1,8 @@
 # Ebola Tracker
 
 [![Gitter](https://img.shields.io/gitter/room/opentrials/chat.svg)](https://gitter.im/opentrials/chat)
-[![Shippable](https://img.shields.io/shippable/5604ab341895ca447417f6fe.svg)](https://app.shippable.com/projects/5604ab341895ca447417f6fe)
+[![Travis Build Status](https://travis-ci.org/opentrials/tracker-ebola.svg?branch=fix%2Fmapping)](https://travis-ci.org/opentrials/tracker-ebola)
+[![Coverage Status](https://coveralls.io/repos/github/opentrials/tracker-ebola/badge.svg?branch=fix%2Fmapping)](https://coveralls.io/github/opentrials/tracker-ebola?branch=fix%2Fmapping)
 
 A mini app to track trials - [link](https://opentrials-tracker.herokuapp.com/).
 
@@ -74,5 +75,4 @@ Deployment to Heroku will be done only on master branch on green builds.
 > More sofisticated CI/CD strategy with stage/production splitting
 is planned for next stages of the project.
 
-To tweak the process use `shippable.yml` ([reference](http://docs.shippable.com/yml_reference/))
-file in the root of the project.
+To tweak the process use `.travis.yml` file in the root of the project.

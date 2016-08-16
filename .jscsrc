@@ -1,4 +1,12 @@
 {
   "preset": "google",
-  "excludeFiles": ["app/public/**/*", "app/client//scripts/modernizr.min.js"]
+  "excludeFiles": [
+    "app/public/**/*",
+    "app/client//scripts/modernizr.min.js",
+    "app/client/scripts/jquery.mmenu.all.min.js"
+  ],
+  "requireCamelCaseOrUpperCaseIdentifiers": {
+    "ignoreProperties": true
+  },
+  "requireMultipleVarDecl": false
 }
