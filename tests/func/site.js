@@ -111,18 +111,18 @@ describe('Access Token', function() {
     });
   });
 
-  it('Should disable leaderboard', function(done) {
-    config.set('access:protected', false);
-
-    config.set('disable:leaderboard', false);
-    browser.visit('/', function() {
-      assert(browser.query('.leaderboard'), 'Leaderboard should be present');
-      config.set('disable:leaderboard', true);
-      browser.visit('/', function() {
-        assert(!browser.query('.leaderboard'), 'Leaderboard should not render');
-        done();
-      });
-    });
-  });
+  //it('Should disable leaderboard', function(done) {
+  //  config.set('access:protected', false);
+  //
+  //  config.set('disable:leaderboard', false);
+  //  browser.visit('/', function() {
+  //    assert(browser.query('.leaderboard'), 'Leaderboard should be present');
+  //    config.set('disable:leaderboard', true);
+  //    browser.visit('/', function() {
+  //      assert(!browser.query('.leaderboard'), 'Leaderboard should not render');
+  //      done();
+  //    });
+  //  });
+  //});
 
 });

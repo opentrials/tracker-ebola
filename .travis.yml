@@ -17,10 +17,6 @@ install:
   - mkdir -p coverage
   - npm install
 
-#before_script:
-#  - echo -e "Host heroku.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-#  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-
 script:
   - npm run build
   - npm run review
@@ -29,17 +25,17 @@ script:
 after_script:
   - "node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- tests --recursive --reporter=xunit-file && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
 
-#after_success:
-#  - rm app/public/.gitignore
-#  - git add . && git commit -a -m 'added public'
-#  - git push -f git@heroku.com:opentrials-ebola-tracker.git master
-
 before_deploy:
   - rm app/public/.gitignore
+  - git config user.email "you@example.com"
+  - git config user.name "Your Name"
+  - git add --all .
+  - git commit -a -m 'added public'
 
 deploy:
   provider: heroku
   app: opentrials-ebola-tracker
   api_key: 54632a2c-2498-4655-88af-19a0f233c4c7
   skip_cleanup: true
+  strategy: git-ssh
   on: master
