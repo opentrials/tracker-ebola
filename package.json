@@ -24,7 +24,8 @@
     "nunjucks": "^2.0.0",
     "request": "^2.63.0",
     "require-dir": "^0.3.0",
-    "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git"
+    "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git",
+    "jsonteableschema": "git+https://github.com/frictionlessdata/jsontableschema-js.git"
   },
   "devDependencies": {
     "browser-sync": "^2.8.2",

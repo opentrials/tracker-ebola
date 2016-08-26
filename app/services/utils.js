@@ -1,5 +1,3 @@
-'use strict';
-
 var _ = require('lodash');
 
 module.exports = {
@@ -18,7 +16,8 @@ function collectTrialsInfo(trials) {
     completedTrials: 0,
     publishedTrials: 0
   };
-  _.forEach(trials, function(trial) {
+
+  trials.forEach(function (trial) {
     if (trial.isCompleted) {
       result.completedTrials++;
     }
@@ -28,29 +27,31 @@ function collectTrialsInfo(trials) {
     result.sources.push(trial.source);
     [].push.apply(result.funders, trial.funders);
   });
+
   result.sources = _.uniq(result.sources);
   result.funders = _.uniq(result.funders);
   return result;
 }
 
 function mapTrialsData(trials, cases) {
-  var now = new Date();
-  var result = {};
-  var defaultItem = {
-    key: null,
-    all: 0,
-    completed: 0,
-    deaths: 0
-  };
+  var now = new Date(),
+    result = {},
+    defaultItem = {
+      key: null,
+      all: 0,
+      completed: 0,
+      deaths: 0
+    };
 
-  _.forEach(trials, function(trial) {
+  trials.forEach(function (trial) {
     if (trial.startDate && trial.participantCount) {
-      var current;
+      var current, to,
+        from = trial.startDate;
 
-      var from = trial.startDate;
       from = from.getUTCFullYear() * 12 + from.getUTCMonth();
-      var to = (trial.isCompleted && trial.completionDate) ?
-        trial.completionDate : now;
+
+      to = (trial.isCompleted && trial.completionDate) ?
+           trial.completionDate : now;
 
       to = to.getUTCFullYear() * 12 + to.getUTCMonth();
 
@@ -70,7 +71,7 @@ function mapTrialsData(trials, cases) {
     }
   });
 
-  _.forEach(cases, function(item) {
+  _.forEach(cases, function (item) {
     var i = item.year * 12 + (item.month - 1);
     var current = result[i] || _.clone(defaultItem);
     current.key = i;
@@ -78,28 +79,27 @@ function mapTrialsData(trials, cases) {
     result[i] = current;
   });
 
-  return _.sortBy(_.values(result), function(item) {
+  return _.sortBy(_.values(result), function (item) {
     return item.key;
   });
 }
 
 function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
-  var result = [];
-  var collected = {
-    all: 0,
-    completed: 0,
-    deaths: 0
-  };
+  var result = [],
+    collected = {
+      all: 0,
+      completed: 0,
+      deaths: 0
+    },
+    detailedIncrement = 3, // In months
+    increment = 12; // In months
 
-  var detailedIncrement = 3; // In months
-
-  var increment = 12; // In months
   if (fromDate >= detalizationBreakpoint) {
     increment = detailedIncrement;
     fromDate = Math.floor(detalizationBreakpoint / increment) * increment;
   }
 
-  _.forEach(trialsData, function(item) {
+  trialsData.forEach(function (item) {
     collected.all += item.all;
     collected.completed += item.completed;
     collected.deaths += item.deaths;
@@ -124,8 +124,18 @@ function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
 }
 
 function collectDataForChart(trials, cases) {
-  var minYear = null;
-  _.forEach(trials, function(trial) {
+  var minYear = null,
+    breakpoint = (new Date()).getUTCFullYear() - 1,
+    quarters = ['I', 'II', 'III', 'IV'],
+    result = {
+      x: [],
+      all: [],
+      completed: [],
+      death: []
+    },
+    trialsData;
+
+  trials.forEach(function (trial) {
     if (trial.startDate) {
       var year = trial.startDate.getUTCFullYear();
       if ((year < minYear) || (minYear === null)) {
@@ -134,23 +144,10 @@ function collectDataForChart(trials, cases) {
     }
   });
 
-  var breakpoint = (new Date()).getUTCFullYear() - 1;
+  trialsData = reduceTrialsData(mapTrialsData(trials, cases), minYear * 12,
+                                breakpoint * 12);
 
-  var trialsData = mapTrialsData(trials, cases);
-  trialsData = reduceTrialsData(trialsData, minYear * 12,
-    breakpoint * 12);
-
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var quarters = ['I', 'II', 'III', 'IV'];
-
-  var result = {
-    x: [],
-    all: [],
-    completed: [],
-    death: []
-  };
-  _.forEach(trialsData, function(item) {
+  trialsData.forEach(function (item) {
     if (item.year < breakpoint) {
       result.x.push(item.year);
     } else {
