@@ -1,7 +1,7 @@
 'use strict';
 var csv = require('csv'),
   Promise = require('bluebird'),
-  jts = require('jsontableschema'),
+  jts = require('../jsontableschema'),
   config = require('../config'),
   schema = require('./schemaTrials.json'),
   _ = require('lodash');
