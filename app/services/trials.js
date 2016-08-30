@@ -1,40 +1,43 @@
 'use strict';
-var csv = require('csv'),
-  Promise = require('bluebird'),
-  jts = require('../jsontableschema'),
-  config = require('../config'),
-  schema = require('./schemaTrials.json'),
-  _ = require('lodash');
+var csv = require('csv');
+var Promise = require('bluebird');
+var jts = require('jsontableschema');
+var config = require('../config');
+var schema = require('./schemaTrials.json');
+var _ = require('lodash');
 
 /**
  * Module provides trials service
  */
 module.exports = {
+
   /**
    * Load and return normalized tracker data
+   *
    * @returns {Promise}
    */
-  get: function () {
-    return new Promise(function (resolve, reject) {
+  get: function() {
+    return new Promise(function(resolve, reject) {
       new jts.Resource(schema, config.get('database:trials')).then(
-        function (resource) {
-          const values = [], daysDivider = 24 * 60 * 60 *
-                                           1000, currentDate = new Date(), today = Math.round(
-            currentDate.getTime() / daysDivider);
+        function(resource) {
+          var values = [];
+          var daysDivider = 24 * 60 * 60 * 1000;
+          var currentDate = new Date();
+          var today = Math.round(currentDate.getTime() / daysDivider);
 
-          resource.iter(iterator, false, false).then(function () {
-            resolve(_.sortBy(values, function (item) {
+          resource.iter(iterator, false, false).then(function() {
+            resolve(_.sortBy(values, function(item) {
               return item.publicationDelay;
             }));
-          }, function (errors) {
+          }, function(errors) {
             reject(errors);
           });
 
           function iterator(items) {
-            const trial = resource.map(items);
+            var trial = resource.map(items);
             values.push(processData(trial, currentDate, today, daysDivider));
           }
-        }, function (error) {
+        }, function(error) {
           reject(error);
         });
     });

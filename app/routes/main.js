@@ -21,7 +21,7 @@ router.use(express.static(statics));
 // General middlewares
 router.use(cookieParser());
 router.use(session(config.get('session')));
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({extended: true}));
 
 // Site middlewares
 router.use(middlewares.helpers.slash);

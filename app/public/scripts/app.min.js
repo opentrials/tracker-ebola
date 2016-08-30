@@ -23,25 +23,16 @@
     }
 
     var chart = c3.generate({
-      bindto: element,
-      data: {
-        colors: colors,
-        x: 'x',
-        columns: series,
-        types: types
-      },
-      legend: {
+      bindto: element, data: {
+        colors: colors, x: 'x', columns: series, types: types
+      }, legend: {
         position: 'inset'
-      },
-      axis: {
+      }, axis: {
         x: {
-          type: 'category',
-          tick: {
-            rotate: 75,
-            multiline: false
+          type: 'category', tick: {
+            rotate: 75, multiline: false
           }
-        },
-        y: {
+        }, y: {
           show: false
         }
       }
