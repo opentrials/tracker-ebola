@@ -19,6 +19,7 @@
     "express": "^4.13.1",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
+    "moment": "^2.13.0",
     "nconf": "^0.8.0",
     "nunjucks": "^2.0.0",
     "request": "^2.63.0",
