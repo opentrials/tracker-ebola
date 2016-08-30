@@ -19,13 +19,13 @@
     "express": "^4.13.1",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
-    "moment": "^2.13.0",
     "nconf": "^0.8.0",
     "nunjucks": "^2.0.0",
     "request": "^2.63.0",
     "require-dir": "^0.3.0",
     "c3": "git+https://github.com/masayuki0812/c3.git",
-    "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git"
+    "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git",
+    "jsonteableschema": "git+https://github.com/frictionlessdata/jsontableschema-js.git"
   },
   "devDependencies": {
     "browser-sync": "^2.8.2",
