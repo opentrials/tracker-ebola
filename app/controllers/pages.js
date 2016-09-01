@@ -38,10 +38,12 @@ module.exports = {
         html = html.replace('</body', '</div');
 
         res.render('correspondence.html', {
+          title: 'Ebola trial correspondence',
           html: html
         });
       }, function(error) {
         res.render('errors/server.html', {
+          title: 'Ebola Tracker Error',
           error: error
         });
       });
