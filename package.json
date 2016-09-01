@@ -24,7 +24,13 @@
     "request": "^2.63.0",
     "require-dir": "^0.3.0",
     "c3": "git+https://github.com/masayuki0812/c3.git",
-    "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git"
+    "smooth-scroll": "git+https://github.com/cferdinandi/smooth-scroll.git",
+    "csv-parse": "^1.1.0",
+    "d3-time-format": "^0.3.2",
+    "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.13.0",
+    "stream-transform": "^0.1.1",
+    "tv4": "^1.2.7"
   },
   "devDependencies": {
     "browser-sync": "^2.8.2",
@@ -60,7 +66,7 @@
     "npm": "^2.14.0"
   },
   "scripts": {
-    "build": "git clone -b fix\/tracker-ebola git://github.com/frictionlessdata/jsontableschema-js.git node_modules/jsontableschema && cd node_modules/jsontableschema && npm install && npm run build && gulp",
+    "build": "gulp",
     "config": "less config.json",
     "coverage": "istanbul cover _mocha -- tests --recursive --reporter=xunit-file",
     "develop": "WATCH=true gulp & npm start",
