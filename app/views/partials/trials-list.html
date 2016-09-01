@@ -69,7 +69,9 @@
         {% endif %}
         {% if trial.isPublished %}
           {% set text = 'Results have been published.' %}
-          <class="status" span title="{{ text }}">{{ text }}</span>
+        <p class="status" title="{{ text }}">
+          <span>{{ text }}</span>
+        </p>
         {% endif %}
 
         <div class="description">
