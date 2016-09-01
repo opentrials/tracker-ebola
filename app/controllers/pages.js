@@ -29,5 +29,21 @@ module.exports = {
         chartData: JSON.stringify(chartData)
       });
     });
+  },
+
+  correspondence: function(req, res) {
+    services.driveapi.getContentByFileName(req.params.fileName)
+      .then(function(html) {
+        html = html.replace('<body', '<div');
+        html = html.replace('</body', '</div');
+
+        res.render('correspondence.html', {
+          html: html
+        });
+      }, function(error) {
+        res.render('errors/server.html', {
+          error: error
+        });
+      });
   }
 };
