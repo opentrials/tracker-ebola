@@ -1,12 +1,12 @@
 var google = require('googleapis');
 var Promise = require('bluebird');
-var key = require('../../tracker-ebola-secret.json');
+var config = require('../config');
 
 var scopes = ['https://www.googleapis.com/auth/drive.metadata.readonly',
               'https://www.googleapis.com/auth/drive'];
 var drive = google.drive('v3');
-var jwtClient = new google.auth.JWT(key.client_email, null,
-  key.private_key, scopes, null);
+var jwtClient = new google.auth.JWT(config.get('CLIENT_EMAIL'), null,
+  config.get('PRIVATE_KEY'), scopes, null);
 
 module.exports = {
   getContentByFileName: function(fileName) {

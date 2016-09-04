@@ -8,7 +8,7 @@ var nconf = require('nconf');
 module.exports = {
   get: function(key) {return nconf.get.call(nconf, key);},
   set: nconf.set.bind(nconf),
-  reset: nconf.reset.bind(nconf),
+  reset: nconf.reset.bind(nconf)
 };
 
 // 1. Config from env (overrides)
@@ -19,5 +19,5 @@ nconf.env({
 
 // 2. Config from file (default)
 nconf.file({
-  file: path.join(__dirname, '../../config.json'),
+  file: path.join(__dirname, '../../config.json')
 });
