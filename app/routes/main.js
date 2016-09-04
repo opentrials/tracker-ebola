@@ -35,6 +35,7 @@ router.get('/api/trials', controllers.api.trials);
 // Site pages
 router.get('/', controllers.pages.index);
 router.get('/graph', controllers.pages.chart);
+router.get('/correspondence/:fileName', controllers.pages.correspondence);
 
 // Error handling
 router.use(middlewares.errors.notfound);

@@ -34,3 +34,21 @@ module.exports.chart = function(req, res) {
     });
   });
 };
+
+module.exports.correspondence = function(req, res) {
+  services.driveapi.getContentByFileName(req.params.fileName)
+    .then(function(html) {
+      html = html.replace('<body', '<div');
+      html = html.replace('</body', '</div');
+
+      res.render('correspondence.html', {
+        title: 'Ebola trial correspondence',
+        html: html
+      });
+    }, function(error) {
+      res.render('errors/server.html', {
+        title: 'Ebola Tracker Error',
+        error: error
+      });
+    });
+};
