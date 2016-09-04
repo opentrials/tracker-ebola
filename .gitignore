@@ -32,3 +32,6 @@ xunit.xml
 # Editor files & cache
 .idea
 .sass-cache
+
+# Credentials of Google Drive
+tracker-ebola-secret.json

@@ -69,7 +69,9 @@
         {% endif %}
         {% if trial.isPublished %}
           {% set text = 'Results have been published.' %}
-          <class="status" span title="{{ text }}">{{ text }}</span>
+        <p class="status" title="{{ text }}">
+          <span>{{ text }}</span>
+        </p>
         {% endif %}
 
         <div class="description">
@@ -126,13 +128,13 @@
 
         <ul class="links">
           <li class="external">
-            <a target="_blank" href="#">OpenTrials entry</a>
+            <a target="_blank" href="http://explorer.opentrials.net/search?q={{ trial.trialId }}">OpenTrials entry</a>
           </li>
           <li class="external">
             <a target="_blank" href="{{ trial.url }}">Registry entry</a>
           </li>
           <li class="external">
-            <a target="_blank" href="#">Correspondence with trialist</a>
+            <a target="_blank" href="/correspondence/{{ trial.trialId }}">Correspondence with trialist</a>
           </li>
           {% if trial.isCompleted and not trial.isPublished %}
           {% set text = 'No results have been published.' %}

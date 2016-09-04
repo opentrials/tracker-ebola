@@ -2,7 +2,7 @@
 var path = require('path');
 var reqdir = require('require-dir');
 var express = require('express');
-var nunjucks  = require('nunjucks');
+var nunjucks = require('nunjucks');
 var config = require('./config');
 var routes = reqdir('./routes');
 var views = path.join(__dirname, '/views');
