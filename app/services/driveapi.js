@@ -4,9 +4,14 @@ var config = require('../config');
 
 var scopes = ['https://www.googleapis.com/auth/drive.metadata.readonly',
               'https://www.googleapis.com/auth/drive'];
+
+var clientEmail = process.env.CLIENT_EMAIL;
+var privateKey = process.env.PRIVATE_KEY ?
+                 process.env.PRIVATE_KEY.replace(/\\n/g, '\n') : '';
+
 var drive = google.drive('v3');
-var jwtClient = new google.auth.JWT(config.get('drive:clientEmail'), null,
-  config.get('drive:privateKey'), scopes, null);
+var jwtClient = new google.auth.JWT(clientEmail, null,
+  privateKey, scopes, null);
 
 module.exports = {
   getContentByFileName: function(fileName) {

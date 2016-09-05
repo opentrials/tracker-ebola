@@ -3,10 +3,6 @@
     "protected": false,
     "token": "ACCESS_TOKEN"
   },
-  "drive": {
-    "clientEmail": "CLIENT_EMAIL",
-    "privateKey": "PRIVATE_KEY"
-  },
   "build": {
     "nodeModulesDir": "node_modules",
     "uiDir": "app/client",
