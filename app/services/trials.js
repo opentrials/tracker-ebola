@@ -49,7 +49,7 @@ function processData(trials) {
         investigator: trial.principal_investigator,
         sponsors: trial.sponsor_collaborators,
         isPublished: (
-          (('' + trial.results_available).toUpperCase() == 'Yes') &&
+          (('' + trial.results_available).toUpperCase() == 'YES') &&
           (('' + trial.preliminary_or_full).toUpperCase() == 'FULL')
 
         ),
