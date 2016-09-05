@@ -5,8 +5,8 @@ var config = require('../config');
 var scopes = ['https://www.googleapis.com/auth/drive.metadata.readonly',
               'https://www.googleapis.com/auth/drive'];
 var drive = google.drive('v3');
-var jwtClient = new google.auth.JWT(config.get('CLIENT_EMAIL'), null,
-  config.get('PRIVATE_KEY'), scopes, null);
+var jwtClient = new google.auth.JWT(config.get('drive:clientEmail'), null,
+  config.get('drive:privateKey'), scopes, null);
 
 module.exports = {
   getContentByFileName: function(fileName) {
