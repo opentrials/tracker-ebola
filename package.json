@@ -89,10 +89,10 @@
     }
   ],
   "homepage": "http://opentrials.net/",
-  "bugs": "https://github.com/okfn/opentrials-ebola-tracker/issues",
+  "bugs": "https://github.com/opentrials/tracker-ebola/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/okfn/opentrials-ebola-tracker.git"
+    "url": "https://github.com/opentrials/tracker-ebola.git"
   },
   "license": "MIT"
 }

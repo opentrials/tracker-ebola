@@ -10,8 +10,8 @@ A mini app to track trials - [link](https://opentrials-tracker.herokuapp.com/).
 
 To start development process:
 ```
-$ git clone git@github.com:okfn/opentrials-ebola-tracker.git
-$ cd opentrials-ebola-tracker
+$ git clone git@github.com:opentrials/tracker-ebola.git
+$ cd tracker-ebola
 $ npm install && npm dedup
 $ npm run develop
 ```
