@@ -2,6 +2,7 @@
   "preset": "google",
   "excludeFiles": [
     "app/public/**/*",
+    "app/jsontableschema/*",
     "app/client//scripts/modernizr.min.js",
     "app/client/scripts/jquery.mmenu.all.min.js"
   ],

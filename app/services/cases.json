@@ -1,0 +1,53 @@
+{
+  "fields": [
+    {
+      "name": "year",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "month",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "cases",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "deaths",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "cases_cumulative",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "deaths_cumulative",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "datapackage",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    }
+  ]
+}
