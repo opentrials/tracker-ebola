@@ -50,7 +50,7 @@ function mapTrialsData(trials, cases) {
       var from = trial.startDate;
       from = from.getUTCFullYear() * 12 + from.getUTCMonth();
       var to = (trial.isCompleted && trial.completionDate) ?
-        trial.completionDate : now;
+               trial.completionDate : now;
 
       to = to.getUTCFullYear() * 12 + to.getUTCMonth();
 
@@ -140,10 +140,7 @@ function collectDataForChart(trials, cases) {
   trialsData = reduceTrialsData(trialsData, minYear * 12,
     breakpoint * 12);
 
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var quarters = ['I', 'II', 'III', 'IV'];
-
   var result = {
     x: [],
     all: [],

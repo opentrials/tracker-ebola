@@ -100,4 +100,3 @@ exports.default = function (headers, values) {
 
   return descriptor;
 };
-//# sourceMappingURL=infer.js.map

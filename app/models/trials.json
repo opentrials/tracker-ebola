@@ -1,0 +1,193 @@
+{
+  "fields": [
+    {
+      "name": "trial_id",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "public_title",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "title",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "recruitment",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "study_design",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "conditions",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "interventions",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "sponsor_collaborators",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "principal_investigator",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "age_groups",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "phases",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "participant_count",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "funded_by",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "start_date",
+      "title": "",
+      "description": "",
+      "type": "date",
+      "format": "fmt:%d/%m/%Y"
+    },
+    {
+      "name": "completion_date",
+      "title": "",
+      "description": "",
+      "type": "date",
+      "format": "fmt:%d/%m/%Y"
+    },
+    {
+      "name": "results_first_received",
+      "title": "",
+      "description": "",
+      "type": "date",
+      "format": "fmt:%d/%m/%Y"
+    },
+    {
+      "name": "results_last_searched",
+      "title": "",
+      "description": "",
+      "type": "date",
+      "format": "fmt:%d/%m/%Y"
+    },
+    {
+      "name": "results_available",
+      "title": "",
+      "description": "",
+      "type": "boolean",
+      "format": "default"
+    },
+    {
+      "name": "preliminary_or_full",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "url_results",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "primary_completion_date",
+      "title": "",
+      "description": "",
+      "type": "date",
+      "format": "fmt:%d/%m/%Y"
+    },
+    {
+      "name": "publication_delay_days",
+      "title": "",
+      "description": "",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "country",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "source",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "url",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "secondary_registry_or_id",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "correspondence",
+      "title": "",
+      "description": "",
+      "type": "string",
+      "format": "default"
+    }
+  ]
+}

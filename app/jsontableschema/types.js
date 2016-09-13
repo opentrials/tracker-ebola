@@ -1012,4 +1012,3 @@ function getType(field) {
 
   throw new Error('Unsupported field type');
 }
-//# sourceMappingURL=types.js.map

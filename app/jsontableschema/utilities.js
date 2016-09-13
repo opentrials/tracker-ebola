@@ -32,4 +32,3 @@ exports.default = {
     return this.REMOTE_SCHEMES.indexOf(protocol.replace(':', '')) !== -1;
   }
 };
-//# sourceMappingURL=utilities.js.map

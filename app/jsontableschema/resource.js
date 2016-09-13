@@ -66,12 +66,17 @@ var Resource = function () {
     this.source = data;
 
     return new Promise(function (resolve, reject) {
-      new _schema2.default(schema).then(function (model) {
-        self.schema = model;
+      if (schema instanceof _schema2.default) {
+        self.schema = schema;
         resolve(self);
-      }).catch(function (error) {
-        reject(error);
-      });
+      } else {
+        new _schema2.default(schema).then(function (model) {
+          self.schema = model;
+          resolve(self);
+        }).catch(function (error) {
+          reject(error);
+        });
+      }
     });
   }
 
@@ -138,46 +143,6 @@ var Resource = function () {
 
       return proceed(this, getReadStream(this.source), callback, failFast, skipConstraints);
     }
-
-    /**
-     * Return object with map of values to headers of the row of values
-     * @param row
-     * @returns {}
-     */
-
-  }, {
-    key: 'map',
-    value: function map(row) {
-      var result = {};
-      var i = 0;
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = this.schema.headers()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var header = _step2.value;
-
-          result[header] = row[i];
-          i++;
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-
-      return result;
-    }
   }]);
 
   return Resource;
@@ -224,9 +189,9 @@ function proceed(instance, readStream, callback) {
       while ((items = parser.read()) !== null) {
         if (isFirst) {
           isFirst = false;
-          continue;
+        } else {
+          cast(instance, reject, callback, errors, items, failFast, skipConstraints);
         }
-        cast(instance, reject, callback, errors, items, failFast, skipConstraints);
       }
     }).on('end', function () {
       end(resolve, reject, errors);
@@ -321,27 +286,27 @@ function cast(instance, reject, callback, errors, items, failFast, skipConstrain
       reject(e);
       return;
     }
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
 
     try {
-      for (var _iterator3 = e[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var error = _step3.value;
+      for (var _iterator2 = e[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var error = _step2.value;
 
         errors.push(error);
       }
     } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion3 && _iterator3.return) {
-          _iterator3.return();
+        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+          _iterator2.return();
         }
       } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
+        if (_didIteratorError2) {
+          throw _iteratorError2;
         }
       }
     }
@@ -355,4 +320,3 @@ function end(resolve, reject, errors) {
     resolve();
   }
 }
-//# sourceMappingURL=resource.js.map

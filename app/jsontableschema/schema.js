@@ -403,4 +403,3 @@ function expand(instance, schema) {
     instance.descriptor.primaryKey = [instance.descriptor.primaryKey];
   }
 }
-//# sourceMappingURL=schema.js.map

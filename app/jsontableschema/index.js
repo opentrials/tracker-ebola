@@ -23,4 +23,3 @@ var _resource2 = _interopRequireDefault(_resource);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = { infer: _infer2.default, types: _types2.default, validate: _validate2.default, Schema: _schema2.default, Resource: _resource2.default };
-//# sourceMappingURL=index.js.map
