@@ -3,6 +3,7 @@
   "excludeFiles": [
     "app/public/**/*",
     "app/jsontableschema/*",
+    "app/storage/*",
     "app/client//scripts/modernizr.min.js",
     "app/client/scripts/jquery.mmenu.all.min.js"
   ],
