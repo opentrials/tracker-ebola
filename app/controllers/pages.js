@@ -1,18 +1,20 @@
 'use strict';
 
-var _ = require('lodash');
-var Promise = require('bluebird');
-var requireDir = require('require-dir');
-var services = requireDir('../services');
+const _ = require('lodash');
+const Promise = require('bluebird');
+const moment = require('moment');
+const requireDir = require('require-dir');
+const services = requireDir('../services');
 
 // Index
 module.exports.index = function(req, res) {
-  services.trials.getMapped().then(function(data) {
+  services.trials.getMapped().then((trials) => {
     res.render('index.html', {
+      trials: _.sortBy(trials, (t) => t.daysAfterCompletion).reverse(),
       title: 'Ebola',
       subtitle: 'A live tracker of Ebola trials',
-      trials: data,
-      info: services.utils.collectTrialsInfo(data),
+      info: services.utils.collectTrialsInfo(trials),
+      today: moment().format('LL'),
       req: req,
       disableLeaderboard: !!req.app.get('config').get('disable:leaderboard')
     });
@@ -22,7 +24,7 @@ module.exports.index = function(req, res) {
 module.exports.chart = function(req, res) {
   var promises = [
     services.trials.getMapped(),
-    services.cases.getMapped()
+    services.cases.getMapped(),
   ];
   Promise.all(promises).then(function(data) {
     var trials = data[0];

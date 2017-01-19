@@ -1,42 +1,73 @@
 'use strict';
 
-var _ = require('lodash');
+const _ = require('lodash');
+const moment = require('moment');
 
-module.exports = {
-  collectTrialsInfo: collectTrialsInfo,
-  collectDataForChart: collectDataForChart
-};
+const timeFormat = 'YYYY-MM-DD';
+const today = moment.utc();
 
 /**
  * Collects some useful data from trials, such as unique sources, total
  * number of trials and so on
  */
 function collectTrialsInfo(trials) {
-  var result = {
-    sources: [],
-    funders: [],
+  let result = {
     completedTrials: 0,
-    publishedTrials: 0
+    reportedTrials: 0,
+    delayedCompletedTrials: 0,
+    mostDelayed: { date: today, days: 0, id: '' },
+    leastDelayed: { date: moment([1900, 1, 1]), days: 0, id: '' },
+    averageDelay: 0,
+    participants: {
+      completedRecruitment: 0,
+      reportedResults: 0,
+      completedRecruitmentNotReported: 0,
+      total: 0,
+    },
   };
   _.forEach(trials, function(trial) {
     if (trial.isCompleted) {
       result.completedTrials++;
     }
-    if (trial.isPublished) {
-      result.publishedTrials++;
+    if (trial.resultsAvailable) {
+      result.reportedTrials++;
     }
-    result.sources.push(trial.source);
-    [].push.apply(result.funders, trial.funders);
+    if (trial.completionDate.isBefore(today) && !trial.resultsAvailable) {
+      result.delayedCompletedTrials++;
+      result.averageDelay += trial.publicationDelayDays; // will get divided at the end
+    }
+    if (!trial.resultsAvailable && trial.completionDate.isBefore(result.mostDelayed.date)) {
+      result.mostDelayed.date = trial.completionDate;
+      // result.mostDelayed.days = moment().diff(trial.completionDate, 'days');
+      result.mostDelayed.days = trial.publicationDelayDays;
+      result.mostDelayed.id = trial.trialId;
+    }
+    if (trial.completionDate.isBefore(today) && trial.completionDate.isAfter(result.leastDelayed.date)) {
+      result.leastDelayed.date = trial.completionDate;
+      // result.leastDelayed.days = today.diff(trial.completionDate, 'days');
+      result.leastDelayed.days = trial.publicationDelayDays;
+      result.leastDelayed.id = trial.trialId;
+    }
+    if (trial.hasCompletedRecruitment) {
+      result.participants.completedRecruitment += trial.participantCount;
+    }
+    if (trial.resultsAvailable) {
+      result.participants.reportedResults += trial.participantCount;
+    }
+    if (trial.completionDate.isBefore(today)
+        && !trial.resultsAvailable) {
+      result.participants.completedRecruitmentNotReported += trial.participantCount;
+    }
   });
+  result.averageDelay = Math.round(result.averageDelay / result.delayedCompletedTrials);
   result.sources = _.uniq(result.sources);
   result.funders = _.uniq(result.funders);
   return result;
 }
 
 function mapTrialsData(trials, cases) {
-  var now = new Date();
-  var result = {};
-  var defaultItem = {
+  let result = {};
+  const defaultItem = {
     key: null,
     all: 0,
     completed: 0,
@@ -45,14 +76,15 @@ function mapTrialsData(trials, cases) {
 
   _.forEach(trials, function(trial) {
     if (trial.startDate && trial.participantCount) {
-      var current;
+      let current;
 
-      var from = trial.startDate;
-      from = from.getUTCFullYear() * 12 + from.getUTCMonth();
-      var to = (trial.isCompleted && trial.completionDate) ?
-        trial.completionDate : now;
+      let from = moment(trial.startDate, timeFormat);
+      from = from.year() * 12 + from.month();
+      let to = (trial.isCompleted && trial.completionDate)
+          ? moment(trial.completionDate, timeFormat)
+          : today;
 
-      to = to.getUTCFullYear() * 12 + to.getUTCMonth();
+      to = to.year() * 12 + to.month();
 
       if (trial.isCompleted) {
         current = result[from] || _.clone(defaultItem);
@@ -71,8 +103,8 @@ function mapTrialsData(trials, cases) {
   });
 
   _.forEach(cases, function(item) {
-    var i = item.year * 12 + (item.month - 1);
-    var current = result[i] || _.clone(defaultItem);
+    let i = item.year * 12 + (item.month - 1);
+    let current = result[i] || _.clone(defaultItem);
     current.key = i;
     current.deaths += item.deaths;
     result[i] = current;
@@ -84,16 +116,16 @@ function mapTrialsData(trials, cases) {
 }
 
 function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
-  var result = [];
-  var collected = {
+  let result = [];
+  let collected = {
     all: 0,
     completed: 0,
     deaths: 0
   };
 
-  var detailedIncrement = 3; // In months
+  let detailedIncrement = 3; // In months
 
-  var increment = 12; // In months
+  let increment = 12; // In months
   if (fromDate >= detalizationBreakpoint) {
     increment = detailedIncrement;
     fromDate = Math.floor(detalizationBreakpoint / increment) * increment;
@@ -104,7 +136,7 @@ function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
     collected.completed += item.completed;
     collected.deaths += item.deaths;
     while (item.key >= fromDate) {
-      var temp = _.clone(collected);
+      let temp = _.clone(collected);
       temp.year = Math.floor(fromDate / 12);
       temp.month = fromDate % 12;
       temp.quarter = Math.floor((fromDate % 12) / 3);
@@ -124,27 +156,27 @@ function reduceTrialsData(trialsData, fromDate, detalizationBreakpoint) {
 }
 
 function collectDataForChart(trials, cases) {
-  var minYear = null;
+  let minYear = null;
   _.forEach(trials, function(trial) {
     if (trial.startDate) {
-      var year = trial.startDate.getUTCFullYear();
+      let year = trial.startDate.year();
       if ((year < minYear) || (minYear === null)) {
         minYear = year;
       }
     }
   });
 
-  var breakpoint = (new Date()).getUTCFullYear() - 1;
+  const breakpoint = today.year() - 1;
 
-  var trialsData = mapTrialsData(trials, cases);
+  let trialsData = mapTrialsData(trials, cases);
   trialsData = reduceTrialsData(trialsData, minYear * 12,
     breakpoint * 12);
 
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var quarters = ['I', 'II', 'III', 'IV'];
+  const quarters = ['I', 'II', 'III', 'IV'];
 
-  var result = {
+  let result = {
     x: [],
     all: [],
     completed: [],
@@ -163,3 +195,8 @@ function collectDataForChart(trials, cases) {
 
   return result;
 }
+
+module.exports = {
+  collectTrialsInfo,
+  collectDataForChart,
+};

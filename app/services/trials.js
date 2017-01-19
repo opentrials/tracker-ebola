@@ -1,25 +1,21 @@
 'use strict';
-var csv = require('csv');
-var request = require('request');
-var Promise = require('bluebird');
-var config = require('../config');
-var _ = require('lodash');
+const csv = require('csv');
+const request = require('request');
+const Promise = require('bluebird');
+const config = require('../config');
+const _ = require('lodash');
+const moment = require('moment');
 
-/**
- * Module provides trials service
- */
-module.exports = {
-  get: getData,
-  getMapped: getMappedData
-};
+const timeFormat = 'YYYY-MM-DD';
+const today = moment.utc();
 
 /**
  * Load and return tracker data
  *
  * @returns {Promise}
  */
-function getData() {
-  return loadData().then(parseData).then(cleanData);
+function get() {
+  return _loadData().then(_parseData).then(_cleanData);
 }
 
 /**
@@ -27,35 +23,68 @@ function getData() {
  *
  * @returns {Promise}
  */
-function getMappedData() {
-  return loadData().then(parseData).then(cleanData).then(processData);
+function getMapped() {
+  return _loadData().then(_parseData).then(_cleanData).then(_processData);
 }
 
-function processData(trials) {
+function _processData(trials) {
   return new Promise(function(resolve, reject) {
-    var daysDivider = 24 * 60 * 60 * 1000;
-    var currentDate = new Date();
-    var today = Math.round(currentDate.getTime() / daysDivider);
-    var results = _.map(trials, function(trial) {
-      var result = {
+    let results = _.map(trials, function(trial) {
+      const result = {
+
+        // 1:1 mapping with spreadsheet columns, translated to camelCase
         trialId: trial.trial_id,
-        title: trial.title,
         publicTitle: trial.public_title,
+        title: trial.title,
+        recruitment: trial.recruitment,
+        studyDesign: trial.study_design,
+        conditions: trial.conditions.split('|'),
+        interventions: trial.interventions.split('\r|\n|\r\n'),
+        sponsorCollaborators: trial.sponsor_collaborators,
+        principalInvestigator: trial.principal_investigator,
+        ageGroups: trial.age_groups.split('|'),
+        phases: trial.phases.split('\r|\n|\r\n'),
         participantCount: trial.participant_count,
-        startDate: !!trial.start_date ? new Date(trial.start_date) : null,
-        completionDate: (!!trial.completion_date ||
-                         trial.completion_date !== '-') ?
-                        new Date(trial.completion_date) : null,
-        investigator: trial.principal_investigator,
-        sponsors: trial.sponsor_collaborators,
+        fundedBy: trial.funded_by.split('|'),
+        startDate: _processDate(trial.start_date),
+        completionDate: _processDate(trial.completion_date),
+        registryCompletionDate: _processDate(trial.registry_completion_date),
+        resultsFirstReceived: _processDate(trial.results_first_received),
+        resultsLastSearched: _processDate(trial.results_last_searched),
+        resultsAvailable: ('' + trial.results_available).toUpperCase() === 'YES'
+          ? true
+          : false,
+        interimOrFullOrGrey: trial.interim_or_full_or_grey,
+        urlResults: trial.url_results,
+        primaryCompletionDate: _processDate(trial.primary_completion_date),
+        publicationDelayDays: trial.publication_delay_days,
+        country: trial.country.split('\r|\n|\r\n'),
+        source: trial.source,
+        url: trial.url,
+        secondaryRegistryOrId: trial.secondary_registry_or_id,
+        correspondence: trial.correspondence,
+        // End of the 1:1 mapping, following are the extra attributes
+
+        // Booleans here
         isPublished: (
-          (('' + trial.results_available).toUpperCase() == 'YES') &&
-          (('' + trial.preliminary_or_full).toUpperCase() == 'FULL')
+          (('' + trial.results_available).toUpperCase() === 'YES') &&
+          (('' + trial.preliminary_or_full).toUpperCase() === 'FULL')
 
         ),
-        url: trial.url,
-        funders: trial.funded_by,
-        source: trial.source
+        isCompleted: _processDate(trial.completion_date).isBefore(today),
+        hasCompletedRecruitment: ['Active, not recruiting',
+                                  'Closed to recruitment, follow up complete',
+                                  'Completed',
+                                  'No longer recruiting',
+                                  'Terminated',
+                                 ].includes(
+                                   trial.recruitment),
+        isStarted: today.isAfter(trial.start_date),
+        isInProgress: today.isAfter(trial.start_date)
+          && today.isBefore(trial.completion_date),
+
+        // Computed values here
+        daysAfterCompletion: today.diff(trial.completion_date, 'days'),
       };
 
       if (!_.isArray(result.sponsors)) {
@@ -64,53 +93,6 @@ function processData(trials) {
 
       if (!_.isArray(result.funders)) {
         result.funders = [];
-      }
-
-      if (result.startDate) {
-        var started = Math.round(result.startDate.getTime() / daysDivider);
-        if (result.completionDate) {
-          var completed = Math.round(result.completionDate.getTime() /
-                                     daysDivider);
-          result.isCompleted = today >= completed;
-          result.daysAfterCompletion = today - completed;
-          if (result.daysAfterCompletion < 0) {
-            result.daysAfterCompletion = 0;
-          }
-        } else {
-          result.isCompleted = false;
-          result.daysAfterCompletion = 0;
-        }
-
-        result.isStarted = today >= started;
-        result.isInProgress = result.isStarted && !result.isCompleted;
-        result.isPublished = result.isCompleted && result.isPublished;
-
-        result.daysAfterStart = today - started;
-        if (result.daysAfterStart < 0) {
-          result.daysAfterStart = 0;
-        }
-      } else {
-        result.isStarted = false;
-        result.isCompleted = false;
-        result.isInProgress = false;
-        result.daysAfterStart = 0;
-        result.daysAfterCompletion = 0;
-      }
-
-      result.year = result.isCompleted ? result.completionDate.getFullYear()
-        : currentDate.getFullYear();
-
-      // 1. completed but not published - days DESC
-      // 2. not completed - days DESC
-      // 3. completed and published days DESC
-      if (result.isCompleted) {
-        if (result.isPublished) {
-          result.publicationDelay = -result.daysAfterCompletion;
-        } else {
-          result.publicationDelay = -(2000000 + result.daysAfterCompletion);
-        }
-      } else {
-        result.publicationDelay = -(1000000 + result.daysAfterStart);
       }
 
       return result;
@@ -125,7 +107,7 @@ function processData(trials) {
 }
 
 //TODO: add timeout
-function loadData() {
+function _loadData() {
   return new Promise(function(resolve, reject) {
     request(config.get('database:trials'), function(err, res, data) {
       if (!err && res.statusCode === 200) {
@@ -137,9 +119,9 @@ function loadData() {
   });
 }
 
-function parseData(data) {
+function _parseData(data) {
   return new Promise(function(resolve, reject) {
-    var options = { columns: true, auto_parse: true }; // jscs:disable
+    const options = { columns: true, auto_parse: true }; // jscs:disable
     csv.parse(data, options, function(err, data) {
       if (!err) {
         resolve(data);
@@ -150,34 +132,35 @@ function parseData(data) {
   });
 }
 
-function cleanData(data) {
+function _cleanData(data) {
   return new Promise(function(resolve, reject) {
     data.forEach(function(item) {
       Object.keys(item).forEach(function(key) {
-        item[key] = cleanNull(item[key]);
+        item[key] = isNaN(item[key]) ? _.trim(item[key]) : item[key];
+        item[key] = _cleanNull(item[key]);
       });
-      item['Conditions'] = cleanArray(item['Conditions']);
-      item['Interventions'] = cleanArray(item['Interventions']);
-      item['Sponsor/Collaborators'] = cleanArray(item['Sponsor/Collaborators']);
-      item['Age Groups'] = cleanArray(item['Age Groups']);
-      item['Phases'] = cleanArray(item['Phases']);
-      item['Funded Bys'] = cleanArray(item['Funded Bys']);
-      item['Start Date'] = cleanDate(item['Start Date']);
-      item['Completion Date'] = cleanDate(item['Completion Date']);
-      item['Primary Completion Date'] = cleanDate(item['Primary Completion Date']);
+      item['Conditions'] = _cleanArray(item['Conditions']);
+      item['Interventions'] = _cleanArray(item['Interventions']);
+      item['Sponsor/Collaborators'] = _cleanArray(item['Sponsor/Collaborators']);
+      item['Age Groups'] = _cleanArray(item['Age Groups']);
+      item['Phases'] = _cleanArray(item['Phases']);
+      item['Funded Bys'] = _cleanArray(item['Funded Bys']);
+      item['Start Date'] = _cleanDate(item['Start Date']);
+      item['Completion Date'] = _cleanDate(item['Completion Date']);
+      item['Primary Completion Date'] = _cleanDate(item['Primary Completion Date']);
     });
     resolve(data);
   });
 }
 
-function cleanNull(value) {
+function _cleanNull(value) {
   if (value === 'Null') {
     value = null;
   }
   return value;
 }
 
-function cleanArray(value) {
+function _cleanArray(value) {
   if (value === null) {
     return value;
   }
@@ -189,18 +172,31 @@ function cleanArray(value) {
   return value;
 }
 
-function cleanDate(value) {
-  if (value === null) {
-    return value;
+function _cleanDate(value) {
+  // use the abstract equality comparison to check against multiple falsy input with ==
+  // http://www.ecma-international.org/ecma-262/6.0/#sec-abstract-equality-comparison
+  if (value == null) {
+    return null;
   }
   try {
-    // Join with "-" to make it ISO format with UTC
-    value = new Date(value.split('/').reverse().join('-'));
-    if (!value.getTime()) {
-      throw Error('Bad date');
+    parsed = moment.utc(value, timeFormat);
+    if (!parsed.isValid()) {
+      throw Error(`Bad date: ${value}`);
     }
   } catch (err) {
     return '';
   }
-  return value;
+  return parsed;
 }
+
+function _processDate(value) {
+  return moment.utc(value, timeFormat, true);
+}
+
+/**
+ * Module provides trials service
+ */
+module.exports = {
+  get,
+  getMapped
+};
