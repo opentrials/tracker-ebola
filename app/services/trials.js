@@ -69,7 +69,7 @@ function _processData(trials) {
         // Booleans here
         isPublished: (
           (('' + trial.results_available).toUpperCase() === 'YES') &&
-          (('' + trial.preliminary_or_full).toUpperCase() === 'FULL')
+          (('' + trial.preliminary_or_full).toUpperCase() !== '')
 
         ),
         isCompleted: _processDate(trial.completion_date).isBefore(today),
