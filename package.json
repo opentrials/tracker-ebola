@@ -59,8 +59,8 @@
     "zombie": "^4.1.0"
   },
   "engines": {
-    "node": "^4.1.0",
-    "npm": "^2.14.0"
+    "node": "6.9.1",
+    "npm": "^3.10.0"
   },
   "scripts": {
     "build": "gulp",
