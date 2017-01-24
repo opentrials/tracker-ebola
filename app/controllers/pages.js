@@ -7,7 +7,7 @@ var services = requireDir('../services');
 
 // Index
 module.exports.index = function(req, res) {
-  services.trials.getMapped().then(function(data) {
+  services.trials.get().then(function(data) {
     res.render('index.html', {
       title: 'Ebola',
       subtitle: 'A live tracker of Ebola trials',
@@ -21,8 +21,8 @@ module.exports.index = function(req, res) {
 
 module.exports.chart = function(req, res) {
   var promises = [
-    services.trials.getMapped(),
-    services.cases.getMapped()
+    services.trials.get(),
+    services.cases.get()
   ];
   Promise.all(promises).then(function(data) {
     var trials = data[0];
