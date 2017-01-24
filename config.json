@@ -37,7 +37,7 @@
   },
   "database": {
     "trials": "https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=0&single=true&output=csv",
-    "cases": "https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=1189650096&single=true&output=csv",
+    "cases": "https://docs.google.com/spreadsheets/d/18QoNBtABuGca8LBc0nXjMfrzWz4gZ2FWlLmtrvX-qyo/pub?gid=1189650096&single=true&output=csv"
   },
   "port": 3000,
   "session": {

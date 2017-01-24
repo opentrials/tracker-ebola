@@ -51,9 +51,10 @@ function _processData(trials) {
         registryCompletionDate: _processDate(trial.registry_completion_date),
         resultsFirstReceived: _processDate(trial.results_first_received),
         resultsLastSearched: _processDate(trial.results_last_searched),
-        resultsAvailable: ('' + trial.results_available).toUpperCase() === 'YES'
-          ? true
-          : false,
+        resultsAvailable:
+        ('' + trial.results_available).toUpperCase() === 'YES' ?
+          true :
+          false,
         interimOrFullOrGrey: trial.interim_or_full_or_grey,
         urlResults: trial.url_results,
         primaryCompletionDate: _processDate(trial.primary_completion_date),
@@ -80,8 +81,8 @@ function _processData(trials) {
                                  ].includes(
                                    trial.recruitment),
         isStarted: today.isAfter(trial.start_date),
-        isInProgress: today.isAfter(trial.start_date)
-          && today.isBefore(trial.completion_date),
+        isInProgress: today.isAfter(trial.start_date) &&
+          today.isBefore(trial.completion_date),
 
         // Computed values here
         daysAfterCompletion: today.diff(trial.completion_date, 'days'),

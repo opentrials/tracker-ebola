@@ -15,8 +15,8 @@ function collectTrialsInfo(trials) {
     completedTrials: 0,
     reportedTrials: 0,
     delayedCompletedTrials: 0,
-    mostDelayed: { date: today, days: 0, id: '' },
-    leastDelayed: { date: moment([1900, 1, 1]), days: 0, id: '' },
+    mostDelayed: {date: today, days: 0, id: ''},
+    leastDelayed: {date: moment([1900, 1, 1]), days: 0, id: ''},
     averageDelay: 0,
     participants: {
       completedRecruitment: 0,
@@ -34,15 +34,18 @@ function collectTrialsInfo(trials) {
     }
     if (trial.completionDate.isBefore(today) && !trial.resultsAvailable) {
       result.delayedCompletedTrials++;
-      result.averageDelay += trial.publicationDelayDays; // will get divided at the end
+      // the following will get divided at the end
+      result.averageDelay += trial.publicationDelayDays;
     }
-    if (!trial.resultsAvailable && trial.completionDate.isBefore(result.mostDelayed.date)) {
+    if (!trial.resultsAvailable &&
+        trial.completionDate.isBefore(result.mostDelayed.date)) {
       result.mostDelayed.date = trial.completionDate;
       // result.mostDelayed.days = moment().diff(trial.completionDate, 'days');
       result.mostDelayed.days = trial.publicationDelayDays;
       result.mostDelayed.id = trial.trialId;
     }
-    if (trial.completionDate.isBefore(today) && trial.completionDate.isAfter(result.leastDelayed.date)) {
+    if (trial.completionDate.isBefore(today) &&
+        trial.completionDate.isAfter(result.leastDelayed.date)) {
       result.leastDelayed.date = trial.completionDate;
       // result.leastDelayed.days = today.diff(trial.completionDate, 'days');
       result.leastDelayed.days = trial.publicationDelayDays;
@@ -54,12 +57,15 @@ function collectTrialsInfo(trials) {
     if (trial.resultsAvailable) {
       result.participants.reportedResults += trial.participantCount;
     }
-    if (trial.completionDate.isBefore(today)
-        && !trial.resultsAvailable) {
-      result.participants.completedRecruitmentNotReported += trial.participantCount;
+    if (trial.completionDate.isBefore(today) &&
+        !trial.resultsAvailable) {
+      result.participants
+        .completedRecruitmentNotReported += trial.participantCount;
     }
   });
-  result.averageDelay = Math.round(result.averageDelay / result.delayedCompletedTrials);
+  result.averageDelay = Math.round(
+    result.averageDelay / result.delayedCompletedTrials
+  );
   result.sources = _.uniq(result.sources);
   result.funders = _.uniq(result.funders);
   return result;
@@ -80,9 +86,9 @@ function mapTrialsData(trials, cases) {
 
       let from = moment(trial.startDate, timeFormat);
       from = from.year() * 12 + from.month();
-      let to = (trial.isCompleted && trial.completionDate)
-          ? moment(trial.completionDate, timeFormat)
-          : today;
+      let to = (trial.isCompleted && trial.completionDate) ?
+          moment(trial.completionDate, timeFormat) :
+          today;
 
       to = to.year() * 12 + to.month();
 

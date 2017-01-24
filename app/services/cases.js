@@ -38,7 +38,6 @@ function _processData(trials) {
   });
 }
 
-
 //TODO: add timeout
 function _loadData() {
   return new Promise(function(resolve, reject) {
