@@ -46,18 +46,18 @@ function _processData(trials) {
         phases: trial.phases.split('\r|\n|\r\n'),
         participantCount: trial.participant_count,
         fundedBy: trial.funded_by.split('|'),
-        startDate: _processDate(trial.start_date),
-        completionDate: _processDate(trial.completion_date),
-        registryCompletionDate: _processDate(trial.registry_completion_date),
-        resultsFirstReceived: _processDate(trial.results_first_received),
-        resultsLastSearched: _processDate(trial.results_last_searched),
+        startDate: _cleanDate(trial.start_date),
+        completionDate: _cleanDate(trial.completion_date),
+        registryCompletionDate: _cleanDate(trial.registry_completion_date),
+        resultsFirstReceived: _cleanDate(trial.results_first_received),
+        resultsLastSearched: _cleanDate(trial.results_last_searched),
         resultsAvailable:
         ('' + trial.results_available).toUpperCase() === 'YES' ?
           true :
           false,
         interimOrFullOrGrey: trial.interim_or_full_or_grey,
         urlResults: trial.url_results,
-        primaryCompletionDate: _processDate(trial.primary_completion_date),
+        primaryCompletionDate: _cleanDate(trial.primary_completion_date),
         publicationDelayDays: trial.publication_delay_days,
         country: trial.country.split('\r|\n|\r\n'),
         source: trial.source,
@@ -72,7 +72,7 @@ function _processData(trials) {
           (('' + trial.preliminary_or_full).toUpperCase() !== '')
 
         ),
-        isCompleted: _processDate(trial.completion_date).isBefore(today),
+        isCompleted: _cleanDate(trial.completion_date).isBefore(today),
         hasCompletedRecruitment: ['Active, not recruiting',
                                   'Closed to recruitment, follow up complete',
                                   'Completed',
@@ -139,16 +139,8 @@ function _cleanData(data) {
       Object.keys(item).forEach(function(key) {
         item[key] = isNaN(item[key]) ? _.trim(item[key]) : item[key];
         item[key] = _cleanNull(item[key]);
+        item[key] = _cleanDash(item[key]);
       });
-      item['Conditions'] = _cleanArray(item['Conditions']);
-      item['Interventions'] = _cleanArray(item['Interventions']);
-      item['Sponsor/Collaborators'] = _cleanArray(item['Sponsor/Collaborators']);
-      item['Age Groups'] = _cleanArray(item['Age Groups']);
-      item['Phases'] = _cleanArray(item['Phases']);
-      item['Funded Bys'] = _cleanArray(item['Funded Bys']);
-      item['Start Date'] = _cleanDate(item['Start Date']);
-      item['Completion Date'] = _cleanDate(item['Completion Date']);
-      item['Primary Completion Date'] = _cleanDate(item['Primary Completion Date']);
     });
     resolve(data);
   });
@@ -161,14 +153,10 @@ function _cleanNull(value) {
   return value;
 }
 
-function _cleanArray(value) {
-  if (value === null) {
-    return value;
-  }
-  try {
-    value = value.split('|');
-  } catch (err) {
-    return [];
+function _cleanDash(value) {
+  // If moment.js gets a dash as input, it throws a warning
+  if (value === '-') {
+    value = '';
   }
   return value;
 }
@@ -176,22 +164,17 @@ function _cleanArray(value) {
 function _cleanDate(value) {
   // use the abstract equality comparison to check against multiple falsy input with ==
   // http://www.ecma-international.org/ecma-262/6.0/#sec-abstract-equality-comparison
-  if (value == null) {
-    return null;
-  }
+  let parsed = moment.utc(undefined);
   try {
-    parsed = moment.utc(value, timeFormat);
+    parsed = moment.utc(value, 'YYYY-MM-DD', true);
     if (!parsed.isValid()) {
       throw Error(`Bad date: ${value}`);
     }
   } catch (err) {
-    return '';
+    // Not actually catching the error
+    // Just letting `moment` return an invalid date
   }
   return parsed;
-}
-
-function _processDate(value) {
-  return moment.utc(value, timeFormat, true);
 }
 
 /**

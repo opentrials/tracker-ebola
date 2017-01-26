@@ -16,7 +16,7 @@ function collectTrialsInfo(trials) {
     reportedTrials: 0,
     delayedCompletedTrials: 0,
     mostDelayed: {date: today, days: 0, id: ''},
-    leastDelayed: {date: moment([1900, 1, 1]), days: 0, id: ''},
+    leastDelayed: {date: moment('1900-01-01', timeFormat), days: 0, id: ''},
     averageDelay: 0,
     participants: {
       completedRecruitment: 0,
