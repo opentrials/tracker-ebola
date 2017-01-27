@@ -6,23 +6,24 @@ var _ = require('lodash');
 var config =  require('../config');
 
 /**
- * Module provides tracker data service
+ * Load and return cases and deaths data
+ *
+ * @returns {Promise}
  */
-module.exports = {
-  get: getData,
-  getMapped: getMappedData
-};
+function get() {
+  return _loadData().then(_parseData).then(_cleanData);
+}
 
 /**
  * Load and return normalized tracker data
  *
  * @returns {Promise}
  */
-function getMappedData() {
-  return loadData().then(parseData).then(cleanData).then(processData);
+function getMapped() {
+  return _loadData().then(_parseData).then(_cleanData).then(_processData);
 }
 
-function processData(trials) {
+function _processData(trials) {
   return new Promise(function(resolve, reject) {
     var results = _.map(trials, function(trial) {
       return {
@@ -37,17 +38,8 @@ function processData(trials) {
   });
 }
 
-/**
- * Load and return cases and deaths data
- *
- * @returns {Promise}
- */
-function getData() {
-  return loadData().then(parseData).then(cleanData);
-}
-
 //TODO: add timeout
-function loadData() {
+function _loadData() {
   return new Promise(function(resolve, reject) {
     request(config.get('database:cases'), function(err, res, data) {
       if (!err && res.statusCode === 200) {
@@ -59,7 +51,7 @@ function loadData() {
   });
 }
 
-function parseData(data) {
+function _parseData(data) {
   return new Promise(function(resolve, reject) {
     var options = {columns: true, auto_parse: true}; // jscs:disable
     csv.parse(data, options, function(err, data) {
@@ -72,6 +64,14 @@ function parseData(data) {
   });
 }
 
-function cleanData(data) {
+function _cleanData(data) {
   return data;
 }
+
+/**
+ * Module provides tracker data service
+ */
+module.exports = {
+  get,
+  getMapped
+};

@@ -1,19 +1,56 @@
 <section class="leaderboard">
   <article>
+    <p>
+      All trials should be published, with their full methods and results made
+      available. The WHO <a class="external"
+      href="http://www.who.int/medicines/ebola-treatment/data-sharing_phe/en/"
+      target="_blank">recently stated</a> that this process should be expedited
+      during public health emergencies. However, there is currently no public
+      data describing which individual researchers and organisations are
+      complying with these ethical requirements. The Ebola Trials Tracker aims
+      to fix this. We identify every trial on Ebola, and then highlight each
+      individual trial that has currently not reported results. This is a
+      complex task: researchers are required to place important information
+      about their trials on public trial registries, but they often fail to do
+      so, or leave incorrect information in the public domain. We therefore
+      encourage all users of this site to read our paper to learn more about our
+      methods.
+    </p>
+    <p>
+        Below we present information on all completed trials (and ongoing trials
+        with preliminary results). We also present summaries of our
+        correspondence with trialists. If you are aware of any trial results we
+        have missed, you can tell us here. You can also see the raw data behind
+        this site, including ongoing trials, here. For this site, we consider
+        preliminary and grey literature results to count as “reported”: however
+        a more detailed breakdown is available in our paper. To maintain ongoing
+        monitoring of compliance we will run results searches, and update the
+        data presented here, on a monthly basis from February 2017.
+    </p>
+    <hr/>
     <a class="upload-missing-data" href="https://goo.gl/forms/ngSxKVCB6PrijHo13" target="_blank">
       Have we missed a trial? <b>Get in touch!</b>
     </a>
     <h3>Trial “leaderboard”</h3>
     <p>
-      We currently have <b>{{ trials.length }}</b> Ebola trials in our tracker
-      from {{ info.sources.length }} sources ({{ joinListOfNames(wrapWithTag(info.sources, 'i')) | safe }}).
-      <b>{{ info.completedTrials }}</b> of these trials are complete, and
-      <b>{{ info.publishedTrials }}</b> with results.
-      {% if info.funders.length > 0 %}
-      <b>{{ info.funders.length }}</b> different funders are currently backing Ebola trials,
-      including {{ joinListOfNames(wrapWithTag(info.funders, 'i')) | safe }}.
-      {% endif %}
+      As of {{ today }}, <b>{{ trials.length }}</b> trials have been started,
+      <b>{{ info.completedTrials }}</b> have passed completion date,
+      and <b>{{ info.reportedTrials }}</b> trials have reported results.
+
+      The average delay for unpublished results of completed Ebola trials is <b>{{ info.averageDelay }}</b> days.
+
+      The most delayed trial is <b>{{ info.mostDelayed.id }}</b>, the least delayed trial is
+      <b>{{ info.leastDelayed.id }}</b>.
+
+      The number of participants in trials with completed recruitment is <b>{{ info.participants.completedRecruitment }}</b>,
+      the number of participants in trials that have reported results is <b>{{ info.participants.reportedResults }}</b>.
+      <br/>
+      <b>{{ info.participants.completedRecruitmentNotReported }}</b> participants in completed trials have not had their
+      data reported. We welcome feedback, especially from anyone who would like
+      our support to build their own trackers for other sets of trials.
+> Services improvements + new summary variables in place
     </p>
+    <hr/>
 
     {% if trials.length > 0 %}
     <div class="trials-sorting">
@@ -104,14 +141,14 @@
               </dl>
             </li>
             {% endif %}
-            {% if trial.investigator %}
+            {% if trial.principalInvestigator %}
             <li>
           </ul>
           <ul>
             <li>
               <dl class="investigator">
                 <dt>Principal investigator</dt>
-                <dd>{{ trial.investigator | safe }}</dd>
+                <dd>{{ trial.principalInvestigator | safe }}</dd>
               </dl>
             </li>
             {% endif %}
