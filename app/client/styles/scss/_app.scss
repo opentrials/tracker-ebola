@@ -355,6 +355,7 @@ body {
 									background-color: $green;
 									padding: $small-spacing $base-spacing 0 $base-spacing;
 									color: #fff;
+									min-width: 200px;
 
 									@include media($large-screen) {
 										background-color: inherit;

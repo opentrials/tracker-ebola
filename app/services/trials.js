@@ -58,7 +58,6 @@ function _processData(trials) {
         interimOrFullOrGrey: trial.interim_or_full_or_grey,
         urlResults: trial.url_results,
         primaryCompletionDate: _cleanDate(trial.primary_completion_date),
-        // publicationDelayDays: trial.publication_delay_days,
         publicationDelayDays: _calculatePublicationDelay(trial),
         country: trial.country.split('\r|\n|\r\n'),
         source: trial.source,
