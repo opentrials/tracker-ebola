@@ -6,9 +6,11 @@
         $('body').addClass('modal-open');
       } else {
         $('body').removeClass('modal-open');
-        $('.modal').find('video, audio').each(function() {
-          this.pause();
-        });
+        document
+          .getElementById('about-video')
+          .contentWindow.postMessage(
+            '{"event":"command","func":"pauseVideo","args":""}', '*'
+          );
       }
     })
     .on('click', '[data-modal="close"]', function() {
