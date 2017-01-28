@@ -78,7 +78,7 @@
 
         <div class="days">
           {% if trial.isCompleted %}
-          <p>{{ trial.daysAfterCompletion }} days
+          <p>{{ trial.publicationDelayDays }} days
             {% if trial.isPublished %}
             <span>after completion</span>
             {% else %}
