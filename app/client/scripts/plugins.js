@@ -1,5 +1,5 @@
 ;(function($, undefined) {
-  // scroll to achors
+  // scroll to anchors
   $(function() {
     smoothScroll.init({
       updateURL: false
@@ -18,23 +18,9 @@
       }
     });
 
-    // var API = $menu.data( "mmenu" );
-    // API.setSelected( $menu.find( "li" ).first() );
-
     $menu.find('a').on('click', function() {
       closer = $(this).attr('href');
     });
-
-    // API.bind( "closed", function() {
-    // 	if ( closer ) {
-    // 		setTimeout( function() {
-    // 			$html.animate({
-    // 				scrollTop: $(closer).offset().top
-    // 			});
-    // 			closer = null;
-    // 		}, 25 );
-    // 	}
-    // });
   });
 
   // cookie bar

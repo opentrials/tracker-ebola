@@ -21,22 +21,6 @@ module.exports.index = function(req, res) {
   });
 };
 
-module.exports.chart = function(req, res) {
-  var promises = [
-    services.trials.getMapped(),
-    services.cases.getMapped(),
-  ];
-  Promise.all(promises).then(function(data) {
-    var trials = data[0];
-    var cases = data[1];
-    var chartData = services.utils.collectDataForChart(trials, cases);
-    res.render('graph.html', {
-      title: 'Ebola Graph',
-      chartData: JSON.stringify(chartData)
-    });
-  });
-};
-
 module.exports.correspondence = function(req, res) {
   services.driveapi.getContentByFileName(req.params.fileName)
     .then(function(html) {
