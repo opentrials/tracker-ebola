@@ -99,7 +99,10 @@ function _processData(trials) {
       return result;
     });
 
-    const sortedResults = _.sortBy(results, (item) => item.publicationDelayDays);
+    const sortedResults = _.sortBy(
+      results,
+      (item) => item.publicationDelayDays
+    ).reverse();
 
     resolve(sortedResults);
   });

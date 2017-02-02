@@ -74,13 +74,18 @@
       {% endif %}
       {% endif %}
       <li class="{{ class }}" data-sort-participants="{{ -trial.participantCount }}"
-          data-sort-publication="{{ trial.publicationDelay }}">
+          data-sort-publication="{{ -trial.publicationDelayDays }}">
 
         <div class="days">
           {% if trial.isCompleted %}
-          <p>{{ trial.publicationDelayDays }} days
-            {% if trial.isPublished %}
-            <span>after completion</span>
+            {% if trial.publicationDelayDays > 0 %}
+              <p>{{ trial.publicationDelayDays }} days
+                {% if trial.isPublished %}
+                <span>after completion</span>
+                {% else %}
+                <span>since completed</span>
+                {% endif %}
+              </p>
             {% else %}
               <p>Published
                 <span>on time</span>
