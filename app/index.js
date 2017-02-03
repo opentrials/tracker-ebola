@@ -1,12 +1,14 @@
 'use strict';
-var path = require('path');
-var reqdir = require('require-dir');
-var express = require('express');
-var nunjucks  = require('nunjucks');
-var config = require('./config');
-var routes = reqdir('./routes');
-var views = path.join(__dirname, '/views');
-var _ = require('lodash');
+const path = require('path');
+const reqdir = require('require-dir');
+const express = require('express');
+const nunjucks  = require('nunjucks');
+const config = require('./config');
+const routes = reqdir('./routes');
+const views = path.join(__dirname, '/views');
+const filters = require('./views/filters');
+const _ = require('lodash');
+const moment = require('moment');
 
 /**
  * Module provides application
@@ -46,4 +48,8 @@ env.addGlobal('wrapWithTag', function(items, tag) {
     });
   }
   return items;
+});
+
+_.map(filters, (filterFunc, filterName) => {
+  env.addFilter(filterName, filterFunc);
 });
