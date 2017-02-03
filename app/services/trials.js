@@ -58,7 +58,7 @@ function _processData(trials) {
         interimOrFullOrGrey: trial.interim_or_full_or_grey,
         urlResults: trial.url_results,
         primaryCompletionDate: _cleanDate(trial.primary_completion_date),
-        publicationDelayDays: trial.publication_delay_days,
+        publicationDelayDays: _calculatePublicationDelay(trial),
         country: trial.country.split('\r|\n|\r\n'),
         source: trial.source,
         url: trial.url,
@@ -99,11 +99,12 @@ function _processData(trials) {
       return result;
     });
 
-    results = _.sortBy(results, function(item) {
-      return item.publicationDelay;
-    });
+    const sortedResults = _.sortBy(
+      results,
+      (item) => item.publicationDelayDays
+    ).reverse();
 
-    resolve(results);
+    resolve(sortedResults);
   });
 }
 
@@ -175,6 +176,31 @@ function _cleanDate(value) {
     // Just letting `moment` return an invalid date
   }
   return parsed;
+}
+
+function _calculatePublicationDelay(trial) {
+  let delay = 0;
+  const resultsFirstReceived = moment.utc(trial.results_first_received);
+  const primaryCompletionDate = moment.utc(trial.primary_completion_date);
+  const registryCompletionDate = moment.utc(trial.registry_completion_date);
+
+  if (!resultsFirstReceived.isValid()) {
+    if (!primaryCompletionDate.isValid() &&
+        registryCompletionDate.isBefore(today)) {
+      delay = today.diff(registryCompletionDate, 'days');
+    } else if (primaryCompletionDate.isBefore(today)) {
+      delay = today.diff(primaryCompletionDate, 'days');
+    }
+  } else {
+    if (!primaryCompletionDate.isValid() &&
+        registryCompletionDate.isBefore(resultsFirstReceived)) {
+      delay = resultsFirstReceived.diff(registryCompletionDate, 'days');
+    } else if (primaryCompletionDate.isBefore(resultsFirstReceived)) {
+      delay = resultsFirstReceived.diff(primaryCompletionDate, 'days');
+    }
+  }
+
+  return delay;
 }
 
 /**

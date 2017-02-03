@@ -10,7 +10,7 @@ const services = requireDir('../services');
 module.exports.index = function(req, res) {
   services.trials.getMapped().then((trials) => {
     res.render('index.html', {
-      trials: _.sortBy(trials, (t) => t.daysAfterCompletion).reverse(),
+      trials,
       title: 'Ebola',
       subtitle: 'A live tracker of Ebola trials',
       info: services.utils.collectTrialsInfo(trials),
