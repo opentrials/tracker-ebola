@@ -86,6 +86,8 @@ function _processData(trials) {
 
         // Computed values here
         daysAfterCompletion: today.diff(trial.completion_date, 'days'),
+        daysBeforeCompletion: _cleanDate(trial.completion_date)
+          .diff(today, 'days'),
       };
 
       if (!_.isArray(result.sponsors)) {
