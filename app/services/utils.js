@@ -66,8 +66,7 @@ function collectTrialsInfo(trials) {
   result.averageDelay = Math.round(
     result.averageDelay / result.delayedCompletedTrials
   );
-  result.sources = _.uniq(result.sources);
-  result.funders = _.uniq(result.funders);
+
   return result;
 }
 

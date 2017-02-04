@@ -64,131 +64,128 @@
 
     <ol class="trial-list" id="trials-list">
       {% for trial in trials %}
-      {% if trial.isCompleted %}
-      {% set class = '' %}
-      {% if trial.isCompleted and not trial.isPublished %}
-      {% if trial.daysAfterCompletion <= 150 %}
-      {% set class = 'ongoing' %}
-      {% else %}
-      {% set class = 'no-results' %}
-      {% endif %}
-      {% endif %}
-      <li class="{{ class }}" data-sort-participants="{{ -trial.participantCount }}"
-          data-sort-publication="{{ -trial.publicationDelayDays }}">
-
-        <div class="days">
+        {% if trial.completionDate.isValid() %}
           {% if trial.isCompleted %}
-            {% if trial.publicationDelayDays > 0 %}
-              <p>{{ trial.publicationDelayDays }} days
-                {% if trial.isPublished %}
-                <span>after completion</span>
-                {% else %}
-                <span>since completed</span>
-                {% endif %}
-              </p>
-            {% else %}
-              <p>Published
-                <span>on time</span>
-              </p>
-            {% endif %}
+            {% set class = '' %}
           {% endif %}
-          {% if trial.isInProgress %}
-          <p>{{ trial.daysAfterStart }} days <span>until completed</span></p>
-          {% endif %}
-          {% if not trial.isStarted %}
-          <p>N/A</p>
-          {% endif %}
-        </div>
-
-        {% if trial.isCompleted and not trial.isPublished %}
-        {% set text = 'No results have been published.' %}
-        <p class="status" title="{{ text }}">
-          <span>{{ text }}</span>
-        </p>
-        {% endif %}
-        {% if trial.isInProgress %}
-        {% set text = 'Trial is ongoing.' %}
-        <span class="status" title="{{ text }}">{{ text }}</span>
-        {% endif %}
-        {% if trial.isPublished %}
-        {% set text = 'Results have been published.' %}
-        <p class="status" title="{{ text }}">
-          <span>{{ text }}</span>
-        </p>
-        {% endif %}
-
-        <div class="description">
-          <h4 title="{{ trial.title }}">{{ trial.title }}</h4>
-
-          <ul>
-            <li>
-              <dl class="id">
-                <dt>ID</dt>
-                <dd>{{ trial.trialId }}</dd>
-              </dl>
-            </li>
-            <li>
-              <dl class="start date">
-                <dt>Start date</dt>
-                <dd>{{ trial.startDate }}</dd>
-              </dl>
-            </li>
-            <li>
-              <dl class="completion date">
-                <dt>Completion date</dt>
-                <dd>{{ trial.completionDate }}</dd>
-              </dl>
-            </li>
-            {% if trial.participantCount %}
-            <li>
-              <dl class="participants">
-                <dt>Participants</dt>
-                <dd>{{ trial.participantCount }}</dd>
-              </dl>
-            </li>
-            {% endif %}
-            {% if trial.principalInvestigator %}
-            <li>
-          </ul>
-          <ul>
-            <li>
-              <dl class="investigator">
-                <dt>Principal investigator</dt>
-                <dd>{{ trial.principalInvestigator | safe }}</dd>
-              </dl>
-            </li>
-            {% endif %}
-            {% if trial.sponsors.length > 0 %}
-            <li>
-              <dl class="sponsors">
-                <dt>Sponsored by</dt>
-                <dd>{{ joinListOfNames(trial.sponsors) | safe }}</dd>
-              </dl>
-            </li>
-            {% endif %}
-          </ul>
-        </div>
-
-        <ul class="links">
-          <li class="external">
-            <a target="_blank" href="https://explorer.opentrials.net/search?q={{ trial.trialId }}">OpenTrials entry</a>
-          </li>
-          <li class="external">
-            <a target="_blank" href="{{ trial.url }}">Registry entry</a>
-          </li>
-          <li class="external">
-            <a target="_blank" href="/correspondence/{{ trial.trialId }}">Correspondence with trialist</a>
-          </li>
           {% if trial.isCompleted and not trial.isPublished %}
-          {% set text = 'No results have been published.' %}
-          <li class="email">
-            <a href="mailto:{{ email }}?subject=Submission of information on {{ trial.trialId }} from the Ebola Trials Tracker">Submit information on this trial</a>
-          </li>
+            {% if trial.daysAfterCompletion <= 150 %}
+              {% set class = 'ongoing' %}
+            {% else %}
+              {% set class = 'no-results' %}
+            {% endif %}
           {% endif %}
-        </ul>
+          <li class="{{ class }}" data-sort-participants="{{ -trial.participantCount }}"
+            data-sort-publication="{{ -trial.publicationDelayDays }}">
 
-      </li>
-      {% endif %}
+            <div class="days">
+              {% if trial.isCompleted %}
+                {% if trial.publicationDelayDays > 0 %}
+                  <p>{{ trial.publicationDelayDays }} days
+                    {% if trial.isPublished %}
+                      <span>after completion</span>
+                    {% else %}
+                      <span>since completed</span>
+                    {% endif %}
+                  </p>
+                {% else %}
+                  <p>Published
+                    <span>on time</span>
+                  </p>
+                {% endif %}
+              {% endif %}
+              {% if trial.isInProgress %}
+                <p>{{ trial.daysBeforeCompletion }} days <span>until completed</span></p>
+              {% endif %}
+              {% if not trial.isStarted %}
+                <p>N/A</p>
+              {% endif %}
+            </div>
+
+            {% if trial.isCompleted and not trial.isPublished %}
+              {% set text = 'No results have been published.' %}
+              <p class="status" title="{{ text }}">
+                <span>{{ text }}</span>
+              </p>
+            {% endif %}
+            {% if trial.isInProgress %}
+              {% set text = 'Trial is ongoing.' %}
+              <span class="status" title="{{ text }}">{{ text }}</span>
+            {% endif %}
+            {% if trial.isPublished %}
+              {% set text = 'Results have been published.' %}
+              <p class="status" title="{{ text }}">
+                <span>{{ text }}</span>
+              </p>
+            {% endif %}
+
+            <div class="description">
+              <h4 title="{{ trial.title }}">{{ trial.title }}</h4>
+              <ul>
+                <li>
+                  <dl class="id">
+                    <dt>ID</dt>
+                    <dd>{{ trial.trialId }}</dd>
+                  </dl>
+                </li>
+                <li>
+                  <dl class="start date">
+                    <dt>Start date</dt>
+                    <dd>{{ trial.startDate }}</dd>
+                  </dl>
+                </li>
+                <li>
+                  <dl class="completion date">
+                    <dt>Completion date</dt>
+                    <dd>{{ trial.completionDate }}</dd>
+                  </dl>
+                </li>
+                {% if trial.participantCount %}
+                  <li>
+                    <dl class="participants">
+                      <dt>Participants</dt>
+                      <dd>{{ trial.participantCount }}</dd>
+                    </dl>
+                  </li>
+                {% endif %}
+                {% if trial.principalInvestigator %}
+                  <li>
+                    <dl class="investigator">
+                      <dt>Principal investigator</dt>
+                      <dd>{{ trial.principalInvestigator | safe }}</dd>
+                    </dl>
+                  </li>
+                {% endif %}
+                {% if trial.sponsors.length > 0 %}
+                  <li>
+                    <dl class="sponsors">
+                      <dt>Sponsored by</dt>
+                      <dd>{{ joinListOfNames(trial.sponsors) | safe }}</dd>
+                    </dl>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
+
+            <ul class="links">
+              <li class="external">
+                <a target="_blank" href="https://explorer.opentrials.net/search?q={{ trial.trialId }}">OpenTrials entry</a>
+              </li>
+              <li class="external">
+                <a target="_blank" href="{{ trial.url }}">Registry entry</a>
+              </li>
+              <li class="external">
+                <a target="_blank" href="/correspondence/{{ trial.trialId }}">Correspondence with trialist</a>
+              </li>
+              {% if trial.isCompleted and not trial.isPublished %}
+                {% set text = 'No results have been published.' %}
+                <li class="email">
+                  <a href="mailto:{{ email }}?subject=Submission of information on {{ trial.trialId }} from the Ebola Trials Tracker">Submit information on this trial</a>
+                </li>
+              {% endif %}
+            </ul>
+          </li>
+        {% endif %}
       {% endfor %}
     </ol>
     {% endif %}
