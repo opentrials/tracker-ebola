@@ -33,19 +33,19 @@
     </a>
     <h3>Trial “leaderboard”</h3>
     <p>
-      As of {{ today }}, <b>{{ trials.length }}</b> trials have been started,
-      <b>{{ info.completedTrials }}</b> have passed completion date,
-      and <b>{{ info.reportedTrials }}</b> trials have reported results.
+      As of {{ today }}, <b>{{ trials.length | formatNumber }}</b> trials have been started,
+      <b>{{ info.completedTrials | formatNumber }}</b> have passed completion date,
+      and <b>{{ info.reportedTrials | formatNumber }}</b> trials have reported results.
 
-      The average delay for unpublished results of completed Ebola trials is <b>{{ info.averageDelay }}</b> days.
+      The average delay for unpublished results of completed Ebola trials is <b>{{ info.averageDelay | formatNumber }}</b> days.
 
       The most delayed trial is <b>{{ info.mostDelayed.id }}</b>, the least delayed trial is
       <b>{{ info.leastDelayed.id }}</b>.
 
-      The number of participants in trials with completed recruitment is <b>{{ info.participants.completedRecruitment }}</b>,
-      the number of participants in trials that have reported results is <b>{{ info.participants.reportedResults }}</b>.
+      The number of participants in trials with completed recruitment is <b>{{ info.participants.completedRecruitment | formatNumber }}</b>,
+      the number of participants in trials that have reported results is <b>{{ info.participants.reportedResults | formatNumber }}</b>.
       <br/>
-      <b>{{ info.participants.completedRecruitmentNotReported }}</b> participants in completed trials have not had their
+      <b>{{ info.participants.completedRecruitmentNotReported | formatNumber }}</b> participants in completed trials have not had their
       data reported. We welcome feedback, especially from anyone who would like
       our support to build their own trackers for other sets of trials.
 > Services improvements + new summary variables in place
@@ -110,7 +110,9 @@
             {% endif %}
             {% if trial.isInProgress %}
               {% set text = 'Trial is ongoing.' %}
-              <span class="status" title="{{ text }}">{{ text }}</span>
+              <p class="status" title="{{ text }}">
+                <span>{{ text }}</span>
+              </p>
             {% endif %}
             {% if trial.isPublished %}
               {% set text = 'Results have been published.' %}
@@ -131,20 +133,20 @@
                 <li>
                   <dl class="start date">
                     <dt>Start date</dt>
-                    <dd>{{ trial.startDate }}</dd>
+                    <dd>{{ trial.startDate | formatDate }}</dd>
                   </dl>
                 </li>
                 <li>
                   <dl class="completion date">
                     <dt>Completion date</dt>
-                    <dd>{{ trial.completionDate }}</dd>
+                    <dd>{{ trial.completionDate | formatDate }}</dd>
                   </dl>
                 </li>
                 {% if trial.participantCount %}
                   <li>
                     <dl class="participants">
                       <dt>Participants</dt>
-                      <dd>{{ trial.participantCount }}</dd>
+                      <dd>{{ trial.participantCount | formatNumber }}</dd>
                     </dl>
                   </li>
                 {% endif %}
@@ -156,11 +158,11 @@
                     </dl>
                   </li>
                 {% endif %}
-                {% if trial.sponsors.length > 0 %}
+                {% if trial.fundedBy.length > 0 %}
                   <li>
                     <dl class="sponsors">
                       <dt>Sponsored by</dt>
-                      <dd>{{ joinListOfNames(trial.sponsors) | safe }}</dd>
+                      <dd>{{ joinListOfNames(trial.fundedBy) | safe }}</dd>
                     </dl>
                   </li>
                 {% endif %}
