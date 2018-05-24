@@ -23,11 +23,4 @@
     });
   });
 
-  // cookie bar
-  window.cookieconsent_options = {
-    message: 'This site uses cookies. For more information, see our ',
-    dismiss: 'OK, Got it',
-    learnMore: 'Cookie policy.',
-    link: 'https://okfn.org/cookie-policy/'
-  };
 })(jQuery);
