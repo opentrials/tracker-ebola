@@ -37,5 +37,4 @@ deploy:
   app: opentrials-ebola-tracker
   api_key: 54632a2c-2498-4655-88af-19a0f233c4c7
   skip_cleanup: true
-  strategy: git-ssh
   on: master
