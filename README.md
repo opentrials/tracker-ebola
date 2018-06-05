@@ -76,3 +76,10 @@ Deployment to Heroku will be done only on master branch on green builds.
 is planned for next stages of the project.
 
 To tweak the process use `.travis.yml` file in the root of the project.
+
+## Notes
+
+For now the static contents are checked into the repository because the building process relies on the `sass` gem for Ruby. Tasks:
+- it should be migrated to `gulp-sass` based on `node-sass`
+- `Dockerfile` should be updated to cover the build step
+- static contents should be added to the `.gitignore` file
